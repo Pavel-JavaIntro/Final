@@ -12,5 +12,9 @@
   </head>
   <body>
   Pavel Library
+  <br/>
+  <form action="library">
+    <input type="submit" value="Execute">
+  </form>
   </body>
 </html>
