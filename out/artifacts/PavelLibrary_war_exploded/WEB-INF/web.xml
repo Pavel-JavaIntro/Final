@@ -12,6 +12,6 @@
         <url-pattern>/library</url-pattern>
     </servlet-mapping>
     <listener>
-        <listener-class>by.pavka.LibraryStarter</listener-class>
+        <listener-class>by.pavka.LibraryConnectionPool</listener-class>
     </listener>
 </web-app>
