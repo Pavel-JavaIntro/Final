@@ -11,4 +11,7 @@
         <servlet-name>LibraryServlet</servlet-name>
         <url-pattern>/library</url-pattern>
     </servlet-mapping>
+    <listener>
+        <listener-class>by.pavka.LibraryStarter</listener-class>
+    </listener>
 </web-app>
