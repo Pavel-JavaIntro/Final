@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ResourceBundle;
 
 public class LibraryServlet extends HttpServlet {
   @Override
@@ -23,6 +24,9 @@ public class LibraryServlet extends HttpServlet {
 
   private void process(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
+    ResourceBundle resourceBundle = ResourceBundle.getBundle("database");
+    String num = resourceBundle.getString("connections");
+    request.setAttribute("conn", num);
     RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/success.jsp");
     requestDispatcher.forward(request, response);
   }

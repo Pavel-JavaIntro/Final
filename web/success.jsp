@@ -11,6 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-Yes, inside jsp
+Yes, inside jsp <br/>
+${conn} connections found
 </body>
 </html>
