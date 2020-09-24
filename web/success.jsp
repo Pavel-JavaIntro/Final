@@ -12,6 +12,7 @@
 </head>
 <body>
 Yes, inside jsp <br/>
-${applicationScope.conn} connections found
+${applicationScope.conn} connections found <br/>
+${surname}
 </body>
 </html>

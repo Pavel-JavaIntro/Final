@@ -24,6 +24,8 @@ public class LibraryServlet extends HttpServlet {
 
   private void process(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
+    String surname = request.getParameter("surname");
+    request.setAttribute("surname", surname);
     RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/success.jsp");
     requestDispatcher.forward(request, response);
   }
