@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class LibraryConnectionPool implements ServletContextListener, ConnectionPool {
-  //TODO refactor
+public class LibraryConnectionPool implements ServletContextListener {
+  // TODO refactor
 
   private static List<Connection> freeConnections = new ArrayList<Connection>();
   private static List<Connection> connectionsInUse = new ArrayList<Connection>();
@@ -24,7 +24,13 @@ public class LibraryConnectionPool implements ServletContextListener, Connection
     String login = resourceBundle.getString("user");
     String password = resourceBundle.getString("pass");
     String num = resourceBundle.getString("connections");
-    int connectionsNumber = Integer.parseInt(num);
+    int connectionsNumber;
+    try {
+      connectionsNumber = Integer.parseInt(num);
+    } catch (NumberFormatException e) {
+      // TODO
+      connectionsNumber = 1;
+    }
     for (int i = 0; i < connectionsNumber; i++) {
       try {
         freeConnections.add(createConnection(url, login, password));
@@ -43,26 +49,29 @@ public class LibraryConnectionPool implements ServletContextListener, Connection
 
   public void contextDestroyed(ServletContextEvent servletContextEvent) {
     try {
-      for (Connection fcon : freeConnections) {
-        fcon.close();
+      for (Connection useCon : connectionsInUse) {
+        releaseConnection(useCon);
       }
-      for (Connection ucon : connectionsInUse) {
-        ucon.close();
+      for (Connection freeCon : freeConnections) {
+        freeCon.close();
       }
     } catch (SQLException throwables) {
-      //TODO
+      // TODO
       throwables.printStackTrace();
     }
   }
 
-  public Connection obtainConnection() {
+  public static Connection obtainConnection() {
+    //TODO
     Connection connection = freeConnections.remove(freeConnections.size() - 1);
     connectionsInUse.add(connection);
     return connection;
   }
 
-  public boolean releaseConnection(Connection connection) {
-    freeConnections.add(connection);
+  public static boolean releaseConnection(Connection connection) {
+    if (connection != null) {
+      freeConnections.add(connection);
+    }
     return connectionsInUse.remove(connection);
   }
 }
