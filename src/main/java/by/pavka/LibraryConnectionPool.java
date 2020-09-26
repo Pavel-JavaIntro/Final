@@ -18,6 +18,12 @@ public class LibraryConnectionPool implements ServletContextListener {
   private static List<Connection> connectionsInUse = new ArrayList<Connection>();
 
   public void contextInitialized(ServletContextEvent servletContextEvent) {
+    try {
+      Class.forName("com.mysql.jdbc.Driver");
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+      //TODO
+    }
     ServletContext context = servletContextEvent.getServletContext();
     ResourceBundle resourceBundle = ResourceBundle.getBundle("database");
     String url = resourceBundle.getString("url");
