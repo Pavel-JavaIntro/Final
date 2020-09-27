@@ -1,6 +1,12 @@
 package by.pavka.entity;
 
-public abstract class LibraryEntity {
+import by.pavka.entity.criteria.EntityField;
+
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Objects;
+
+public abstract class LibraryEntity implements Serializable {
   private final EntityField<?>[] fields;
   private int id;
 
@@ -22,11 +28,6 @@ public abstract class LibraryEntity {
     this.id = id;
   }
 
-  public <T> void setValue(int index, T value) {
-    EntityField entityField = fields[index];
-    fillField(entityField, value);
-  }
-
   public <T> void setValue(String name, T value) {
     for (EntityField field : fields) {
       if (field.getName().equals(name)) {
@@ -38,5 +39,32 @@ public abstract class LibraryEntity {
 
   private <T> void fillField(EntityField<T> field, T value) {
     field.setValue(value);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof LibraryEntity)) return false;
+    LibraryEntity that = (LibraryEntity) o;
+    return id == that.id &&
+        Arrays.equals(fields, that.fields);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = Objects.hash(id);
+    result = 31 * result + Arrays.hashCode(fields);
+    return result;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder(getClass().getSimpleName() + " {\n");
+    builder.append("id=").append(id).append('\n');
+    for (EntityField field : fields) {
+      builder.append(field.getName()).append("=").append(field.getValue()).append('\n');
+    }
+    builder.append('}');
+    return builder.toString();
   }
 }

@@ -1,21 +1,15 @@
-package by.pavka.entity;
+package by.pavka.entity.criteria;
 
 public class EntityField<T> {
   private final String name;
-  private final String description;
   private T value;
 
-  public EntityField(String name, String description) {
+  public EntityField(String name) {
     this.name = name;
-    this.description = description;
   }
 
   public String getName() {
     return name;
-  }
-
-  public String getDescription() {
-    return description;
   }
 
   public T getValue() {

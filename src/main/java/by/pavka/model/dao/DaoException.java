@@ -1,4 +1,4 @@
-package by.pavka;
+package by.pavka.model.dao;
 
 public class DaoException extends Exception {
   public DaoException(String message) {

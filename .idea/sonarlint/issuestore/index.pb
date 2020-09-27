@@ -25,8 +25,6 @@ c
 3out/artifacts/PavelLibrary_war_exploded/success.jsp,d\a\da3bc0347f87af04bcca9031b190edf074fae14c
 =
 web/error.jsp,1\1\11f40b85173e667b59eff435613694769b922b44
-a
-1src/main/java/by/pavka/LibraryConnectionPool.java,7\1\71b672825cd991ae6935b9d8e31a93debb355f22
 ^
 .src/main/java/by/pavka/entity/EntityField.java,b\d\bd4aa20ad56ba2461697633c8c3562b3bb228a85
 ]

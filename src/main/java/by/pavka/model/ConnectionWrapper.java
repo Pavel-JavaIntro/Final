@@ -1,4 +1,6 @@
-package by.pavka;
+package by.pavka.model;
+
+import by.pavka.model.dao.DaoException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,8 +10,11 @@ import java.sql.Statement;
 public class ConnectionWrapper {
   private Connection connection;
 
-  public ConnectionWrapper() {
-    connection = LibraryConnectionPool.obtainConnection();
+  public ConnectionWrapper() throws DaoException {
+    connection = DBConnectionPool.getInstance().obtainConnection();
+    if (connection == null) {
+      throw new DaoException("ConnectionWrapper cannot get connection");
+    }
   }
 
   public Statement obtainStatement() throws DaoException {
@@ -48,6 +53,6 @@ public class ConnectionWrapper {
   }
 
   public void closeConnection() {
-    LibraryConnectionPool.releaseConnection(connection);
+    DBConnectionPool.getInstance().releaseConnection(connection);
   }
 }
