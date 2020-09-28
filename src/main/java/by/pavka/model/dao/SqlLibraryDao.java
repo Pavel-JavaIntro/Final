@@ -124,11 +124,10 @@ public abstract class SqlLibraryDao<T extends LibraryEntity>
       EntityField<?> field = criteria.getConstraint(i);
       builder.append(field.getName());
       if (field.getValue() instanceof String) {
-        builder.append(" LIKE ");
+        builder.append(" LIKE ").append(field.getValue()).append('%');
       } else {
-        builder.append("=");
+        builder.append("=").append(field.getValue());
       }
-      builder.append(field.getValue());
       if (i < criteria.size() - 1) {
         builder.append(" AND ");
       }
