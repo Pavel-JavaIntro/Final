@@ -2,7 +2,7 @@
 <html>
 <head><title>Login</title></head>
 <body>
-<form name="loginForm" method="POST" action="test.jsp">
+<form name="loginForm" method="POST" action="library">
     <h1>Библиотека Павла Касичева<br/></h1>
     <br/>
     <h2>Войдите в свою учетную запись<br/></h2>

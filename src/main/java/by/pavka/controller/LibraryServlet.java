@@ -5,6 +5,7 @@ import by.pavka.model.dao.LibraryDao;
 import by.pavka.model.dao.impl.GenreLibraryDao;
 import by.pavka.entity.criteria.EntityField;
 import by.pavka.entity.impl.Genre;
+import by.pavka.model.dao.impl.SimpleLibraryDao;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,15 +33,16 @@ public class LibraryServlet extends HttpServlet {
     String surname = request.getParameter("surname");
     String name = request.getParameter("name");
     request.setAttribute("surname", surname);
+    response.setContentType("text/html; charset=UTF-8");
     try {
-      LibraryDao<Genre> genre = new GenreLibraryDao();
+      LibraryDao<Genre> genre = new SimpleLibraryDao("genres");
       int n = Integer.parseInt(name);
       EntityField<String> field = new EntityField<>("description");
       field.setValue(surname);
       genre.update(n, field);
-
-      Genre g = new Genre();
-      g.setValue("description", surname);
+//
+//      Genre g = new Genre();
+//      g.setValue("description", surname);
       //genre.add(g);
       List<Genre> genres = genre.read();
       genre.close();
