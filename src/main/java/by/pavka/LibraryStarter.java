@@ -16,6 +16,8 @@ public class LibraryStarter implements ServletContextListener {
     ResourceBundle resourceBundle = ResourceBundle.getBundle("database");
     String email = resourceBundle.getString("email");
     context.setAttribute("email", email);
+    context.setAttribute("books", 5);
+    context.setAttribute("users", 3);
   }
 
   public void contextDestroyed(ServletContextEvent servletContextEvent) {
