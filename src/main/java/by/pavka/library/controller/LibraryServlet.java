@@ -1,5 +1,6 @@
 package by.pavka.library.controller;
 
+import by.pavka.library.model.EntityTableMapper;
 import by.pavka.library.model.TableEntityMapper;
 import by.pavka.library.model.dao.DaoException;
 import by.pavka.library.model.dao.LibraryDao;
@@ -35,7 +36,7 @@ public class LibraryServlet extends HttpServlet {
     request.setAttribute("surname", surname);
     response.setContentType("text/html; charset=UTF-8");
     try {
-      LibraryDao<Genre> genre = new SimpleLibraryDao(TableEntityMapper.getEntry(1));
+      LibraryDao<Genre> genre = new SimpleLibraryDao(EntityTableMapper.GENRE);
       int n = Integer.parseInt(name);
       EntityField<String> field = new EntityField<>("description");
       field.setValue(surname);

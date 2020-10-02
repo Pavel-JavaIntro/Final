@@ -5,6 +5,7 @@ import by.pavka.library.entity.LibraryEntity;
 import by.pavka.library.entity.SimpleEntity;
 import by.pavka.library.entity.criteria.EntityField;
 import by.pavka.library.model.ConnectionWrapper;
+import by.pavka.library.model.EntityTableMapper;
 import by.pavka.library.model.TableEntityMapper;
 import by.pavka.library.model.dao.DaoException;
 import by.pavka.library.model.dao.SqlLibraryDao;
@@ -18,9 +19,14 @@ public class SimpleLibraryDao<T extends SimpleEntity> extends SqlLibraryDao<T> {
   private final String tableName;
   private final EntityFactory<T> entityFactory;
 
-  public SimpleLibraryDao(TableEntityMapper.MapperEntry entry) throws DaoException {
-    tableName = entry.getTableName();
-    entityFactory = entry.getFactory();
+//  public SimpleLibraryDao(TableEntityMapper.MapperEntry entry) throws DaoException {
+//    tableName = entry.getTableName();
+//    entityFactory = entry.getFactory();
+//  }
+
+  public SimpleLibraryDao(EntityTableMapper mapper) throws DaoException {
+    tableName = mapper.getTableName();
+    entityFactory = mapper.getFactory();
   }
 
   @Override
