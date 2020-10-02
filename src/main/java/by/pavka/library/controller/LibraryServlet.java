@@ -35,24 +35,24 @@ public class LibraryServlet extends HttpServlet {
     String name = request.getParameter("name");
     request.setAttribute("surname", surname);
     response.setContentType("text/html; charset=UTF-8");
-    try {
-      LibraryDao<Genre> genre = new SimpleLibraryDao(EntityTableMapper.GENRE);
-      int n = Integer.parseInt(name);
-      EntityField<String> field = new EntityField<>("description");
-      field.setValue(surname);
-      genre.update(n, field);
-//
-//      Genre g = new Genre();
-//      g.setValue("description", surname);
-      //genre.add(g);
-      List<Genre> genres = genre.read();
-      genre.close();
-      request.setAttribute("genres", genres);
-    } catch (DaoException e) {
-      //TODO
-      e.printStackTrace();
-    }
-    RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/jsp/success.jsp");
+//    try {
+//      LibraryDao<Genre> genre = new SimpleLibraryDao(EntityTableMapper.GENRE);
+////      int n = Integer.parseInt(name);
+////      EntityField<String> field = new EntityField<>("description");
+////      field.setValue(surname);
+////      genre.update(n, field);
+////
+////      Genre g = new Genre();
+////      g.setValue("description", surname);
+//      //genre.add(g);
+//      List<Genre> genres = genre.read();
+//      genre.close();
+//      request.setAttribute("genres", genres);
+//    } catch (DaoException e) {
+//      //TODO
+//      e.printStackTrace();
+//    }
+    RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/jsp/test.jsp");
     requestDispatcher.forward(request, response);
   }
 }

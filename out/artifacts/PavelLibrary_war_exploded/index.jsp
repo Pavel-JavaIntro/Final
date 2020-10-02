@@ -20,5 +20,6 @@
     <input type="submit" value="Войти"/>
 </form>
 <hr/>
+<jsp:include page="jsp/menu.jsp"/>
 </body>
 </html>
