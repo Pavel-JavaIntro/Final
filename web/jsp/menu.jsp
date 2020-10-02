@@ -7,13 +7,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<td bgcolor="#e6e6fa">
 <h3>Меню</h3>
 <!--Абзац для ссылки на страницу сайта-->
 <p>
     <!--Ссылка на страницу сайта-->
     <a href="">
         <!--Картинка маркера перед названием страницы-->
-        <img src="../images/book.png" width="30" height="30">
+        <img src="./images/book.png" width="30" height="30">
         <!--Название страницы
         style="margin-left:5px;" - отступ названия от маркера-->
         <span style="margin-left:5px;">Войти по паролю</span></a>
@@ -21,13 +22,14 @@
 </p>
 <p>
     <a href="">
-        <img src="../images/book.png" width="30" height="30">
+        <img src="./images/book.png" width="30" height="30">
         <span style="margin-left:5px;">Продолжить без авторизации</span></a>
 </p>
 <p>
-    <a href="">
-        <img src="../images/book.png" width="30" height="30">
+    <a href="anekdot.jsp">
+        <img src="./images/book.png" width="30" height="30">
         <span style="margin-left:5px;">Свежий анекдот</span></a>
 </p>
 <!--Закрываем строку Меню-->
+</td>
 </html>

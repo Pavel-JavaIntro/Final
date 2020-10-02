@@ -52,7 +52,8 @@ public class LibraryServlet extends HttpServlet {
 //      //TODO
 //      e.printStackTrace();
 //    }
-    RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/jsp/test.jsp");
+    RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/jsp/welcome" +
+            ".jsp");
     requestDispatcher.forward(request, response);
   }
 }
