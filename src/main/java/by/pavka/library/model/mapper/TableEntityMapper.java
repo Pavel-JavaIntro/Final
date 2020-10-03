@@ -1,13 +1,12 @@
-package by.pavka.library.model;
+package by.pavka.library.model.mapper;
 
 import by.pavka.library.entity.EntityFactory;
-import by.pavka.library.entity.LibraryEntity;
 import by.pavka.library.entity.impl.Genre;
 import by.pavka.library.entity.impl.Location;
 import by.pavka.library.entity.impl.Operation;
 import by.pavka.library.entity.impl.Role;
 
-public enum EntityTableMapper {
+public enum TableEntityMapper {
 
   GENRE("genres", new EntityFactory<Genre>() {
     @Override
@@ -37,7 +36,7 @@ public enum EntityTableMapper {
   private final String tableName;
   private final EntityFactory factory;
 
-  EntityTableMapper(String tableName, EntityFactory factory) {
+  TableEntityMapper(String tableName, EntityFactory factory) {
     this.tableName = tableName;
     this.factory = factory;
   }

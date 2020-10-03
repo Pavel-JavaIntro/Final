@@ -1,0 +1,16 @@
+
+|
+java:S1989"aHandle the following exceptions that could be thrown by "process": ServletException, IOException.(¡âÊ–ýÿÿÿÿ
+|
+java:S1989"aHandle the following exceptions that could be thrown by "process": ServletException, IOException.(¡âÊ–ýÿÿÿÿ
+a
+java:S1128"ERemove this unused import 'by.pavka.library.model.TableEntityMapper'.(Ç®¸8®ÓŸÑÎ.
+U
+java:S1854#"8Remove this useless assignment to local variable "name".(ûÁéê8®ÓŸÑÎ.
+T
+java:S11354"2Complete the task associated to this TODO comment.(ú†˜”üÿÿÿÿ8®ÓŸÑÎ.
+F
+java:S1481#")Remove this unused "name" local variable.(ûÁéê8®ÓŸÑÎ.
+]	java:S125&"<This block of commented-out lines of code should be removed.(ñ¥ùšøÿÿÿÿ8®ÓŸÑÎ.
+X	java:S125-"<This block of commented-out lines of code should be removed.(…œÒÏ8®ÓŸÑÎ.
+X	java:S1255"<This block of commented-out lines of code should be removed.(†€éˆ8®ÓŸÑÎ.

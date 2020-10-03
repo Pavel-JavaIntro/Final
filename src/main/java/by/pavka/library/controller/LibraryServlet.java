@@ -1,12 +1,10 @@
 package by.pavka.library.controller;
 
-import by.pavka.library.model.EntityTableMapper;
-import by.pavka.library.model.TableEntityMapper;
+import by.pavka.library.entity.impl.Genre;
 import by.pavka.library.model.dao.DaoException;
 import by.pavka.library.model.dao.LibraryDao;
-import by.pavka.library.entity.criteria.EntityField;
-import by.pavka.library.entity.impl.Genre;
 import by.pavka.library.model.dao.impl.SimpleLibraryDao;
+import by.pavka.library.model.mapper.TableEntityMapper;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,25 +33,24 @@ public class LibraryServlet extends HttpServlet {
     String name = request.getParameter("name");
     request.setAttribute("surname", surname);
     response.setContentType("text/html; charset=UTF-8");
-//    try {
-//      LibraryDao<Genre> genre = new SimpleLibraryDao(EntityTableMapper.GENRE);
-////      int n = Integer.parseInt(name);
-////      EntityField<String> field = new EntityField<>("description");
-////      field.setValue(surname);
-////      genre.update(n, field);
-////
-////      Genre g = new Genre();
-////      g.setValue("description", surname);
-//      //genre.add(g);
-//      List<Genre> genres = genre.read();
-//      genre.close();
-//      request.setAttribute("genres", genres);
-//    } catch (DaoException e) {
-//      //TODO
-//      e.printStackTrace();
-//    }
-    RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/jsp/welcome" +
-            ".jsp");
+    try {
+      LibraryDao<Genre> genre = new SimpleLibraryDao(TableEntityMapper.GENRE);
+//      int n = Integer.parseInt(name);
+//      EntityField<String> field = new EntityField<>("description");
+//      field.setValue(surname);
+//      genre.update(n, field);
+//
+      Genre g = new Genre();
+      g.setValue("description", surname);
+      genre.add(g);
+      List<Genre> genres = genre.read();
+      genre.close();
+      request.setAttribute("genres", genres);
+    } catch (DaoException e) {
+      //TODO
+      e.printStackTrace();
+    }
+    RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/jsp/success.jsp");
     requestDispatcher.forward(request, response);
   }
 }

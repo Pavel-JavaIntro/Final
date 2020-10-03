@@ -1,0 +1,6 @@
+
+N	java:S106O"9Replace this use of System.out or System.err by a logger.(ÿê§¯
+b
+java:S2095e"GUse try-with-resources or close this "ResultSet" in a "finally" clause.(Ê¥¶îüÿÿÿÿ
+X
+java:S1117""=Rename "connector" which hides the field declared at line 21.(ß˜¦Ýùÿÿÿÿ
