@@ -2,8 +2,7 @@ package by.pavka.library;
 
 public class Main {
   public static void main(String args[]) {
-    StringBuilder template = new StringBuilder("ahahahaha");
-    System.out.println(template.replace(template.length() - 1, template.length(), ")"));
+
   }
 
   static int factorial(int n) {

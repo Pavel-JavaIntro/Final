@@ -1,7 +1,8 @@
 package by.pavka.library.model.dao.impl;
 
 import by.pavka.library.entity.EntityFactory;
-import by.pavka.library.entity.SimpleEntity;
+import by.pavka.library.entity.LibraryEntity;
+import by.pavka.library.entity.SimpleListEntity;
 import by.pavka.library.entity.criteria.Criteria;
 import by.pavka.library.entity.criteria.EntityField;
 import by.pavka.library.model.ConnectionWrapper;
@@ -10,13 +11,11 @@ import by.pavka.library.model.mapper.ColumnFieldMapper;
 import by.pavka.library.model.mapper.TableEntityMapper;
 import by.pavka.library.model.dao.DaoException;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimpleLibraryDao<T extends SimpleEntity> implements LibraryDao<T>, EntityFactory<T> {
+public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>, EntityFactory<T> {
 
   private static final String INSERT = "INSERT INTO %s ";
   private static final String LIST_ALL = "SELECT * FROM ";
@@ -43,7 +42,7 @@ public class SimpleLibraryDao<T extends SimpleEntity> implements LibraryDao<T>, 
       System.out.println(statement);
       statement.executeUpdate();
     } catch (DaoException | SQLException e) {
-      throw new DaoException("SqlLibraryDao exception", e);
+      throw new DaoException("SimpleLibraryDao add exception", e);
     } finally {
       connector.closeStatement(statement);
     }
@@ -62,18 +61,18 @@ public class SimpleLibraryDao<T extends SimpleEntity> implements LibraryDao<T>, 
 
   @Override
   public void update(int id, EntityField<?>... fields) throws DaoException {
-    if (fields.length != 1 || !fields[0].getName().equals(SimpleEntity.COLUMN_NAME)) {
+    if (fields.length != 1 || !fields[0].getName().equals(SimpleListEntity.COLUMN_NAME)) {
       throw new DaoException("Wrong Update request");
     }
     PreparedStatement statement = null;
-    String sql = String.format(UPDATE, getTableName(), SimpleEntity.COLUMN_NAME);
+    String sql = String.format(UPDATE, getTableName(), SimpleListEntity.COLUMN_NAME);
     try {
       statement = connector.obtainPreparedStatement(sql);
       statement.setString(1, (String) (fields[0].getValue()));
       statement.setInt(2, id);
       statement.executeUpdate();
     } catch (DaoException | SQLException e) {
-      throw new DaoException("SimpleLibraryDao exception", e);
+      throw new DaoException("SimpleLibraryDao update exception", e);
     } finally {
       connector.closeStatement(statement);
     }
@@ -88,7 +87,26 @@ public class SimpleLibraryDao<T extends SimpleEntity> implements LibraryDao<T>, 
       statement.setInt(1, id);
       statement.executeUpdate();
     } catch (DaoException | SQLException e) {
-      throw new DaoException("Exception in class " + getClass().getSimpleName(), e);
+      throw new DaoException("SimpleLibraryDao remove excdeption", e);
+    } finally {
+      connector.closeStatement(statement);
+    }
+  }
+
+  @Override
+  public boolean contains(Criteria criteria) throws DaoException {
+    PreparedStatement statement = null;
+    ResultSet resultSet;
+    String sql = LIST_ALL + getTableName() + interpret(criteria);
+    try {
+      statement = connector.obtainPreparedStatement(sql);
+      resultSet = statement.executeQuery();
+      if (resultSet.next()) {
+        return true;
+      }
+      return false;
+    } catch (DaoException | SQLException e) {
+      throw new DaoException("SimpleLibraryDao contains exception", e);
     } finally {
       connector.closeStatement(statement);
     }
@@ -97,6 +115,15 @@ public class SimpleLibraryDao<T extends SimpleEntity> implements LibraryDao<T>, 
   @Override
   public void close() {
     connector.closeConnection();
+  }
+
+  private String getTableName() {
+    return tableName;
+  }
+
+  @Override
+  public T createEntity() {
+    return entityFactory.createEntity();
   }
 
   private String interpret(Criteria criteria) {
@@ -131,24 +158,34 @@ public class SimpleLibraryDao<T extends SimpleEntity> implements LibraryDao<T>, 
         items.add(item);
       }
     } catch (DaoException | SQLException e) {
-      throw new DaoException("SimpleSqlLibraryDao exception", e);
+      throw new DaoException("SimpleLibraryDao list exception", e);
     } finally {
       connector.closeStatement(statement);
     }
     return items;
   }
 
-  protected String getTableName() {
-    return tableName;
-  }
+  //TODO correct for the common case
+//  protected T formEntity(ResultSet resultSet) throws SQLException {
+//    int id = resultSet.getInt("id");
+//    String description = resultSet.getString(SimpleEntity.COLUMN_NAME);
+//    T item = createEntity();
+//    item.setId(id);
+//    item.setValue(SimpleEntity.COLUMN_NAME, description);
+//    return item;
+//  }
 
-  protected T formEntity(ResultSet resultSet) throws SQLException {
-    int id = resultSet.getInt("id");
-    String description = resultSet.getString(SimpleEntity.COLUMN_NAME);
+  private T formEntity(ResultSet resultSet) throws SQLException {
     T item = createEntity();
+    int id = resultSet.getInt("id");
     item.setId(id);
-    item.setValue(SimpleEntity.COLUMN_NAME, description);
-    return item;
+    ResultSetMetaData metaData = resultSet.getMetaData();
+    int count = metaData.getColumnCount();
+    ColumnFieldMapper mapper = ColumnFieldMapper.getInstance(item);
+    for (int i = 0; i < count; i++) {
+      //TODO
+    }
+    return null;
   }
 
   private String formInsertRequest(T entity) {
@@ -163,10 +200,5 @@ public class SimpleLibraryDao<T extends SimpleEntity> implements LibraryDao<T>, 
     values.replace(values.length() - 1, values.length(), ")");
     String result = template.toString() + values.toString();
     return result;
-  }
-
-  @Override
-  public T createEntity() {
-    return entityFactory.createEntity();
   }
 }

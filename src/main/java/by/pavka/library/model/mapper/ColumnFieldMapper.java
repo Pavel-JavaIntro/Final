@@ -46,4 +46,13 @@ public class ColumnFieldMapper<T extends LibraryEntity> {
   public String getColumnName(EntityField field) {
     return mapper.get(field.getName());
   }
+
+  public String getFieldName(String columnname) {
+    for (Map.Entry<String, String> entry : mapper.entrySet()) {
+      if (entry.getValue().equals(columnname))
+        return entry.getKey();
+    }
+    throw new AssertionError("ColumnFieldMapper doesn't work");
+  }
+
 }

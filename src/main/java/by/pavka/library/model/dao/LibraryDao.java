@@ -12,6 +12,7 @@ public interface LibraryDao<T extends LibraryEntity> {
   List<T> read() throws DaoException;
   void remove(int id) throws DaoException;
   void update(int id, EntityField<?>... fields) throws DaoException;
+  boolean contains(Criteria criteria)throws DaoException;
   void close();
 
 

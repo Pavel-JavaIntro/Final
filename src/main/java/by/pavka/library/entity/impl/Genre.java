@@ -1,7 +1,7 @@
 package by.pavka.library.entity.impl;
 
-import by.pavka.library.entity.SimpleEntity;
+import by.pavka.library.entity.SimpleListEntity;
 
-public class Genre extends SimpleEntity {
+public class Genre extends SimpleListEntity {
 
 }

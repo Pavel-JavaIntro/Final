@@ -2,7 +2,7 @@ package by.pavka.library.entity;
 
 import by.pavka.library.entity.criteria.EntityField;
 
-public abstract class SimpleEntity extends LibraryEntity {
+public abstract class SimpleListEntity extends LibraryEntity {
   public static final String COLUMN_NAME = "description";
 
   @Override

@@ -1,7 +1,7 @@
 package by.pavka.library.entity.impl;
 
-import by.pavka.library.entity.SimpleEntity;
+import by.pavka.library.entity.SimpleListEntity;
 
-public class Location extends SimpleEntity {
+public class Location extends SimpleListEntity {
 
 }
