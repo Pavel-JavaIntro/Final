@@ -41,6 +41,24 @@ public enum TableEntityMapper {
     public Edition createEntity() {
       return new Edition();
     }
+  }),
+  BOOK("books", new EntityFactory<Book>() {
+    @Override
+    public Book createEntity() {
+      return new Book();
+    }
+  }),
+  USER("users", new EntityFactory<User>() {
+    @Override
+    public User createEntity() {
+      return new User();
+    }
+  }),
+  TRANSACTION("users", new EntityFactory<Transaction>() {
+    @Override
+    public Transaction createEntity() {
+      return new Transaction();
+    }
   });
 
   private final String tableName;
@@ -55,7 +73,7 @@ public enum TableEntityMapper {
     return tableName;
   }
 
-  public <T> EntityFactory getFactory() {
+  public EntityFactory getFactory() {
     return factory;
   }
 }
