@@ -12,6 +12,10 @@
     <input type="text" name="surname" value=""/>
     <br/>Имя:<br/>
     <input type="text" name="name" value=""/>
+    <br/>Отчество:<br/>
+    <input type="text" name="patronymic" value=""/>
+    <br/>Год рождения:<br/>
+    <input type="text" name="year" value=""/>
     <br/>Пароль:<br/>
     <input type="password" name="password" value=""/>
     <br/> ${errorLoginPassMessage} <br/>

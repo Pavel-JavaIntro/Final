@@ -20,6 +20,15 @@ public abstract class LibraryEntity implements Serializable {
     return fields;
   }
 
+  public EntityField<?> entityForName(String name) throws LibraryEntityException{
+    for (EntityField<?> field : fields) {
+      if (field.getName().equals(name)) {
+        return field;
+      }
+    }
+    throw new LibraryEntityException("Entity for name " + name + "doesn't exist");
+  }
+
   public int getId() {
     return id;
   }

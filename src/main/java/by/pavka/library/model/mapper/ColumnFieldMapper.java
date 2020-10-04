@@ -1,9 +1,6 @@
 package by.pavka.library.model.mapper;
 
-import by.pavka.library.entity.impl.Genre;
-import by.pavka.library.entity.impl.Location;
-import by.pavka.library.entity.impl.Operation;
-import by.pavka.library.entity.impl.Role;
+import by.pavka.library.entity.impl.*;
 import by.pavka.library.model.mapper.ConverterFactory;
 import by.pavka.library.entity.LibraryEntity;
 import by.pavka.library.entity.criteria.EntityField;
@@ -17,6 +14,8 @@ public class ColumnFieldMapper<T extends LibraryEntity> {
   private static ColumnFieldMapper<Genre> genreMapper = new ColumnFieldMapper<>(new Genre());
   private static ColumnFieldMapper<Role> roleMapper = new ColumnFieldMapper<>(new Role());
   private static ColumnFieldMapper<Operation> operationMapper = new ColumnFieldMapper<>(new Operation());
+  private static ColumnFieldMapper<Author> authorMapper = new ColumnFieldMapper<>(new Author());
+  private static ColumnFieldMapper<Edition> editionMapper = new ColumnFieldMapper<>(new Edition());
 
   private Map<String, String> mapper = new HashMap<>();
 
@@ -39,6 +38,12 @@ public class ColumnFieldMapper<T extends LibraryEntity> {
     }
     if (entity instanceof Operation) {
       return operationMapper;
+    }
+    if (entity instanceof Author) {
+      return authorMapper;
+    }
+    if (entity instanceof Edition) {
+      return editionMapper;
     }
     throw new AssertionError();
   }

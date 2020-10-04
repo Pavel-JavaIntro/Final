@@ -2,6 +2,7 @@ package by.pavka.library.model.dao.impl;
 
 import by.pavka.library.entity.EntityFactory;
 import by.pavka.library.entity.LibraryEntity;
+import by.pavka.library.entity.LibraryEntityException;
 import by.pavka.library.entity.SimpleListEntity;
 import by.pavka.library.entity.criteria.Criteria;
 import by.pavka.library.entity.criteria.EntityField;
@@ -13,6 +14,7 @@ import by.pavka.library.model.dao.DaoException;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>, EntityFactory<T> {
@@ -157,7 +159,7 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
         T item = formEntity(resultSet);
         items.add(item);
       }
-    } catch (DaoException | SQLException e) {
+    } catch (DaoException | SQLException | LibraryEntityException e) {
       throw new DaoException("SimpleLibraryDao list exception", e);
     } finally {
       connector.closeStatement(statement);
@@ -168,24 +170,26 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
   //TODO correct for the common case
 //  protected T formEntity(ResultSet resultSet) throws SQLException {
 //    int id = resultSet.getInt("id");
-//    String description = resultSet.getString(SimpleEntity.COLUMN_NAME);
+//    String description = resultSet.getString(SimpleListEntity.COLUMN_NAME);
 //    T item = createEntity();
 //    item.setId(id);
-//    item.setValue(SimpleEntity.COLUMN_NAME, description);
+//    item.setValue(SimpleListEntity.COLUMN_NAME, description);
 //    return item;
 //  }
 
-  private T formEntity(ResultSet resultSet) throws SQLException {
+  private T formEntity(ResultSet resultSet) throws SQLException, LibraryEntityException {
     T item = createEntity();
     int id = resultSet.getInt("id");
     item.setId(id);
     ResultSetMetaData metaData = resultSet.getMetaData();
-    int count = metaData.getColumnCount();
-    ColumnFieldMapper mapper = ColumnFieldMapper.getInstance(item);
-    for (int i = 0; i < count; i++) {
-      //TODO
+    int count = metaData.getColumnCount();;
+    ColumnFieldMapper<T> mapper = ColumnFieldMapper.getInstance(item);
+    for (int i = 2; i <= count; i++) {
+      String name = metaData.getColumnName(i);
+      String fieldName = mapper.getFieldName(name);
+      item.setValue(fieldName, resultSet.getObject(i));
     }
-    return null;
+    return item;
   }
 
   private String formInsertRequest(T entity) {

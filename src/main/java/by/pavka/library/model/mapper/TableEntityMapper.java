@@ -1,10 +1,8 @@
 package by.pavka.library.model.mapper;
 
 import by.pavka.library.entity.EntityFactory;
-import by.pavka.library.entity.impl.Genre;
-import by.pavka.library.entity.impl.Location;
-import by.pavka.library.entity.impl.Operation;
-import by.pavka.library.entity.impl.Role;
+import by.pavka.library.entity.LibraryEntity;
+import by.pavka.library.entity.impl.*;
 
 public enum TableEntityMapper {
 
@@ -30,6 +28,18 @@ public enum TableEntityMapper {
     @Override
     public Operation createEntity() {
       return new Operation();
+    }
+  }),
+  AUTHOR("authors", new EntityFactory<Author>() {
+    @Override
+    public Author createEntity() {
+      return new Author();
+    }
+  }),
+  EDITION("editions", new EntityFactory<Edition>() {
+    @Override
+    public Edition createEntity() {
+      return new Edition();
     }
   });
 
