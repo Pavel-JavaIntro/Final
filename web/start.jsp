@@ -13,7 +13,7 @@
     <title>Title</title>
 </head>
 <body>
-<jsp:forward page="library?surname=horror"></jsp:forward>
+<jsp:forward page="library?command=welcome"></jsp:forward>
 
 </body>
 </html>

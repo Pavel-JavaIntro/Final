@@ -26,7 +26,7 @@
         <span style="margin-left:5px;">Продолжить без авторизации</span></a>
 </p>
 <p>
-    <a href="anekdot.jsp">
+    <a href="">
         <img src="./images/book.png" width="30" height="30">
         <span style="margin-left:5px;">Свежий анекдот</span></a>
 </p>
