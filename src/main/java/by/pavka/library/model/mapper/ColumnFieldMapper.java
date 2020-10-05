@@ -55,7 +55,7 @@ public class ColumnFieldMapper<T extends LibraryEntity> {
     if (entity instanceof Transaction) {
       return transactionMapper;
     }
-    throw new AssertionError();
+    throw new AssertionError("Mapper doesn't include this instance");
   }
 
   public String getColumnName(EntityField field) {

@@ -21,7 +21,7 @@
     <!--Закрываем абзац-->
 </p>
 <p>
-    <a href="">
+    <a href="library?command=search">
         <img src="./images/book.png" width="30" height="30">
         <span style="margin-left:5px;">Продолжить без авторизации</span></a>
 </p>
