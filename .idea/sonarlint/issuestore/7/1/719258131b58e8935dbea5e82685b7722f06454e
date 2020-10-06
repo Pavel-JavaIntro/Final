@@ -1,21 +1,19 @@
 
-U
-java:S1135ª"2Complete the task associated to this TODO comment.(ÜÑË©üÿÿÿÿ8ÃˆÃºÏ.
 i
 java:S2095i"GUse try-with-resources or close this "ResultSet" in a "finally" clause.(Ê¥¶îüÿÿÿÿ8ÃˆÃºÏ.
-R
-java:S3740Ç"/Provide the parametrized type for this generic.(¹þµºùÿÿÿÿ8ÃˆÃºÏ.
-^
-java:S1126j"AReplace this if-then-else statement by a single return statement.(Œ‡Ü‘8ÃˆÃºÏ.
-H
-java:S1128"+Remove this unused import 'java.util.Date'.(¸…¼ü8ÃˆÃºÏ.
-^	java:S125«"<This block of commented-out lines of code should be removed.(ãì±‚øÿÿÿÿ8ÃˆÃºÏ.
-
-java:S1488Í"^Immediately return this expression instead of assigning it to the temporary variable "result".(óÈ—˜øÿÿÿÿ8ÃˆÃºÏ.
 j
 java:S2095"GUse try-with-resources or close this "ResultSet" in a "finally" clause.(Ê¥¶îüÿÿÿÿ8ÃˆÃºÏ.
+R
+java:S3740Ç"/Provide the parametrized type for this generic.(¹þµºùÿÿÿÿ8ÃˆÃºÏ.
+
+java:S1488Í"^Immediately return this expression instead of assigning it to the temporary variable "result".(óÈ—˜øÿÿÿÿ8ÃˆÃºÏ.
+H
+java:S1128"+Remove this unused import 'java.util.Date'.(¸…¼ü8ÃˆÃºÏ.
 U	java:S106,"9Replace this use of System.out or System.err by a logger.(ÿê§¯8ÃˆÃºÏ.
+^
+java:S1126j"AReplace this if-then-else statement by a single return statement.(Œ‡Ü‘8ÃˆÃºÏ.
+U
+java:S1135ª"2Complete the task associated to this TODO comment.(ÜÑË©üÿÿÿÿ8ÃˆÃºÏ.
 :
 java:S1116¹"Remove this empty statement.(¤Óª8ÃˆÃºÏ.
-«
-java:S1130´"‡Remove the declaration of thrown exception 'by.pavka.library.entity.LibraryEntityException', as it cannot be thrown from method's body.(ßÎò÷ûÿÿÿÿ8€ÏÚáÏ.
+^	java:S125«"<This block of commented-out lines of code should be removed.(ãì±‚øÿÿÿÿ8ÃˆÃºÏ.

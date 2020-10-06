@@ -20,5 +20,6 @@ public class LibraryStarter implements ServletContextListener {
   }
 
   public void contextDestroyed(ServletContextEvent servletContextEvent) {
+    //TODO
   }
 }
