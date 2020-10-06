@@ -23,10 +23,10 @@
     <br/> ${errorLoginPassMessage} <br/>
     ${wrongAction} <br/>
     ${nullPage} <br/>
-    <input type="submit" value="Войти"/>
+    <input type="input" value="Войти"/>
     <!--Закрываем абзац-->
 </p>
-<p> Или воспользуйтесь поиском без регистрации
+<p> Или воспользуйтесь поиском без регистрации<br/>
     <a href="library?command=search">
         <img src="./images/book.png" width="30" height="30">
         <span style="margin-left:5px;">Поиск книги</span></a>

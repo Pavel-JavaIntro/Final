@@ -25,7 +25,7 @@ public class DBConnectionPool {
     try {
       Class.forName(driver);
     } catch (ClassNotFoundException e) {
-      throw new DatabaseAccessException("Database Driver not found", e);
+      throw new LibraryModelException("Database Driver not found", e);
     }
     url = resourceBundle.getString("url");
     login = resourceBundle.getString("user");
@@ -60,7 +60,7 @@ public class DBConnectionPool {
     try {
       return DriverManager.getConnection(url, login, password);
     } catch (SQLException e) {
-      throw new DatabaseAccessException("Database Connection not created", e);
+      throw new LibraryModelException("Database Connection not created", e);
     }
   }
 
