@@ -8,27 +8,28 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <td bgcolor="#e6e6fa">
-<h3>Меню</h3>
 <!--Абзац для ссылки на страницу сайта-->
 <p>
     <!--Ссылка на страницу сайта-->
-    <a href="">
-        <!--Картинка маркера перед названием страницы-->
-        <img src="./images/book.png" width="30" height="30">
-        <!--Название страницы
-        style="margin-left:5px;" - отступ названия от маркера-->
-        <span style="margin-left:5px;">Войти по паролю</span></a>
+    <h3>Войдите в свою учетную запись<br/></h3>
+    <br/>
+    <input type="hidden" name="command" value="login"/>
+    Фамилия:<br/>
+    <input type="text" name="surname" value=""/>
+    <br/>Имя:<br/>
+    <input type="text" name="name" value=""/>
+    <br/>Пароль:<br/>
+    <input type="password" name="password" value=""/>
+    <br/> ${errorLoginPassMessage} <br/>
+    ${wrongAction} <br/>
+    ${nullPage} <br/>
+    <input type="submit" value="Войти"/>
     <!--Закрываем абзац-->
 </p>
-<p>
+<p> Или воспользуйтесь поиском без регистрации
     <a href="library?command=search">
         <img src="./images/book.png" width="30" height="30">
-        <span style="margin-left:5px;">Продолжить без авторизации</span></a>
-</p>
-<p>
-    <a href="">
-        <img src="./images/book.png" width="30" height="30">
-        <span style="margin-left:5px;">Свежий анекдот</span></a>
+        <span style="margin-left:5px;">Поиск книги</span></a>
 </p>
 <!--Закрываем строку Меню-->
 </td>
