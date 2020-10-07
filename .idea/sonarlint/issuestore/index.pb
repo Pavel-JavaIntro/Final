@@ -87,3 +87,13 @@ z
 Jsrc/main/java/by/pavka/library/controller/command/impl/WelcomeCommand.java,2\3\23a990f5837e73efe5ac17eb1cb273555831e9f3
 w
 Gsrc/main/java/by/pavka/library/controller/command/CommandException.java,a\1\a197fb1463ca279bef68c124b46deb3d924e8c11
+B
+web/jsp/footer.jsp,e\9\e9951a1a31a53b099c73f97e96f9c3f580ad79b9
+A
+web/jsp/extra.jsp,4\a\4a16f30586c39cc60cd5f0f7b5e6c1077e42c4c4
+o
+?src/main/java/by/pavka/library/model/LibraryModelException.java,a\5\a5e533052d8da1f74c5d2cf3905216c8b410c12f
+@
+web/jsp/menu.jsp,2\9\29a0b9746872594cf229fdbe45ea9180b08de427
+B
+web/jsp/header.jsp,8\d\8d7b955531af43c07d384e5a0c05dfd5671e7b8e
