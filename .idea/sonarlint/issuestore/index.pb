@@ -97,3 +97,5 @@ o
 web/jsp/menu.jsp,2\9\29a0b9746872594cf229fdbe45ea9180b08de427
 B
 web/jsp/header.jsp,8\d\8d7b955531af43c07d384e5a0c05dfd5671e7b8e
+g
+7out/artifacts/PavelLibrary_war_exploded/WEB-INF/web.xml,4\7\4773e4f666fc7ffc52a7c4eaeea78ddd285bc3b9
