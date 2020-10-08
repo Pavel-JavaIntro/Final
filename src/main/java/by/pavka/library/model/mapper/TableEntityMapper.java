@@ -3,6 +3,8 @@ package by.pavka.library.model.mapper;
 import by.pavka.library.entity.EntityFactory;
 import by.pavka.library.entity.LibraryEntity;
 import by.pavka.library.entity.impl.*;
+import by.pavka.library.model.dao.LibraryDao;
+import by.pavka.library.model.dao.impl.SimpleLibraryDao;
 
 public enum TableEntityMapper {
 

@@ -2,6 +2,8 @@ package by.pavka.library.model.service;
 
 import by.pavka.library.entity.impl.Book;
 import by.pavka.library.model.dao.DaoException;
+import by.pavka.library.model.dao.LibraryDao;
+import by.pavka.library.model.dao.impl.LibraryDaoFactory;
 import by.pavka.library.model.dao.impl.SimpleLibraryDao;
 import by.pavka.library.model.mapper.TableEntityMapper;
 
@@ -15,7 +17,7 @@ public class WelcomeService {
   }
   public int countBooks() throws ServiceException {
     try {
-      SimpleLibraryDao<Book> dao = new SimpleLibraryDao<>(TableEntityMapper.BOOK);
+      LibraryDao<Book> dao = LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK);
       return dao.read().size();
     } catch (DaoException e) {
       throw new ServiceException("Cannot count the books", e);
