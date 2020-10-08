@@ -1,48 +1,47 @@
 package by.pavka.library;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class ConfirmationMailSender {
   public static void main(String[] args) {
-    String to = "pavkascool@gmail.com";         // sender email
-    String from = "pavkascool@gmail.com";       // receiver email
-    String host = "smtp.gmail.com";            // mail server host
+    final String username = "pavkascool@gmail.com";
+    final String password = "";
+    String addressee = "";
 
-    Properties properties = System.getProperties();
-    properties.setProperty("mail.smtp.host", host);
-    properties.setProperty("mail.smtp.auth", "true");
-    properties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-    properties.setProperty("mail.smtp.socketFactory.fallback", "false");
-    properties.setProperty("mail.smtp.starttls.required", "true");
-    properties.setProperty("mail.smtp.starttls.enable", "true");
-    properties.setProperty("mail.smtp.port", "465");
-    properties.setProperty("mail.smtp.socketFactory.port", "465");
 
-    Session session = Session.getDefaultInstance(properties); // default session
+    Properties props = new Properties();
+    props.put("mail.smtp.auth", "true");
+    props.put("mail.smtp.starttls.enable", "true");
+    props.put("mail.smtp.host", "smtp.gmail.com");
+    props.put("mail.smtp.port", "587");
+
+    Session session = Session.getInstance(props,
+            new javax.mail.Authenticator() {
+              protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+              }
+            });
 
     try {
-      MimeMessage message = new MimeMessage(session); // email message
 
-      message.setFrom(new InternetAddress(from)); // setting header fields
+      Message message = new MimeMessage(session);
+      message.setFrom(new InternetAddress(username));
+      message.setRecipients(Message.RecipientType.TO,
+              InternetAddress.parse(addressee));
+      message.setSubject("Testing Subject");
+      message.setText("Dear Mail Crawler,"
+              + "\n\n No spam to my email, please!");
 
-      message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+      Transport.send(message);
 
-      message.setSubject("Test Mail from Java Program"); // subject line
+      System.out.println("Done");
 
-      // actual mail body
-      message.setText("You can send mail from Java program by using mail API, but you need" +
-              "couple of more JAR files e.g. smtp.jar and activation.jar");
-
-      // Send message
-      Transport.send(message); System.out.println("Email Sent successfully....");
-    } catch (MessagingException mex){ mex.printStackTrace(); }
-
+    } catch (MessagingException e) {
+      throw new RuntimeException(e);
+    }
   }
 
 }
