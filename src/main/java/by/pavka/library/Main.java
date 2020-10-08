@@ -15,7 +15,6 @@ public class Main {
     System.out.println(Objects.hashCode(i));
     System.out.println("admin".hashCode());
 
-    String password = RandomStringUtils.randomAlphanumeric(8);
-    System.out.println(password);
+    ConfirmationMailSender.sendInvitation("pavkascool@gmail.com");
   }
 }
