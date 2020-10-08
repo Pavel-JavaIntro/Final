@@ -99,3 +99,11 @@ B
 web/jsp/header.jsp,8\d\8d7b955531af43c07d384e5a0c05dfd5671e7b8e
 g
 7out/artifacts/PavelLibrary_war_exploded/WEB-INF/web.xml,4\7\4773e4f666fc7ffc52a7c4eaeea78ddd285bc3b9
+y
+Isrc/main/java/by/pavka/library/controller/command/impl/SearchCommand.java,8\7\87d29e3181aaf36b9421646c787f78c6f5c59a9e
+x
+Hsrc/main/java/by/pavka/library/controller/command/impl/LoginCommand.java,5\1\51af0a207e024172cf3daa035abd5dcc0cf3ce1b
+h
+8src/main/java/by/pavka/library/ConfigurationManager.java,7\1\715cf90875b9eeb43d8cb70bad9fbec80f5ab283
+b
+2src/main/java/by/pavka/library/MessageManager.java,0\9\09af22c2c66af2b3fb8777ea18e49d7ba8a53ffb

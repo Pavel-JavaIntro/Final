@@ -1,6 +1,7 @@
 package by.pavka.library;
 
 import java.util.Objects;
+import org.apache.commons.lang3.RandomStringUtils;
 
 public class Main {
   public static void main(String args[]) {
@@ -13,5 +14,8 @@ public class Main {
     System.out.println(Objects.hash(i));
     System.out.println(Objects.hashCode(i));
     System.out.println("admin".hashCode());
+
+    String password = RandomStringUtils.randomAlphanumeric(8);
+    System.out.println(password);
   }
 }
