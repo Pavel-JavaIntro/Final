@@ -8,10 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Success</title>
 </head>
 <body>
-Yes, inside jsp <br/>
+Yes, inside jsp. Login is successful <br/>
 connections found <br/>
 ${surname}<br/>
 ${genres}

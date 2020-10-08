@@ -1,5 +1,7 @@
 package by.pavka.library.controller.command;
 
+import by.pavka.library.MessageManager;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class ActionFactory {
@@ -14,7 +16,8 @@ public class ActionFactory {
       CommandEnum commandEnum = CommandEnum.valueOf(action.toUpperCase());
       command = commandEnum.getCommand();
     } catch (IllegalArgumentException e) {
-      request.setAttribute("wrongAction", action);
+      request.setAttribute("wrongAction", action + MessageManager.getProperty("message" +
+              ".wrongaction"));
     }
     return command;
   }

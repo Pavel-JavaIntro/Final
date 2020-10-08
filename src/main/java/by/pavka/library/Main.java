@@ -12,5 +12,6 @@ public class Main {
     System.out.println("hashCode = " + Objects.hashCode(s));
     System.out.println(Objects.hash(i));
     System.out.println(Objects.hashCode(i));
+    System.out.println("admin".hashCode());
   }
 }
