@@ -19,6 +19,6 @@ Status code: ${pageContext.errorData.statusCode}
 <br/>
 Exception: ${pageContext.errorData.throwable}
 
-<br/><a href="library?command=search">Вернитесь назад</a><br/>
+<br/><a href="library?command=welcome">Вернитесь назад</a><br/>
 </body>
 </html>
