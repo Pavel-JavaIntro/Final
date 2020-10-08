@@ -7,9 +7,9 @@ import java.util.Properties;
 
 public class ConfirmationMailSender {
   public static void main(String[] args) {
-    final String username = "pavellibrarytest@gmail.com";
+    final String mailSender = "pavellibrarytest@gmail.com";
     final String password = "pavellibrarypass";
-    String addressee = "pavellibrarytest@gmail.com";
+    String mailReceiver = "pavellibrarytest@gmail.com";
 
 
     Properties props = new Properties();
@@ -21,16 +21,16 @@ public class ConfirmationMailSender {
     Session session = Session.getInstance(props,
             new javax.mail.Authenticator() {
               protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
+                return new PasswordAuthentication(mailSender, password);
               }
             });
 
     try {
 
       Message message = new MimeMessage(session);
-      message.setFrom(new InternetAddress(username));
+      message.setFrom(new InternetAddress(mailSender));
       message.setRecipients(Message.RecipientType.TO,
-              InternetAddress.parse(addressee));
+              InternetAddress.parse(mailReceiver));
       message.setSubject("Testing Subject");
       message.setText("Dear Mail Crawler,"
               + "\n\n No spam to my email, please!");
