@@ -7,9 +7,9 @@ import java.util.Properties;
 
 public class ConfirmationMailSender {
   public static void main(String[] args) {
-    final String username = "pavkascool@gmail.com";
-    final String password = "";
-    String addressee = "";
+    final String username = "pavellibrarytest@gmail.com";
+    final String password = "pavellibrarypass";
+    String addressee = "pavellibrarytest@gmail.com";
 
 
     Properties props = new Properties();

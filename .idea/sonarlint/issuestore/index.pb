@@ -107,3 +107,5 @@ h
 8src/main/java/by/pavka/library/ConfigurationManager.java,7\1\715cf90875b9eeb43d8cb70bad9fbec80f5ab283
 b
 2src/main/java/by/pavka/library/MessageManager.java,0\9\09af22c2c66af2b3fb8777ea18e49d7ba8a53ffb
+j
+:src/main/java/by/pavka/library/ConfirmationMailSender.java,8\1\81783226f6cfe61dba057f3f1b003905d1ef2877
