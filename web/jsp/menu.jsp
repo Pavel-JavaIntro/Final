@@ -7,35 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <title></title>
-    <script type="text/javascript">
-        function validate() {
-            var s = document.getElementById("surname").value;
-            var n = document.getElementById("name").value;
-            var p = document.getElementById("password").value;
-
-            if (s.length <= 0) {
-                alert("Please enter your surname");
-                return false;
-            }
-            if (n.length <= 0) {
-                alert("Please enter your name");
-                return false;
-            }
-            if (p.length <= 0) {
-                alert("Please enter you password");
-                return false;
-            }
-            return true;
-        }
-    </script>
-</head>
 <body>
 <td bgcolor="#e6e6fa">
     <!--Абзац для ссылки на страницу сайта-->
     <p>
-    <form name="loginForm" method="POST" action="library" onsubmit="return validate(); ">
+    <form name="loginForm" method="POST" action="library" onsubmit="return validateLogin();">
         <!--Ссылка на страницу сайта-->
         <h3>Войдите в свою учетную запись<br/></h3>
         <br/>
@@ -62,5 +38,6 @@
     </p>
     <!--Закрываем строку Меню-->
 </td>
+<script src="${pageContext.request.contextPath}/js/validator.js" type="text/javascript"></script>
 </body>
 </html>
