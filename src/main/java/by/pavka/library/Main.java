@@ -1,9 +1,13 @@
 package by.pavka.library;
 
 import java.util.Objects;
-import org.apache.commons.lang3.RandomStringUtils;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Main {
+
+  private static final Logger LOGGER = LogManager.getLogger();
   public static void main(String args[]) {
    //TODO remove this class when finish
     String s = "abc1";
@@ -14,7 +18,8 @@ public class Main {
     System.out.println(Objects.hash(i));
     System.out.println(Objects.hashCode(i));
     System.out.println("admin".hashCode());
+    LOGGER.warn("Всем труба");
 
-    ConfirmationMailSender.sendInvitation("pavkascool@gmail.com");
+    //ConfirmationMailSender.sendInvitation("pavkascool@gmail.com");
   }
 }
