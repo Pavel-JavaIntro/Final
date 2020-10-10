@@ -55,8 +55,8 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
   }
 
   @Override
-  public List<T> read(Criteria criteria) throws DaoException {
-    return list(LIST_ALL + getTableName() + interpret(criteria));
+  public List<T> read(Criteria criteria, boolean strict) throws DaoException {
+    return list(LIST_ALL + getTableName() + interpret(criteria, strict));
   }
 
 
@@ -95,10 +95,11 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
   }
 
   @Override
-  public boolean contains(Criteria criteria) throws DaoException {
+  public boolean contains(Criteria criteria, boolean strict) throws DaoException {
     PreparedStatement statement = null;
     ResultSet resultSet;
-    String sql = LIST_ALL + getTableName() + interpret(criteria);
+    String sql = LIST_ALL + getTableName() + interpret(criteria, strict);
+    System.out.println("SQL = " + sql);
     try {
       statement = connector.obtainPreparedStatement(sql);
       resultSet = statement.executeQuery();
@@ -127,7 +128,7 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
     return entityExtractor.extractEntity();
   }
 
-  private String interpret(Criteria criteria) {
+  private String interpret(Criteria criteria, boolean strict) {
     if (criteria == null) {
       return "";
     }
@@ -135,10 +136,10 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
     for (int i = 0; i < criteria.size(); i++) {
       EntityField<?> field = criteria.getConstraint(i);
       builder.append(field.getName());
-      if (field.getValue() instanceof String) {
-        builder.append(" LIKE ").append(field.getValue()).append('%');
+      if (!strict && field.getValue() instanceof String) {
+        builder.append(" LIKE '").append(field.getValue()).append("%'");
       } else {
-        builder.append("=").append(field.getValue());
+        builder.append("='").append(field.getValue()).append("'");
       }
       if (i < criteria.size() - 1) {
         builder.append(" AND ");
@@ -165,16 +166,6 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
     }
     return items;
   }
-
-  //TODO correct for the common case
-//  protected T formEntity(ResultSet resultSet) throws SQLException {
-//    int id = resultSet.getInt("id");
-//    String description = resultSet.getString(SimpleListEntity.COLUMN_NAME);
-//    T item = createEntity();
-//    item.setId(id);
-//    item.setValue(SimpleListEntity.COLUMN_NAME, description);
-//    return item;
-//  }
 
   private T formEntity(ResultSet resultSet) throws SQLException, LibraryEntityException {
     T item = extractEntity();

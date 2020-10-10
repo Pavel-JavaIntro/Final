@@ -36,8 +36,8 @@ public class LibraryServlet extends HttpServlet {
       RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(page);
       requestDispatcher.forward(request, response);
     } else {
-      page = ConfigurationManager.getProperty("path.page.index");
-      request.getSession().setAttribute("nullPage", MessageManager.getProperty("message.nullpage"));
+      page = ConfigurationManager.getProperty("index");
+      request.getSession().setAttribute("nullPage", MessageManager.getProperty("nullpage"));
       response.sendRedirect(request.getContextPath() + page);
     }
   }

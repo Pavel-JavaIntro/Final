@@ -60,11 +60,11 @@
 
                     </td>
 
-                    <jsp:include page="block/menu.jsp"/>
+                    <jsp:include page="block/login.jsp"/>
                 </tr>
 
                 <tr>
-                    <jsp:include page="block/extra.jsp"/>
+                    <jsp:include page="block/admin.jsp"/>
                 </tr>
             </table>
 
