@@ -1,3 +1,9 @@
 
-<
-java:S1452	"&Remove usage of generic wildcard type.(€½ÑŽ
+Q
+java:S3740"/Provide the parametrized type for this generic.(©€  üÿÿÿÿ8Ò¢Ë‰Ñ.
+L
+java:S3740	"/Provide the parametrized type for this generic.(¸ÝÔ8ô¤Ê‰Ñ.
+v
+java:S3012"YUse "Arrays.copyOf", "Arrays.asList", "Collections.addAll" or "System.arraycopy" instead.(ƒ’©À8¼Í‰Ñ.
+L
+java:S3740"/Provide the parametrized type for this generic.(ª’ûü8êîË‰Ñ.

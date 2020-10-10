@@ -1,5 +1,7 @@
 package by.pavka.library.model.service;
 
+import by.pavka.library.entity.LibraryEntity;
+import by.pavka.library.entity.SimpleListEntity;
 import by.pavka.library.entity.criteria.Criteria;
 import by.pavka.library.entity.criteria.EntityField;
 import by.pavka.library.entity.impl.Book;
@@ -11,6 +13,7 @@ import by.pavka.library.model.dao.impl.SimpleLibraryDao;
 import by.pavka.library.model.mapper.TableEntityMapper;
 
 import java.util.List;
+import java.util.Map;
 
 public class WelcomeService {
   private static WelcomeService instance = new WelcomeService();
@@ -20,9 +23,29 @@ public class WelcomeService {
   public static WelcomeService getInstance() {
     return instance;
   }
-  public int countBooks() throws ServiceException {
+
+  public <T extends SimpleListEntity> void initConstants(
+      Map<Integer, String> constants, TableEntityMapper constant) throws ServiceException {
+    List<T> list = null;
+    LibraryDao<T> dao = null;
     try {
-      LibraryDao<Book> dao = LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK);
+      dao = LibraryDaoFactory.getInstance().obtainDao(constant);
+      list = dao.read();
+      dao.close();
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot initialize constants", e);
+    } finally {
+      if (dao != null) {
+        dao.close();
+      }
+    }
+    for (T entity : list) {
+      constants.put(entity.getId(), entity.getDescription());
+    }
+  }
+
+  public int countBooks() throws ServiceException {
+    try (LibraryDao<Book> dao = LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
       return dao.read().size();
     } catch (DaoException e) {
       throw new ServiceException("Cannot count the books", e);
@@ -30,36 +53,16 @@ public class WelcomeService {
   }
 
   public int countUsers() throws ServiceException {
-    try {
-      LibraryDao<User> dao = LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER);
-      return dao.read().size();
+    try (LibraryDao<User> dao = LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER)) {
+      return dao.read().size() - 1;
     } catch (DaoException e) {
-      throw new ServiceException("Cannot count the users", e);
+      throw new ServiceException("Cannot count the books", e);
     }
   }
 
-//  public boolean auth(String surname, String name, String password) throws ServiceException {
-//    int hashPass = password.hashCode();
-//    try {
-//      LibraryDao<User> dao = LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER);
-//      Criteria criteria = new Criteria();
-//      EntityField<String> surnameField = new EntityField<>("surname");
-//      surnameField.setValue(surname);
-//      EntityField<String> nameField = new EntityField<>("name");
-//      nameField.setValue(name);
-//      EntityField<Integer> passField = new EntityField<>("password");
-//      passField.setValue(hashPass);
-//      criteria.addConstraints(surnameField, nameField, passField);
-//      return dao.contains(criteria, true);
-//    } catch (DaoException e) {
-//      throw new ServiceException("Cannot authorize the user", e);
-//    }
-//  }
-
   public User auth(String surname, String name, String password) throws ServiceException {
     int hashPass = password.hashCode();
-    try {
-      LibraryDao<User> dao = LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER);
+    try (LibraryDao<User> dao = LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER)){
       Criteria criteria = new Criteria();
       EntityField<String> surnameField = new EntityField<>("surname");
       surnameField.setValue(surname);

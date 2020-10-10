@@ -8,6 +8,7 @@ import by.pavka.library.entity.LibraryEntityException;
 import by.pavka.library.entity.client.AppClient;
 import by.pavka.library.entity.impl.Role;
 import by.pavka.library.entity.impl.User;
+import by.pavka.library.model.mapper.ConstantManager;
 import by.pavka.library.model.service.ServiceException;
 import by.pavka.library.model.service.WelcomeService;
 
@@ -21,7 +22,7 @@ public class LoginCommand implements ActionCommand {
     String surname = request.getParameter("surname");
     String name = request.getParameter("name");
     String password = request.getParameter("password");
-    String page = ConfigurationManager.getProperty("login");
+    String page = ConfigurationManager.getProperty("welcome");
     if (LibValidator.validateLogin(surname, name, password)) {
       WelcomeService welcomeService = WelcomeService.getInstance();
       try {
@@ -29,16 +30,19 @@ public class LoginCommand implements ActionCommand {
         if (user != null) {
           page = ConfigurationManager.getProperty("main");
           HttpSession session = request.getSession();
-          AppClient client = new AppClient() {
-            @Override
-            public int getRoleId() {
-              try {
-                return user.getRoleId();
-              } catch (LibraryEntityException e) {
-                return -1;
-              }
-            }
-          };
+          AppClient client =
+              new AppClient() {
+                @Override
+                public String getRole() {
+                  try {
+                    int roleId = user.getRoleId();
+                    System.out.println("INSIDE COMMAND: " + ConstantManager.getRoleById(roleId));
+                    return ConstantManager.getRoleById(roleId);
+                  } catch (LibraryEntityException e) {
+                    return ConstantManager.VISITOR;
+                  }
+                }
+              };
           try {
             client.setSurname(user.getSurname());
             client.setName(user.getName());

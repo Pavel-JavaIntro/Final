@@ -60,11 +60,11 @@
 
                     </td>
 
-                    <jsp:include page="block/login.jsp"/>
+                    <jsp:include page="${sessionScope.client.entrance}"/>
                 </tr>
 
                 <tr>
-                    <jsp:include page="block/admin.jsp"/>
+                    <jsp:include page="${sessionScope.client.adminSection}"/>
                 </tr>
             </table>
 

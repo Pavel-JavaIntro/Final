@@ -1,6 +1,7 @@
 package by.pavka.library.entity.client;
 
 import by.pavka.library.entity.impl.Role;
+import by.pavka.library.model.mapper.ConstantManager;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -34,7 +35,31 @@ public abstract class AppClient implements Serializable {
     this.email = email;
   }
 
-  public abstract int getRoleId();
+  public abstract String getRole();
+
+  public String getEntrance() {
+    switch (getRole()) {
+      case ConstantManager.VISITOR:
+        return "block/login.jsp";
+      default:
+        return "block/logout.jsp";
+    }
+  }
+
+  //public void setEntrance(String entrance) {}
+
+  public String getAdminSection() {
+    switch (getRole()) {
+      case ConstantManager.ADMIN:
+        System.out.println("INSIDE CLIENT");
+        return "block/admin.jsp";
+      case ConstantManager.LIBRARIAN:
+        return "block/admin.jsp";
+      default:
+        return "block/latin.jsp";
+
+    }
+  }
 
 
   @Override

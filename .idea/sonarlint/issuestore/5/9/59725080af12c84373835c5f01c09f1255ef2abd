@@ -1,27 +1,25 @@
 
-D
-java:S1604-"(Make this anonymous inner class a lambda(—©¢8ÀÃèôÏ.
-J
-java:S16049"(Make this anonymous inner class a lambda(ÎÇáåüÿÿÿÿ8ÀÃèôÏ.
-J
-java:S1604"(Make this anonymous inner class a lambda(¬¯æÆşÿÿÿÿ8ÀÃèôÏ.
-L
-java:S3740A"/Provide the parametrized type for this generic.(îõäŸ8ÖêŒ“Ï.
-J
-java:S1604'"(Make this anonymous inner class a lambda(ŸÃûÿÿÿÿ8ÀÃèôÏ.
-D
-java:S16043"(Make this anonymous inner class a lambda(‹ ¥=8ÀÃèôÏ.
 E
-java:S1604"(Make this anonymous inner class a lambda(¤”ú«8ÀÃèôÏ.
-^
-java:S1128"BRemove this unused import 'by.pavka.library.entity.LibraryEntity'.(€ºÙN8ú“Œ“Ï.
+java:S1604 "(Make this anonymous inner class a lambda(¢ÌŒÈ8è¯·ƒÑ.
+D
+java:S16042"(Make this anonymous inner class a lambda(¥Ö‰18è¯·ƒÑ.
+J
+java:S1604"(Make this anonymous inner class a lambda(ÃıÅšÿÿÿÿÿ8è¯·ƒÑ.
 L
-java:S3740L"/Provide the parametrized type for this generic.(‘Çø„8ÀÃèôÏ.
-J
-java:S1604	"(Make this anonymous inner class a lambda(±™ßıÿÿÿÿ8ÀÃèôÏ.
-J
-java:S1604!"(Make this anonymous inner class a lambda(¦ÕŸ‡şÿÿÿÿ8ÀÃèôÏ.
-E
-java:S1604"(Make this anonymous inner class a lambda(ôÙèš8ÀÃèôÏ.
+java:S3740B"/Provide the parametrized type for this generic.(Ğ˜Ÿ³8è¯·ƒÑ.
 Q
-java:S3740C"/Provide the parametrized type for this generic.(ìÆÏ¢ÿÿÿÿÿ8ú“Œ“Ï.
+java:S3740@"/Provide the parametrized type for this generic.(’—Ÿ´ıÿÿÿÿ8è¯·ƒÑ.
+D
+java:S1604&"(Make this anonymous inner class a lambda(íÃ­e8è¯·ƒÑ.
+J
+java:S1604"(Make this anonymous inner class a lambda(Á‘²Àúÿÿÿÿ8è¯·ƒÑ.
+J
+java:S16048"(Make this anonymous inner class a lambda(¾ş—àûÿÿÿÿ8è¯·ƒÑ.
+J
+java:S1604"(Make this anonymous inner class a lambda(ÎïÂ®üÿÿÿÿ8è¯·ƒÑ.
+J
+java:S1604,"(Make this anonymous inner class a lambda(Ú åúÿÿÿÿ8è¯·ƒÑ.
+D
+java:S1604"(Make this anonymous inner class a lambda(ü¶‘8è¯·ƒÑ.
+L
+java:S3740K"/Provide the parametrized type for this generic.(Ñâøƒ8è¯·ƒÑ.

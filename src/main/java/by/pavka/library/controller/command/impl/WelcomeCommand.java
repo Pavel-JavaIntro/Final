@@ -2,12 +2,15 @@ package by.pavka.library.controller.command.impl;
 
 import by.pavka.library.ConfigurationManager;
 import by.pavka.library.controller.command.ActionCommand;
+import by.pavka.library.entity.client.AppClient;
+import by.pavka.library.model.mapper.ConstantManager;
 import by.pavka.library.model.service.ServiceException;
 import by.pavka.library.model.service.WelcomeService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class WelcomeCommand implements ActionCommand {
   @Override
@@ -20,7 +23,17 @@ public class WelcomeCommand implements ActionCommand {
       ServletContext servletContext = request.getServletContext();
       servletContext.setAttribute("books", books);
       servletContext.setAttribute("users", users);
-      request.setAttribute("page", ConfigurationManager.getProperty("login"));
+      HttpSession session = request.getSession();
+      if (session.isNew()) {
+        AppClient client = new AppClient() {
+          @Override
+          public String getRole() {
+            return ConstantManager.VISITOR;
+          }
+        };
+        session.setAttribute("client", client);
+      }
+      request.setAttribute("page", ConfigurationManager.getProperty("welcome"));
     } catch (ServiceException e) {
       request.setAttribute("page", ConfigurationManager.getProperty("error"));
     }

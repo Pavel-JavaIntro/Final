@@ -80,12 +80,14 @@ style="width:70%;" - добавляем стилевое свойства, де�
 
                     <!--Создаём ячейку сайдбара-->
 
-                    <jsp:include page="block/login.jsp"/>
+<%--                    <jsp:include page="block/login.jsp"/>--%>
+                    <jsp:include page="${sessionScope.client.entrance}"/>
                 </tr>
                 <!--Создаём строку с дополнительной информацией-->
                 <tr>
                     <!--Ячейка с дополнительной информацией-->
-                    <jsp:include page="block/admin.jsp"/>
+<%--                    <jsp:include page="block/latin.jsp"/>--%>
+                    <jsp:include page="${sessionScope.client.adminSection}"/>
                 </tr>
             </table>
 

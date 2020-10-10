@@ -16,7 +16,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>, EntityExtractor<T> {
+public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>, EntityExtractor<T>, AutoCloseable {
 
   private static final String INSERT = "INSERT INTO %s ";
   private static final String LIST_ALL = "SELECT * FROM ";

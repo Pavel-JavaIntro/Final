@@ -3,7 +3,7 @@ package by.pavka.library.model.mapper;
 import by.pavka.library.entity.impl.*;
 import by.pavka.library.entity.LibraryEntity;
 import by.pavka.library.entity.criteria.EntityField;
-import by.pavka.library.model.LibraryModelException;
+import by.pavka.library.model.LibraryFatalException;
 import by.pavka.library.model.mapper.converter.ConverterFactory;
 import by.pavka.library.model.mapper.converter.FieldColumnConverter;
 
@@ -58,7 +58,7 @@ public class ColumnFieldMapper<T extends LibraryEntity> {
     if (entity instanceof Transaction) {
       return transactionMapper;
     }
-    throw new LibraryModelException("Mapper doesn't include this instance");
+    throw new LibraryFatalException("Mapper doesn't include this instance");
   }
 
   public String getColumnName(EntityField field) {
@@ -70,7 +70,7 @@ public class ColumnFieldMapper<T extends LibraryEntity> {
       if (entry.getValue().equals(columnname))
         return entry.getKey();
     }
-    throw new LibraryModelException("ColumnFieldMapper doesn't work");
+    throw new LibraryFatalException("ColumnFieldMapper doesn't work");
   }
 
 }
