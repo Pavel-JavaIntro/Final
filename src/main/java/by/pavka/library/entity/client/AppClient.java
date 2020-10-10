@@ -40,8 +40,10 @@ public abstract class AppClient implements Serializable {
   public String getEntrance() {
     switch (getRole()) {
       case ConstantManager.VISITOR:
+        System.out.println("INSIDE VISITOR1");
         return "block/login.jsp";
       default:
+        System.out.println("INSIDE ADMIN1");
         return "block/logout.jsp";
     }
   }
@@ -51,15 +53,17 @@ public abstract class AppClient implements Serializable {
   public String getAdminSection() {
     switch (getRole()) {
       case ConstantManager.ADMIN:
-        System.out.println("INSIDE CLIENT");
+        System.out.println("INSIDE ADMIN2");
         return "block/admin.jsp";
       case ConstantManager.LIBRARIAN:
         return "block/admin.jsp";
       default:
+        System.out.println("INSIDE VISITOR2");
         return "block/latin.jsp";
-
     }
   }
+
+  public void setAdminSection (String str) {}
 
 
   @Override

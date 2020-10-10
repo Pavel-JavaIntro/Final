@@ -28,7 +28,7 @@ public class LoginCommand implements ActionCommand {
       try {
         User user = welcomeService.auth(surname, name, password);
         if (user != null) {
-          page = ConfigurationManager.getProperty("main");
+          page = ConfigurationManager.getProperty("welcome");
           HttpSession session = request.getSession();
           AppClient client =
               new AppClient() {
