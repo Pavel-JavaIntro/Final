@@ -1,29 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<%--
+  Created by IntelliJ IDEA.
+  User: User
+  Date: 04.10.2020
+  Time: 9:17
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
-<head><title>Login</title></head>
+<head>
+    <title>Title</title>
+</head>
 <body>
-<form name="loginForm" method="POST" action="library">
-    <h1>Библиотека Павла Касичева<br/></h1>
-    <br/>
-    <h2>Войдите в свою учетную запись<br/></h2>
-    <br/>
-    <input type="hidden" name="command" value="login"/>
-    Фамилия:<br/>
-    <input type="text" name="surname" value=""/>
-    <br/>Имя:<br/>
-    <input type="text" name="name" value=""/>
-    <br/>Отчество:<br/>
-    <input type="text" name="patronymic" value=""/>
-    <br/>Год рождения:<br/>
-    <input type="text" name="year" value=""/>
-    <br/>Пароль:<br/>
-    <input type="password" name="password" value=""/>
-    <br/> ${errorLoginPassMessage} <br/>
-    ${wrongAction} <br/>
-    ${nullPage} <br/>
-    <input type="submit" value="Войти"/>
-</form>
-<hr/>
-<jsp:include page="jsp/menu.jsp"/>
+<jsp:forward page="library?command=welcome"></jsp:forward>
+
 </body>
 </html>

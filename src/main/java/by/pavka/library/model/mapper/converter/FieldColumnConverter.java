@@ -1,4 +1,4 @@
-package by.pavka.library.model.mapper;
+package by.pavka.library.model.mapper.converter;
 
 import by.pavka.library.entity.criteria.EntityField;
 

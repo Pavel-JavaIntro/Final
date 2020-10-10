@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 public class Main {
 
   private static final Logger LOGGER = LogManager.getLogger();
-  public static void main(String args[]) {
+  public static void main(String[] args) {
    //TODO remove this class when finish
     String s = "abc1";
     int i = 2987023;

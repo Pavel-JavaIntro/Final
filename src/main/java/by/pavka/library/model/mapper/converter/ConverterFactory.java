@@ -1,4 +1,4 @@
-package by.pavka.library.model.mapper;
+package by.pavka.library.model.mapper.converter;
 
 public class ConverterFactory {
   private static final ConverterFactory INSTANCE = new ConverterFactory();

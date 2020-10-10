@@ -1,6 +1,6 @@
 package by.pavka.library.model.dao.impl;
 
-import by.pavka.library.entity.EntityFactory;
+import by.pavka.library.entity.EntityExtractor;
 import by.pavka.library.entity.LibraryEntity;
 import by.pavka.library.entity.LibraryEntityException;
 import by.pavka.library.entity.SimpleListEntity;
@@ -14,10 +14,9 @@ import by.pavka.library.model.dao.DaoException;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>, EntityFactory<T> {
+public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>, EntityExtractor<T> {
 
   private static final String INSERT = "INSERT INTO %s ";
   private static final String LIST_ALL = "SELECT * FROM ";
@@ -25,12 +24,12 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
   private static final String DELETE = "DELETE FROM %s WHERE id=?";
 
   private final String tableName;
-  private final EntityFactory<T> entityFactory;
+  private final EntityExtractor<T> entityExtractor;
   private ConnectionWrapper connector;
 
   public SimpleLibraryDao(TableEntityMapper mapper) throws DaoException {
     tableName = mapper.getTableName();
-    entityFactory = mapper.getFactory();
+    entityExtractor = mapper.getExtractor();
     connector = new ConnectionWrapper();
   }
 
@@ -124,8 +123,8 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
   }
 
   @Override
-  public T createEntity() {
-    return entityFactory.createEntity();
+  public T extractEntity() {
+    return entityExtractor.extractEntity();
   }
 
   private String interpret(Criteria criteria) {
@@ -178,7 +177,7 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
 //  }
 
   private T formEntity(ResultSet resultSet) throws SQLException, LibraryEntityException {
-    T item = createEntity();
+    T item = extractEntity();
     int id = resultSet.getInt("id");
     item.setId(id);
     ResultSetMetaData metaData = resultSet.getMetaData();

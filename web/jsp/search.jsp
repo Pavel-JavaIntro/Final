@@ -21,7 +21,7 @@
 
     <tr>
         <td>
-            <jsp:include page="header.jsp"/>
+            <jsp:include page="block/header.jsp"/>
 
             <table
                     border="1"
@@ -60,15 +60,15 @@
 
                     </td>
 
-                    <jsp:include page="menu.jsp"/>
+                    <jsp:include page="block/menu.jsp"/>
                 </tr>
 
                 <tr>
-                    <jsp:include page="extra.jsp"/>
+                    <jsp:include page="block/extra.jsp"/>
                 </tr>
             </table>
 
-            <jsp:include page="footer.jsp"/>
+            <jsp:include page="block/footer.jsp"/>
 
         </td>
     </tr>

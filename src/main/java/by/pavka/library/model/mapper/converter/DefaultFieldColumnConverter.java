@@ -1,7 +1,7 @@
-package by.pavka.library.model.mapper;
+package by.pavka.library.model.mapper.converter;
 
 import by.pavka.library.entity.criteria.EntityField;
-import by.pavka.library.model.mapper.FieldColumnConverter;
+import by.pavka.library.model.mapper.converter.FieldColumnConverter;
 
 public class DefaultFieldColumnConverter implements FieldColumnConverter {
 

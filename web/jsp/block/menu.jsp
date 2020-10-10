@@ -22,7 +22,7 @@
         <input type="text" name="name" id="name" value=""/>
         <br/>Пароль:<br/>
         <input type="password" name="password" id="password" value=""/>
-        <br/> ${errorLoginPassMessage} <br/>
+    <br/> <font color="red">${errorLoginPassMessage} </font> <br/>
         ${wrongAction} <br/>
         ${nullPage} <br/>
         <input type="submit" value="Войти"/>

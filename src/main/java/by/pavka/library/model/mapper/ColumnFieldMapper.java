@@ -4,22 +4,24 @@ import by.pavka.library.entity.impl.*;
 import by.pavka.library.entity.LibraryEntity;
 import by.pavka.library.entity.criteria.EntityField;
 import by.pavka.library.model.LibraryModelException;
+import by.pavka.library.model.mapper.converter.ConverterFactory;
+import by.pavka.library.model.mapper.converter.FieldColumnConverter;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ColumnFieldMapper<T extends LibraryEntity> {
-  private static ColumnFieldMapper<Location> locationMapper = new ColumnFieldMapper<>(new Location());
-  private static ColumnFieldMapper<Genre> genreMapper = new ColumnFieldMapper<>(new Genre());
-  private static ColumnFieldMapper<Role> roleMapper = new ColumnFieldMapper<>(new Role());
-  private static ColumnFieldMapper<Operation> operationMapper = new ColumnFieldMapper<>(new Operation());
-  private static ColumnFieldMapper<Author> authorMapper = new ColumnFieldMapper<>(new Author());
-  private static ColumnFieldMapper<Edition> editionMapper = new ColumnFieldMapper<>(new Edition());
-  private static ColumnFieldMapper<Book> bookMapper = new ColumnFieldMapper<>(new Book());
-  private static ColumnFieldMapper<User> userMapper = new ColumnFieldMapper<>(new User());
-  private static ColumnFieldMapper<Transaction> transactionMapper = new ColumnFieldMapper<>(new Transaction());
+  private static final ColumnFieldMapper<Location> locationMapper = new ColumnFieldMapper<>(new Location());
+  private static final ColumnFieldMapper<Genre> genreMapper = new ColumnFieldMapper<>(new Genre());
+  private static final ColumnFieldMapper<Role> roleMapper = new ColumnFieldMapper<>(new Role());
+  private static final ColumnFieldMapper<Operation> operationMapper = new ColumnFieldMapper<>(new Operation());
+  private static final ColumnFieldMapper<Author> authorMapper = new ColumnFieldMapper<>(new Author());
+  private static final ColumnFieldMapper<Edition> editionMapper = new ColumnFieldMapper<>(new Edition());
+  private static final ColumnFieldMapper<Book> bookMapper = new ColumnFieldMapper<>(new Book());
+  private static final ColumnFieldMapper<User> userMapper = new ColumnFieldMapper<>(new User());
+  private static final ColumnFieldMapper<Transaction> transactionMapper = new ColumnFieldMapper<>(new Transaction());
 
-  private Map<String, String> mapper = new HashMap<>();
+  private final Map<String, String> mapper = new HashMap<>();
 
   private ColumnFieldMapper(T entity) {
     FieldColumnConverter converter = ConverterFactory.getInstance().getConverter();

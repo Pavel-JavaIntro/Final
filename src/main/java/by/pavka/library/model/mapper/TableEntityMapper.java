@@ -1,81 +1,78 @@
 package by.pavka.library.model.mapper;
 
-import by.pavka.library.entity.EntityFactory;
-import by.pavka.library.entity.LibraryEntity;
+import by.pavka.library.entity.EntityExtractor;
 import by.pavka.library.entity.impl.*;
-import by.pavka.library.model.dao.LibraryDao;
-import by.pavka.library.model.dao.impl.SimpleLibraryDao;
 
 public enum TableEntityMapper {
 
-  GENRE("genres", new EntityFactory<Genre>() {
+  GENRE("genres", new EntityExtractor<Genre>() {
     @Override
-    public Genre createEntity() {
+    public Genre extractEntity() {
       return new Genre();
     }
   }),
-  LOCATION("locations", new EntityFactory<Location>() {
+  LOCATION("locations", new EntityExtractor<Location>() {
     @Override
-    public Location createEntity() {
+    public Location extractEntity() {
       return new Location();
     }
   }),
-  ROLE("roles", new EntityFactory<Role>() {
+  ROLE("roles", new EntityExtractor<Role>() {
     @Override
-    public Role createEntity() {
+    public Role extractEntity() {
       return new Role();
     }
   }),
-  OPERATION("operations", new EntityFactory<Operation>() {
+  OPERATION("operations", new EntityExtractor<Operation>() {
     @Override
-    public Operation createEntity() {
+    public Operation extractEntity() {
       return new Operation();
     }
   }),
-  AUTHOR("authors", new EntityFactory<Author>() {
+  AUTHOR("authors", new EntityExtractor<Author>() {
     @Override
-    public Author createEntity() {
+    public Author extractEntity() {
       return new Author();
     }
   }),
-  EDITION("editions", new EntityFactory<Edition>() {
+  EDITION("editions", new EntityExtractor<Edition>() {
     @Override
-    public Edition createEntity() {
+    public Edition extractEntity() {
       return new Edition();
     }
   }),
-  BOOK("books", new EntityFactory<Book>() {
+  BOOK("books", new EntityExtractor<Book>() {
     @Override
-    public Book createEntity() {
+    public Book extractEntity() {
       return new Book();
     }
   }),
-  USER("users", new EntityFactory<User>() {
+  USER("users", new EntityExtractor<User>() {
     @Override
-    public User createEntity() {
+    public User extractEntity() {
       return new User();
     }
   }),
-  TRANSACTION("users", new EntityFactory<Transaction>() {
+  TRANSACTION("users", new EntityExtractor<Transaction>() {
     @Override
-    public Transaction createEntity() {
+    public Transaction extractEntity() {
       return new Transaction();
     }
   });
 
   private final String tableName;
-  private final EntityFactory factory;
+  private final EntityExtractor extractor;
 
-  TableEntityMapper(String tableName, EntityFactory factory) {
+  TableEntityMapper(String tableName, EntityExtractor extractor) {
     this.tableName = tableName;
-    this.factory = factory;
+    this.extractor = extractor;
   }
 
   public String getTableName() {
     return tableName;
   }
 
-  public EntityFactory getFactory() {
-    return factory;
+  public EntityExtractor getExtractor() {
+    return extractor;
   }
 }

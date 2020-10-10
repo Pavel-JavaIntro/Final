@@ -1,5 +1,13 @@
 
-Q
-java:S1197"8Move the array designator from the variable to the type.(¡şÏÖøÿÿÿÿ
-M
-java:S1135"2Complete the task associated to this TODO comment.(õŠåƒ8‰…øËÏ.
+S
+java:S1197"8Move the array designator from the variable to the type.(¡şÏÖøÿÿÿÿ
+O
+java:S1135"2Complete the task associated to this TODO comment.(õŠåƒ8‰…øËÏ.
+i
+java:S1128"GRemove this unused import 'org.apache.commons.lang3.RandomStringUtils'.(Í¦ª¤ÿÿÿÿÿ8¾•™ÇĞ.
+Z	java:S106"9Replace this use of System.out or System.err by a logger.(Ã‡ªÄøÿÿÿÿ8¾•™ÇĞ.
+U	java:S106"9Replace this use of System.out or System.err by a logger.(ˆî”¾8¾•™ÇĞ.
+U	java:S106"9Replace this use of System.out or System.err by a logger.(ãƒ×±8¾•™ÇĞ.
+U	java:S106"9Replace this use of System.out or System.err by a logger.(Ğèï÷8¾•™ÇĞ.
+Z	java:S106"9Replace this use of System.out or System.err by a logger.(¾àÀîıÿÿÿÿ8¾•™ÇĞ.
+U	java:S106"9Replace this use of System.out or System.err by a logger.(ÜõâÀ8¾•™ÇĞ.
