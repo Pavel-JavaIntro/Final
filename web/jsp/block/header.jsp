@@ -22,6 +22,20 @@
             <h3>Лучшая онлайн библиотека в моем гитхаб репозитории</h3>
             <!--Закрываем таблицу-->
         </th>
+        <th>
+            <form name="selectLang" method="POST" action="library">
+            <img src="./images/rus.png" width="30" height="30" alt="">
+            <br/>
+                <input type="submit" value="RUS">
+            </form>
+        </th>
+        <th>
+            <form name="selectLang" method="POST" action="library">
+            <img src="./images/eng.png" width="30" height="30" alt="">
+            <br/>
+                <input type="submit" value="ENG">
+            </form>
+        </th>
     </tr>
 </table>
 </html>
