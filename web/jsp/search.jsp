@@ -34,6 +34,7 @@
                             rowspan="2"
                             style="width:80%">
                         <h2>Поиск книги</h2>
+                        В поле "Автор" ставьте только фамилию
 
                         <p style="text-indent:20px">
                             <input type="hidden" name="command" value="search"/>
