@@ -1,7 +1,9 @@
 package by.pavka.library.controller.command.impl;
 
+import by.pavka.library.ConfigurationManager;
 import by.pavka.library.controller.command.ActionCommand;
 import by.pavka.library.entity.impl.Book;
+import by.pavka.library.model.service.ServiceException;
 import by.pavka.library.model.service.WelcomeService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,12 +15,17 @@ public class FindBookCommand implements ActionCommand {
   @Override
   public void execute(HttpServletRequest request, HttpServletResponse response) {
     String title = request.getParameter("title");
-    String author1 = request.getParameter("author1");
-    String author2 = request.getParameter("author2");
-    int year = Integer.parseInt(request.getParameter("year"));
-
+    String author = request.getParameter("author");
     WelcomeService welcomeService = WelcomeService.getInstance();
     HttpSession session = request.getSession();
+    String page = (String)session.getAttribute("page");
     List<Book> books = null;
+    try {
+      books = welcomeService.findBooks(title, author);
+      session.setAttribute("books", books);
+    } catch (ServiceException e) {
+      page = ConfigurationManager.getProperty("error");
+    }
+    session.setAttribute("page", page);
   }
 }

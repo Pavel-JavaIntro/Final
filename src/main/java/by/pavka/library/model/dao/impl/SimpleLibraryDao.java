@@ -20,6 +20,7 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
 
   private static final String INSERT = "INSERT INTO %s ";
   private static final String LIST_ALL = "SELECT * FROM ";
+  private static final String GET = "SELECT * FROM %s WHERE id=?";
   private static final String UPDATE = "UPDATE %s %s WHERE id=?";
   private static final String DELETE = "DELETE FROM %s WHERE id=?";
 
@@ -33,6 +34,10 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
     connector = new ConnectionWrapper();
   }
 
+  public ConnectionWrapper getConnector() {
+    return connector;
+  }
+
   @Override
   public void add(T entity) throws DaoException {
     PreparedStatement statement = null;
@@ -40,7 +45,6 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
     try {
       sql += formInsertRequest(entity);
       statement = connector.obtainPreparedStatement(sql);
-      System.out.println(statement);
       statement.executeUpdate();
     } catch (DaoException | SQLException e) {
       throw new DaoException("SimpleLibraryDao add exception", e);
@@ -57,6 +61,27 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
   @Override
   public List<T> read(Criteria criteria, boolean strict) throws DaoException {
     return list(LIST_ALL + getTableName() + interpret(criteria, strict));
+  }
+
+  @Override
+  public T get(int id) throws DaoException {
+    PreparedStatement statement = null;
+    ResultSet resultSet;
+    String sql = String.format(GET, getTableName());
+    try {
+      statement = connector.obtainPreparedStatement(sql);
+      statement.setInt(1, id);
+      resultSet = statement.executeQuery();
+      if (resultSet.next()) {
+        return formEntity(resultSet);
+      } else {
+        return null;
+      }
+    } catch (DaoException | SQLException | LibraryEntityException e) {
+      throw new DaoException("SimpleLibraryDao remove excdeption", e);
+    } finally {
+      connector.closeStatement(statement);
+    }
   }
 
 
@@ -137,7 +162,7 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
       EntityField<?> field = criteria.getConstraint(i);
       builder.append(field.getName());
       if (!strict && field.getValue() instanceof String) {
-        builder.append(" LIKE '").append(field.getValue()).append("%'");
+        builder.append(" LIKE '%").append(field.getValue()).append("%'");
       } else {
         builder.append("='").append(field.getValue()).append("'");
       }

@@ -1,7 +1,10 @@
 
-[
-java:S1155K">Use isEmpty() to check whether the collection is empty or not.(¦ÍªË8­º¼‘Ñ.
-o
-java:S1128"MRemove this unused import 'by.pavka.library.model.dao.impl.SimpleLibraryDao'.(¥™Ä«ùÿÿÿÿ8é¥©ˆÑ.
 ^
 java:S1128"BRemove this unused import 'by.pavka.library.entity.LibraryEntity'.(€ºÙN8’Ï±‘Ñ.
+^	java:S125¶"<This block of commented-out lines of code should be removed.(†¯›’üÿÿÿÿ8ê§ã¹Ñ.
+Y	java:S125¥"<This block of commented-out lines of code should be removed.(†Ìøù8ê§ã¹Ñ.
+o
+java:S3776V"RRefactor this method to reduce its Cognitive Complexity from 29 to the 15 allowed.(´”•û8™×±ºÑ.
+[
+java:S1155L">Use isEmpty() to check whether the collection is empty or not.(¦ÍªË8Ë—·¸Ñ.
+^	java:S125¨"<This block of commented-out lines of code should be removed.(«‡¾²üÿÿÿÿ8ê§ã¹Ñ.

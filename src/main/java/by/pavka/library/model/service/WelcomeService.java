@@ -4,16 +4,17 @@ import by.pavka.library.entity.LibraryEntity;
 import by.pavka.library.entity.SimpleListEntity;
 import by.pavka.library.entity.criteria.Criteria;
 import by.pavka.library.entity.criteria.EntityField;
+import by.pavka.library.entity.impl.Author;
 import by.pavka.library.entity.impl.Book;
+import by.pavka.library.entity.impl.Edition;
 import by.pavka.library.entity.impl.User;
 import by.pavka.library.model.dao.DaoException;
 import by.pavka.library.model.dao.LibraryDao;
+import by.pavka.library.model.dao.ManyToManyDao;
 import by.pavka.library.model.dao.impl.LibraryDaoFactory;
-import by.pavka.library.model.dao.impl.SimpleLibraryDao;
 import by.pavka.library.model.mapper.TableEntityMapper;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class WelcomeService {
   private static WelcomeService instance = new WelcomeService();
@@ -62,7 +63,7 @@ public class WelcomeService {
 
   public User auth(String surname, String name, String password) throws ServiceException {
     int hashPass = password.hashCode();
-    try (LibraryDao<User> dao = LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER)){
+    try (LibraryDao<User> dao = LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER)) {
       Criteria criteria = new Criteria();
       EntityField<String> surnameField = new EntityField<>("surname");
       surnameField.setValue(surname);
@@ -80,5 +81,128 @@ public class WelcomeService {
     } catch (DaoException e) {
       throw new ServiceException("Cannot authorize the user", e);
     }
+  }
+
+  public List<Book> findBooks(String title, String author) throws ServiceException {
+    try (LibraryDao<Book> bookDao =
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+      if (title.isEmpty() && author.isEmpty()) {
+        return bookDao.read();
+      }
+      List<Book> result = new ArrayList<>();
+      List<Edition> titleEditions = null;
+      List<Edition> authorEditions = null;
+      try (ManyToManyDao<Edition, Author> editionDao =
+          LibraryDaoFactory.getInstance().obtainManyToManyDao()) {
+        if (!title.isEmpty()) {
+          Criteria criteriaT = new Criteria();
+          EntityField<String> titleField = new EntityField<>("title");
+          titleField.setValue(title);
+          criteriaT.addConstraint(titleField);
+          titleEditions = editionDao.read(criteriaT, false);
+          if (titleEditions.isEmpty()) {
+            return new ArrayList<>();
+          }
+        }
+        List<Author> authorList = null;
+        if (!author.isEmpty()) {
+          try (LibraryDao<Author> authorDao =
+              LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.AUTHOR)) {
+            Criteria criteriaA = new Criteria();
+            EntityField<String> authorField = new EntityField<>("surname");
+            authorField.setValue(author);
+            criteriaA.addConstraint(authorField);
+            authorList = authorDao.read(criteriaA, false);
+            if (authorList.isEmpty()) {
+              return new ArrayList<>();
+            }
+            Set<Integer> editionIds = new HashSet<>();
+            for (Author a : authorList) {
+              editionIds.addAll(editionDao.getFirst(a.getId()));
+            }
+            if (editionIds.isEmpty()) {
+              return new ArrayList<>();
+            }
+            authorEditions = new ArrayList<>();
+            for (int i : editionIds) {
+              authorEditions.add(editionDao.get(i));
+            }
+            if (authorEditions.isEmpty()) {
+              return new ArrayList<>();
+            }
+          }
+        }
+        List<Edition> finalEditions = null;
+        if (titleEditions == null) {
+          finalEditions = authorEditions;
+        }
+        if (authorEditions == null) {
+          finalEditions = titleEditions;
+        }
+        if (titleEditions != null && authorEditions != null) {
+          finalEditions = new ArrayList<>();
+          for (Edition edition : titleEditions) {
+            if (authorEditions.contains(edition)) {
+              finalEditions.add(edition);
+            }
+          }
+          if (finalEditions.isEmpty()) {
+            return new ArrayList<>();
+          }
+        }
+        for (Edition edition : finalEditions) {
+          Criteria criteria = new Criteria();
+          EntityField<Integer> edId = new EntityField<>("editionId");
+          edId.setValue(edition.getId());
+          criteria.addConstraint(edId);
+          result.addAll(bookDao.read(criteria, true));
+        }
+      }
+      return result;
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot find books", e);
+    }
+    //    List<Edition> titles = null;
+    //    List<Edition> authors = null;
+    //    try (ManyToManyDao<Edition, Author> dao =
+    //        LibraryDaoFactory.getInstance().obtainManyToManyDao()) {
+    //      if (!title.isEmpty()) {
+    //        Criteria criteria = new Criteria();
+    //        EntityField<String> titleField = new EntityField<>("title");
+    //        titleField.setValue(title);
+    //        criteria.addConstraint(titleField);
+    //        titles = dao.read(criteria, false);
+    //        if (titles.isEmpty()) {
+    //          return new ArrayList<>();
+    //        }
+    //      }
+    //      List<Author> authorList;
+    //      if (!author.isEmpty()) {
+    //        try (LibraryDao<Author> authorDao =
+    //            LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.AUTHOR)) {
+    //          Criteria author1Criteria = new Criteria();
+    //          EntityField<String> surname1Field = new EntityField<>("surname");
+    //          surname1Field.setValue(author);
+    //          author1Criteria.addConstraint(surname1Field);
+    //          authorList = authorDao.read(author1Criteria, false);
+    //          if (authorList.isEmpty()) {
+    //            return new ArrayList<>();
+    //          }
+    //          Set<Integer> editionIds = new HashSet<>();
+    //          for (Author auth : authorList) {
+    //            editionIds.addAll(dao.getFirst(auth.getId()));
+    //          }
+    //          if (editionIds.isEmpty()) {
+    //            return new ArrayList<>();
+    //          }
+    //          authors = new ArrayList<>();
+    //          for (int i : editionIds) {
+    //            authors.add(dao.get(i));
+    //          }
+    //        }
+    //      }
+    //    } catch (DaoException e) {
+    //      throw new ServiceException("Cannot find books", e);
+    //    }
   }
 }

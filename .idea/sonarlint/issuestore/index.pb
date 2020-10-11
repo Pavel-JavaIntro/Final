@@ -135,3 +135,13 @@ C
 web/js/validator.js,9\a\9a627164ff4d635fdb8bc957c6c934f6dbfdf365
 {
 Ksrc/main/java/by/pavka/library/controller/command/impl/FindBookCommand.java,3\e\3eeba665052c65eb4e6e71d7fdb5e480a006905f
+Z
+*.idea/libraries/javax_servlet_jstl_1_2.xml,b\0\b06d1ae898bd45f42e809e6b117aba3c01de9ca9
+Q
+!.idea/libraries/jstl_jstl_1_0.xml,6\b\6ba221ac2516a0c10763c74491bc01e664d183d3
+Q
+!.idea/libraries/jstl_jstl_1_2.xml,2\9\2948cb5b1e82467930c7f97cf9872b2736e5bd4f
+m
+=src/main/java/by/pavka/library/model/dao/impl/EditionDao.java,4\8\48ffc43df48a80f257ac7a783934bbb616467635
+k
+;src/main/java/by/pavka/library/model/dao/ManyToManyDao.java,d\2\d2761cc85e214c7b22bb2c237bbdcb833d682482

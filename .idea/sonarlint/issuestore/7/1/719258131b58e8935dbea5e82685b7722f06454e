@@ -1,17 +1,18 @@
 
 R
-java:S3740½"/Provide the parametrized type for this generic.(¹şµºùÿÿÿÿ8™õ¾’Ñ.
-Z	java:S106f"9Replace this use of System.out or System.err by a logger.(Ä°îûÿÿÿÿ8Ÿ´Â’Ñ.
-«
-java:S1130ª"‡Remove the declaration of thrown exception 'by.pavka.library.entity.LibraryEntityException', as it cannot be thrown from method's body.(ßÎò÷ûÿÿÿÿ8Ÿ´Â’Ñ.
-j
-java:S2095"GUse try-with-resources or close this "ResultSet" in a "finally" clause.(Ê¥¶îüÿÿÿÿ8Ÿ´Â’Ñ.
-i
-java:S2095i"GUse try-with-resources or close this "ResultSet" in a "finally" clause.(Ê¥¶îüÿÿÿÿ8Ÿ´Â’Ñ.
+java:S3740Ö"/Provide the parametrized type for this generic.(¹şµºùÿÿÿÿ8™õ¾’Ñ.
 :
-java:S1116¯"Remove this empty statement.(¤Óª8™õ¾’Ñ.
-U	java:S106+"9Replace this use of System.out or System.err by a logger.(ÿê§¯8Ÿ´Â’Ñ.
+java:S1116È"Remove this empty statement.(¤Óª8¬¬Æ¸Ñ.
+j
+java:S2095‚"GUse try-with-resources or close this "ResultSet" in a "finally" clause.(Ê¥¶îüÿÿÿÿ8Ÿ´Â’Ñ.
 
-java:S1488Ã"^Immediately return this expression instead of assigning it to the temporary variable "result".(óÈ—˜øÿÿÿÿ8™õ¾’Ñ.
-^
-java:S1126j"AReplace this if-then-else statement by a single return statement.(Œ‡Ü‘8Ÿ´Â’Ñ.
+java:S1488Ü"^Immediately return this expression instead of assigning it to the temporary variable "result".(óÈ—˜øÿÿÿÿ8™õ¾’Ñ.
+«
+java:S1130Ã"‡Remove the declaration of thrown exception 'by.pavka.library.entity.LibraryEntityException', as it cannot be thrown from method's body.(ßÎò÷ûÿÿÿÿ8¬¬Æ¸Ñ.
+i
+java:S2095J"GUse try-with-resources or close this "ResultSet" in a "finally" clause.(Ê¥¶îüÿÿÿÿ8ÍõÏ¸Ñ.
+j
+java:S2095¶"GUse try-with-resources or close this "ResultSet" in a "finally" clause.(Ê¥¶îüÿÿÿÿ8Ÿ´Â’Ñ.
+Z	java:S106"9Replace this use of System.out or System.err by a logger.(Ä°îûÿÿÿÿ8¬¬Æ¸Ñ.
+_
+java:S1126ƒ"AReplace this if-then-else statement by a single return statement.(Œ‡Ü‘8¬¬Æ¸Ñ.
