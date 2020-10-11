@@ -1,7 +1,7 @@
 
-X	java:S125)"<This block of commented-out lines of code should be removed.(¦Μ›ε8΄ΘΡ.
-[
-java:S1155H">Use isEmpty() to check whether the collection is empty or not.(¦ΝªΛ8μν°Ρ.
 o
-java:S1128
-"MRemove this unused import 'by.pavka.library.model.dao.impl.SimpleLibraryDao'.(¥™Δ«ωÿÿÿÿ8ι¥©Ρ.
+java:S1128"MRemove this unused import 'by.pavka.library.model.dao.impl.SimpleLibraryDao'.(¥™Δ«ωÿÿÿÿ8ι¥©Ρ.
+[
+java:S1155K">Use isEmpty() to check whether the collection is empty or not.(¦ΝªΛ8­ΊΌ‘Ρ.
+^
+java:S1128"BRemove this unused import 'by.pavka.library.entity.LibraryEntity'.(€ΊΩN8’Ο±‘Ρ.

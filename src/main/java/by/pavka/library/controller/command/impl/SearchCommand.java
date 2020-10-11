@@ -9,6 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 public class SearchCommand implements ActionCommand {
   @Override
   public void execute(HttpServletRequest request, HttpServletResponse response) {
-    request.setAttribute("page", "/jsp/search.jsp");
+    request.getSession().setAttribute("page", "/jsp/search.jsp");
   }
 }

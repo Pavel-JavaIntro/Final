@@ -17,13 +17,13 @@ public class WelcomeCommand implements ActionCommand {
   public void execute(HttpServletRequest request, HttpServletResponse response) {
     //TODO
     WelcomeService welcomeService = WelcomeService.getInstance();
+    HttpSession session = request.getSession();
     try {
       int books = welcomeService.countBooks();
       int users = welcomeService.countUsers();
       ServletContext servletContext = request.getServletContext();
       servletContext.setAttribute("books", books);
       servletContext.setAttribute("users", users);
-      HttpSession session = request.getSession();
       if (session.isNew()) {
         AppClient client = new AppClient() {
           @Override
@@ -33,9 +33,9 @@ public class WelcomeCommand implements ActionCommand {
         };
         session.setAttribute("client", client);
       }
-      request.setAttribute("page", ConfigurationManager.getProperty("welcome"));
+      session.setAttribute("page", ConfigurationManager.getProperty("welcome"));
     } catch (ServiceException e) {
-      request.setAttribute("page", ConfigurationManager.getProperty("error"));
+      session.setAttribute("page", ConfigurationManager.getProperty("error"));
     }
   }
 }

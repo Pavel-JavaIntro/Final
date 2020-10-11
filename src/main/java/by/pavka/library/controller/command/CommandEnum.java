@@ -1,15 +1,13 @@
 package by.pavka.library.controller.command;
 
-import by.pavka.library.controller.command.impl.EmptyCommand;
-import by.pavka.library.controller.command.impl.LoginCommand;
-import by.pavka.library.controller.command.impl.SearchCommand;
-import by.pavka.library.controller.command.impl.WelcomeCommand;
+import by.pavka.library.controller.command.impl.*;
 
 public enum CommandEnum {
   EMPTY(new EmptyCommand()),
   WELCOME(new WelcomeCommand()),
   SEARCH(new SearchCommand()),
-  LOGIN(new LoginCommand());
+  LOGIN(new LoginCommand()),
+  LOGOUT(new LogoutCommand());
 
   private ActionCommand command;
 

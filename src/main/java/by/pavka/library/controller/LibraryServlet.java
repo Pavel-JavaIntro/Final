@@ -31,7 +31,8 @@ public class LibraryServlet extends HttpServlet {
     ActionFactory client = new ActionFactory();
     ActionCommand command = client.defineCommand(request);
     command.execute(request, response);
-    String page = (String) request.getAttribute("page");
+    String page = (String) request.getSession().getAttribute("page");
+    System.out.println("PAGE = " + page);
     if (page != null) {
       RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(page);
       requestDispatcher.forward(request, response);

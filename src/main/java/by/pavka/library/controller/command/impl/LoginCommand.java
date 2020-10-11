@@ -22,21 +22,19 @@ public class LoginCommand implements ActionCommand {
     String surname = request.getParameter("surname");
     String name = request.getParameter("name");
     String password = request.getParameter("password");
-    String page = ConfigurationManager.getProperty("welcome");
+    HttpSession session = request.getSession();
+    String page = (String)session.getAttribute("page");
     if (LibValidator.validateLogin(surname, name, password)) {
       WelcomeService welcomeService = WelcomeService.getInstance();
       try {
         User user = welcomeService.auth(surname, name, password);
         if (user != null) {
-          page = ConfigurationManager.getProperty("welcome");
-          HttpSession session = request.getSession();
           AppClient client =
               new AppClient() {
                 @Override
                 public String getRole() {
                   try {
                     int roleId = user.getRoleId();
-                    System.out.println("INSIDE COMMAND: " + ConstantManager.getRoleById(roleId));
                     return ConstantManager.getRoleById(roleId);
                   } catch (LibraryEntityException e) {
                     return ConstantManager.VISITOR;
@@ -60,6 +58,6 @@ public class LoginCommand implements ActionCommand {
     } else {
       request.setAttribute("errorLoginPassMessage", MessageManager.getProperty("emptyfields"));
     }
-    request.setAttribute("page", page);
+    session.setAttribute("page", page);
   }
 }

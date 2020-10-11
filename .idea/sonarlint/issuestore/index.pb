@@ -85,8 +85,6 @@ y
 Isrc/main/java/by/pavka/library/controller/command/impl/SearchCommand.java,8\7\87d29e3181aaf36b9421646c787f78c6f5c59a9e
 B
 web/jsp/search.jsp,8\9\89a67dd27682cc53178c3e0853df7a8770e1ed39
-o
-?src/main/java/by/pavka/library/model/LibraryModelException.java,a\5\a5e533052d8da1f74c5d2cf3905216c8b410c12f
 g
 7out/artifacts/PavelLibrary_war_exploded/WEB-INF/web.xml,4\7\4773e4f666fc7ffc52a7c4eaeea78ddd285bc3b9
 k
@@ -123,3 +121,11 @@ V
 &src/main/resources/messages.properties,7\7\77906e46f0e91702a3d64a15647ee2a5325bdab6
 k
 ;src/main/java/by/pavka/library/entity/client/AppClient.java,0\c\0c6c47a0237f912e786a07f7534201df96c6e389
+T
+$src/main/resources/config.properties,f\a\fac4e92d770a0a6287eaad0e53c4efa350987f47
+p
+@src/main/java/by/pavka/library/model/mapper/ConstantManager.java,7\e\7ef0d7e193e1d92fd426c38c070e7e5e8399d012
+G
+web/jsp/block/latin.jsp,1\c\1c402896f69f3e0152a2f7cd1d0e0810238a77c8
+o
+?src/main/java/by/pavka/library/model/LibraryFatalException.java,3\f\3fbef4536675573892e297682dadfbde0c0ac165
