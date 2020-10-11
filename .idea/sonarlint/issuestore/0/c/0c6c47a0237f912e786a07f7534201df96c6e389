@@ -1,0 +1,10 @@
+
+[
+java:S1128">Remove this unused import 'by.pavka.library.entity.impl.Role'.(õü¯…8ÅòŞÑ.
+X	java:S1253"<This block of commented-out lines of code should be removed.(§—ø§8·š­”Ñ.
+Z	java:S1068"9Replace this use of System.out or System.err by a logger.(áãÒéúÿÿÿÿ8ë”Ñ.
+Z	java:S106+"9Replace this use of System.out or System.err by a logger.(Ÿ“–Ğÿÿÿÿÿ8åÎ•Ñ.
+Z	java:S106="9Replace this use of System.out or System.err by a logger.(ÜÀ’Ìùÿÿÿÿ8çíŠ•Ñ.
+m
+java:S1301)"KReplace this "switch" statement by "if" statements to increase readability.(—¯‹‰øÿÿÿÿ8Î÷ó“Ñ.
+Z	java:S106."9Replace this use of System.out or System.err by a logger.(ºåàÁÿÿÿÿÿ8„Ú‡•Ñ.

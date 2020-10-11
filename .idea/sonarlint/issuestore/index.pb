@@ -129,3 +129,9 @@ G
 web/jsp/block/latin.jsp,1\c\1c402896f69f3e0152a2f7cd1d0e0810238a77c8
 o
 ?src/main/java/by/pavka/library/model/LibraryFatalException.java,3\f\3fbef4536675573892e297682dadfbde0c0ac165
+y
+Isrc/main/java/by/pavka/library/controller/command/impl/LogoutCommand.java,1\5\15852bc4ae0a94cf87db578ca12a03bd12a4bb7d
+C
+web/js/validator.js,9\a\9a627164ff4d635fdb8bc957c6c934f6dbfdf365
+{
+Ksrc/main/java/by/pavka/library/controller/command/impl/FindBookCommand.java,3\e\3eeba665052c65eb4e6e71d7fdb5e480a006905f

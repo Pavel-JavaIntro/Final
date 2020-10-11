@@ -1,0 +1,6 @@
+
+jWeb:DoctypePresenceCheck	":Insert a <!DOCTYPE> declaration to before this <html> tag.(œ÷Ãûÿÿÿÿ8©ÔüƒÑ.
+L	Web:S1827"+Remove this deprecated "bgcolor" attribute.(†øëşıÿÿÿÿ8©ÔüƒÑ.
+PWeb:PageWithoutTitleCheck	"Add a <title> tag to this page.(œ÷Ãûÿÿÿÿ8³¸„Ñ.
+]Web:UnsupportedTagsInHtml5Check"&Remove this deprecated "font" element.(èßœıüÿÿÿÿ8”µ„Ñ.
+a	Web:S5254	"@Add "lang" and/or "xml:lang" attributes to this "<html>" element(œ÷Ãûÿÿÿÿ8©ÔüƒÑ.

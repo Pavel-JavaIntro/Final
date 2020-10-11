@@ -7,7 +7,8 @@ public enum CommandEnum {
   WELCOME(new WelcomeCommand()),
   SEARCH(new SearchCommand()),
   LOGIN(new LoginCommand()),
-  LOGOUT(new LogoutCommand());
+  LOGOUT(new LogoutCommand()),
+  FIND_BOOK(new FindBookCommand());
 
   private ActionCommand command;
 
