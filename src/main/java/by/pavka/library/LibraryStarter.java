@@ -15,8 +15,8 @@ public class LibraryStarter implements ServletContextListener {
   private static final Logger logger = LogManager.getLogger(LibraryStarter.class.getName());
 
   public void contextInitialized(ServletContextEvent servletContextEvent) {
-//    DBConnectionPool.getInstance();
-//    ConstantManager.getLocationById(0);
+    DBConnectionPool.getInstance();
+    ConstantManager.getLocationById(0);
     logger.info("STARTED");
     ServletContext context = servletContextEvent.getServletContext();
     ResourceBundle resourceBundle = ResourceBundle.getBundle("database");

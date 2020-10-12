@@ -25,7 +25,7 @@ public class FindBookCommand implements ActionCommand {
       session.setAttribute("books", books);
     } catch (ServiceException e) {
       page = ConfigurationManager.getProperty("error");
-      logger.warn("FindBookCommand hasn't completed");
+      logger.error("FindBookCommand hasn't completed");
     }
     session.setAttribute("page", page);
   }

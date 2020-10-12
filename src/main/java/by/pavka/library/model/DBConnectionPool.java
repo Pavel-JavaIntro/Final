@@ -12,9 +12,9 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class DBConnectionPool {
+  private static final Logger logger = LogManager.getLogger(DBConnectionPool.class);
   private static final DBConnectionPool instance = new DBConnectionPool();
   private static final int TIMEOUT = 3;
-  private static final Logger logger = LogManager.getLogger(DBConnectionPool.class.getName());
 
   private BlockingQueue<Connection> connections;
   private BlockingQueue<Connection> usedConnections;
@@ -29,7 +29,7 @@ public class DBConnectionPool {
     try {
       Class.forName(driver);
     } catch (ClassNotFoundException e) {
-      logger.error("Database Driver not found");
+      logger.fatal("Database Driver not found");
       throw new LibraryFatalException("Database Driver not found", e);
     }
     url = resourceBundle.getString("url");
@@ -41,7 +41,7 @@ public class DBConnectionPool {
     try {
       connectionsNumber = Integer.parseInt(num);
     } catch (NumberFormatException e) {
-      // TODO Log it
+      logger.error("Integer parcing failed");
       connectionsNumber = 2;
     }
     try {
@@ -65,7 +65,7 @@ public class DBConnectionPool {
     try {
       return DriverManager.getConnection(url, login, password);
     } catch (SQLException e) {
-      logger.error("Database Connection not created");
+      logger.fatal("Database Connection not created");
       throw new LibraryFatalException("Database Connection not created", e);
     }
   }
@@ -77,7 +77,7 @@ public class DBConnectionPool {
     try {
       connections.add(DriverManager.getConnection(url, login, password));
     } catch (SQLException e) {
-      // TODO Log it;
+      logger.error("Can't add a connection");
       return false;
     }
     return true;

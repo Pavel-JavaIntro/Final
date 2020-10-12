@@ -61,7 +61,7 @@ public class ColumnFieldMapper<T extends LibraryEntity> {
     if (entity instanceof Transaction) {
       return transactionMapper;
     }
-    logger.error("Mapper doesn't include this instance");
+    logger.fatal("Mapper doesn't include this instance");
     throw new LibraryFatalException("Mapper doesn't include this instance");
   }
 
@@ -74,7 +74,7 @@ public class ColumnFieldMapper<T extends LibraryEntity> {
       if (entry.getValue().equals(columnname))
         return entry.getKey();
     }
-    logger.error("ColumnFieldMapper doesn't work");
+    logger.fatal("ColumnFieldMapper doesn't work");
     throw new LibraryFatalException("ColumnFieldMapper doesn't work");
   }
 

@@ -36,7 +36,7 @@ public class WelcomeCommand implements ActionCommand {
       session.setAttribute("page", ConfigurationManager.getProperty("welcome"));
     } catch (ServiceException e) {
       session.setAttribute("page", ConfigurationManager.getProperty("error"));
-      logger.warn("WelcomeCommand hasn't completed");
+      logger.error("WelcomeCommand hasn't completed");
     }
   }
 }

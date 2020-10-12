@@ -31,7 +31,7 @@ public class ConstantManager {
       service.initConstants(operations, TableEntityMapper.OPERATION);
       service.initConstants(roles, TableEntityMapper.ROLE);
     } catch (ServiceException e) {
-      logger.error("Cannot initialize constants");
+      logger.fatal("Cannot initialize constants");
       throw new LibraryFatalException("Cannot initialize constants");
     }
   }

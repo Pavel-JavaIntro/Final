@@ -21,7 +21,7 @@ function validateLogin() {
 function validateAuthor() {
     var a = document.getElementById("author").value;
     if (a.length > 0 && a.includes(" ")) {
-        alert("Please enter only the athor surname, without any spaces");
+        alert("Please enter only the author surname, without any spaces");
         return false;
     }
     return true;
