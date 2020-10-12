@@ -61,7 +61,7 @@ style="width:70%;" - добавляем стилевое свойства, де�
                         Если вы осуществляете поиск по авторам для книг с более, чем одним автором,
                             внесите в поле поиска любого<br/></h3>
                         <form name="searchForm" method="POST" action="library" onsubmit="return validateAuthor();">
-                            <input type="hidden" name="command" value="find_book"/>
+                            <input type="hidden" name="command" value="find_edition"/>
                             <br/>Название:<br/>
                             <input type="text" name="title" id="title" value=""/>
                             <br/>Автор:<br/>
@@ -77,7 +77,7 @@ style="width:70%;" - добавляем стилевое свойства, де�
                         <h2>В вашей корзине ... книг<br/></h2>
                         Результаты поиска будут отображены здесь:<br/>
                         <select size="10">
-                            <c:forEach var="item" items="${sessionScope.books}">
+                            <c:forEach var="item" items="${sessionScope.editions}">
                                 <option>${item}</option>
                             </c:forEach>
                         </select>

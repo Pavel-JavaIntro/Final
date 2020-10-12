@@ -12,8 +12,8 @@ import java.util.ResourceBundle;
 public class LibraryStarter implements ServletContextListener {
 
   public void contextInitialized(ServletContextEvent servletContextEvent) {
-    DBConnectionPool.getInstance();
-    ConstantManager.getLocationById(0);
+    //DBConnectionPool.getInstance();
+    //ConstantManager.getLocationById(0);
     ServletContext context = servletContextEvent.getServletContext();
     ResourceBundle resourceBundle = ResourceBundle.getBundle("database");
     String email = resourceBundle.getString("email");
