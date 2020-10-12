@@ -117,12 +117,8 @@ x
 Hsrc/main/java/by/pavka/library/controller/command/impl/LoginCommand.java,5\1\51af0a207e024172cf3daa035abd5dcc0cf3ce1b
 H
 web/jsp/block/logout.jsp,3\1\319f55cf5d27dfc8c1e9d549900342b1fef83bfc
-V
-&src/main/resources/messages.properties,7\7\77906e46f0e91702a3d64a15647ee2a5325bdab6
 k
 ;src/main/java/by/pavka/library/entity/client/AppClient.java,0\c\0c6c47a0237f912e786a07f7534201df96c6e389
-T
-$src/main/resources/config.properties,f\a\fac4e92d770a0a6287eaad0e53c4efa350987f47
 p
 @src/main/java/by/pavka/library/model/mapper/ConstantManager.java,7\e\7ef0d7e193e1d92fd426c38c070e7e5e8399d012
 G
