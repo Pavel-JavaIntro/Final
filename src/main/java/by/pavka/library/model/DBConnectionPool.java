@@ -1,5 +1,8 @@
 package by.pavka.library.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class DBConnectionPool {
   private static final DBConnectionPool instance = new DBConnectionPool();
   private static final int TIMEOUT = 3;
+  private static final Logger logger = LogManager.getLogger(DBConnectionPool.class.getName());
 
   private BlockingQueue<Connection> connections;
   private BlockingQueue<Connection> usedConnections;
@@ -25,6 +29,7 @@ public class DBConnectionPool {
     try {
       Class.forName(driver);
     } catch (ClassNotFoundException e) {
+      logger.error("Database Driver not found");
       throw new LibraryFatalException("Database Driver not found", e);
     }
     url = resourceBundle.getString("url");
@@ -37,7 +42,7 @@ public class DBConnectionPool {
       connectionsNumber = Integer.parseInt(num);
     } catch (NumberFormatException e) {
       // TODO Log it
-      connectionsNumber = 1;
+      connectionsNumber = 2;
     }
     try {
       maxSize = Integer.parseInt(maxNum);
@@ -60,6 +65,7 @@ public class DBConnectionPool {
     try {
       return DriverManager.getConnection(url, login, password);
     } catch (SQLException e) {
+      logger.error("Database Connection not created");
       throw new LibraryFatalException("Database Connection not created", e);
     }
   }

@@ -1,15 +1,20 @@
 package by.pavka.library;
 
-import java.util.Objects;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.util.Enumeration;
+import java.util.Locale;
+import java.util.Objects;
+
 public class Main {
 
-  private static final Logger LOGGER = LogManager.getLogger();
+  private static final Logger logger = LogManager.getLogger(Main.class.getName());
+
   public static void main(String[] args) {
-   //TODO remove this class when finish
+    // TODO remove this class when finish
     String s = "abc1";
     int i = 2987023;
     System.out.println("s.hashCode() = " + s.hashCode());
@@ -18,8 +23,13 @@ public class Main {
     System.out.println(Objects.hash(i));
     System.out.println(Objects.hashCode(i));
     System.out.println("admin".hashCode());
-    LOGGER.warn("Всем труба");
+    logger.warn("Всем труба");
 
-    //ConfirmationMailSender.sendInvitation("pavkascool@gmail.com");
+    // ConfirmationMailSender.sendInvitation("pavkascool@gmail.com");
+    System.out.println(Locale.getDefault());
+    Enumeration<Driver> drivers = DriverManager.getDrivers();
+    while (drivers.hasMoreElements()) {
+      System.out.println(drivers.nextElement());
+    }
   }
 }

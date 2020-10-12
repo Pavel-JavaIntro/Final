@@ -3,6 +3,8 @@ package by.pavka.library.model.mapper;
 import by.pavka.library.model.LibraryFatalException;
 import by.pavka.library.model.service.ServiceException;
 import by.pavka.library.model.service.WelcomeService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +17,7 @@ public class ConstantManager {
   public static final String READER = "reader";
   public static final String VISITOR = "visitor";
 
+  private static final Logger logger = LogManager.getLogger(ConstantManager.class.getName());
   private static final Map<Integer, String> locations = new HashMap<>();
   private static final Map<Integer, String> operations = new HashMap<>();
   private static final Map<Integer, String> roles = new HashMap<>();
@@ -28,6 +31,7 @@ public class ConstantManager {
       service.initConstants(operations, TableEntityMapper.OPERATION);
       service.initConstants(roles, TableEntityMapper.ROLE);
     } catch (ServiceException e) {
+      logger.error("Cannot initialize constants");
       throw new LibraryFatalException("Cannot initialize constants");
     }
   }

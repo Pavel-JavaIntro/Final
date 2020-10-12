@@ -54,6 +54,7 @@ public class LoginCommand implements ActionCommand {
         }
       } catch (ServiceException e) {
         page = ConfigurationManager.getProperty("error");
+        logger.warn("LoginCommand hasn't completed");
       }
     } else {
       request.setAttribute("errorLoginPassMessage", MessageManager.getProperty("emptyfields"));

@@ -6,11 +6,14 @@ import by.pavka.library.entity.criteria.EntityField;
 import by.pavka.library.model.LibraryFatalException;
 import by.pavka.library.model.mapper.converter.ConverterFactory;
 import by.pavka.library.model.mapper.converter.FieldColumnConverter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ColumnFieldMapper<T extends LibraryEntity> {
+  private static final Logger logger = LogManager.getLogger(ColumnFieldMapper.class.getName());
   private static final ColumnFieldMapper<Location> locationMapper = new ColumnFieldMapper<>(new Location());
   private static final ColumnFieldMapper<Genre> genreMapper = new ColumnFieldMapper<>(new Genre());
   private static final ColumnFieldMapper<Role> roleMapper = new ColumnFieldMapper<>(new Role());
@@ -58,6 +61,7 @@ public class ColumnFieldMapper<T extends LibraryEntity> {
     if (entity instanceof Transaction) {
       return transactionMapper;
     }
+    logger.error("Mapper doesn't include this instance");
     throw new LibraryFatalException("Mapper doesn't include this instance");
   }
 
@@ -70,6 +74,7 @@ public class ColumnFieldMapper<T extends LibraryEntity> {
       if (entry.getValue().equals(columnname))
         return entry.getKey();
     }
+    logger.error("ColumnFieldMapper doesn't work");
     throw new LibraryFatalException("ColumnFieldMapper doesn't work");
   }
 

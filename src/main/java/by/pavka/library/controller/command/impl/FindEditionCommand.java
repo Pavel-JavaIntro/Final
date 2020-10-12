@@ -25,6 +25,7 @@ public class FindEditionCommand implements ActionCommand {
       session.setAttribute("editions", editions);
     } catch (ServiceException e) {
       page = ConfigurationManager.getProperty("error");
+      logger.warn("FindEditionCommand hasn't completed");
     }
     session.setAttribute("page", page);
   }

@@ -4,6 +4,8 @@ import by.pavka.library.ConfigurationManager;
 import by.pavka.library.MessageManager;
 import by.pavka.library.controller.command.ActionCommand;
 import by.pavka.library.controller.command.ActionFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class LibraryServlet extends HttpServlet {
+  private static final Logger logger = LogManager.getLogger(LibraryServlet.class.getName());
+
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
@@ -30,6 +34,7 @@ public class LibraryServlet extends HttpServlet {
     // TODO this is only for test purposes and should be re-written
     ActionFactory client = new ActionFactory();
     ActionCommand command = client.defineCommand(request);
+    logger.debug(command);
     command.execute(request, response);
     String page = (String) request.getSession().getAttribute("page");
     System.out.println("PAGE = " + page);
