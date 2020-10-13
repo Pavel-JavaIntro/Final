@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setBundle basename="messages"/>
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -77,7 +79,7 @@ style="width:70%;" - добавляем стилевое свойства, де�
                         вам следует войти, используя форму справа вверху,
                         по логину (по умолчанию это ваши фамилия и имя) и паролю.</p>
                         <p style="text-indent:20px">
-                            Приятного чтения!</p>
+                            <fmt:message key="maintex2" /></p>
                         <!--Закрываем ячейку-->
                     </td>
 
