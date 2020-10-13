@@ -24,15 +24,17 @@
         </th>
         <th>
             <form name="selectLang" method="POST" action="library">
-            <img src="./images/rus.png" width="30" height="30" alt="">
-            <br/>
+                <input type="hidden" name="command" value="lang"/>
+                <img src="./images/rus.png" width="30" height="30" alt="">
+                <br/>
                 <input type="submit" value="RUS">
             </form>
         </th>
         <th>
             <form name="selectLang" method="POST" action="library">
-            <img src="./images/eng.png" width="30" height="30" alt="">
-            <br/>
+                <input type="hidden" name="command" value="lang"/>
+                <img src="./images/eng.png" width="30" height="30" alt="">
+                <br/>
                 <input type="submit" value="ENG">
             </form>
         </th>

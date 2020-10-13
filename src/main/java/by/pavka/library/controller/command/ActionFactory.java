@@ -8,7 +8,6 @@ public class ActionFactory {
   public ActionCommand defineCommand(HttpServletRequest request) {
     ActionCommand command = CommandEnum.EMPTY.getCommand();
     String action = request.getParameter("command");
-    System.out.println("Command = " + action);
     if (action == null || action.isEmpty()) {
       return command;
     }
