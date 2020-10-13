@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration monitorInterval="3">
     <Appenders>
-        <File name="FILE" fileName="liblogs/mainlog.log">
+        <File name="FILE" fileName="../logs/pavliblog/mainlog.log">
             <PatternLayout pattern="%d{ISO8601} [%-5p] (%F:%L) - %m%n"/>
         </File>
         <Console name="STDOUT" target="SYSTEM_OUT">
