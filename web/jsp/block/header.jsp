@@ -2,11 +2,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="lan" value="${param.lan}" scope="session"/>
-<%=Locale.getDefault()%>
-<%=request.getParameter("lan")%>
-<%=session.getAttribute("lan")%>
-<%=pageContext.getRequest().getLocale()%>
 <fmt:setLocale value="${sessionScope.lan}"/>
 <fmt:setBundle basename="messages"/>
 <table
@@ -22,7 +17,7 @@
         </th>
         <th>
             <form name="selectLang" method="POST" action="library">
-                <input type="hidden" name="command" value="lang"/>
+                <input type="hidden" name="command" value="set_lang"/>
                 <img src="./images/rus.png" width="30" height="30" alt="">
                 <br/>
                 <button name="lan" value="ru">RU</button>
@@ -30,7 +25,7 @@
         </th>
         <th>
             <form name="selectLang" method="POST" action="library">
-                <input type="hidden" name="command" value="lang"/>
+                <input type="hidden" name="command" value="set_lang"/>
                 <img src="./images/eng.png" width="30" height="30" alt="">
                 <br/>
                 <button name="lan" value="en">EN</button>

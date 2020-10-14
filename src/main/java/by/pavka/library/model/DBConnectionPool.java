@@ -114,4 +114,17 @@ public class DBConnectionPool {
     }
     return false;
   }
+
+  public void unconnect() {
+    for (Connection connection : usedConnections) {
+      releaseConnection(connection);
+    }
+    for (Connection connection :  connections) {
+      try {
+        connection.close();
+      } catch (SQLException throwables) {
+        logger.error("Connection not closed while destroying the app");
+      }
+    }
+  }
 }

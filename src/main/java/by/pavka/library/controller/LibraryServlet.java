@@ -37,8 +37,8 @@ public class LibraryServlet extends HttpServlet {
     logger.info(command);
     command.execute(request, response);
     String page = (String) request.getSession().getAttribute("page");
-    System.out.println("PAGE = " + page);
     if (page != null) {
+      logger.warn(request.getSession().getAttribute("lan"));
       RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(page);
       requestDispatcher.forward(request, response);
     } else {

@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.lan}"/>
@@ -10,13 +9,13 @@
         <h3><fmt:message key="login"/><br/></h3>
         <br/>
         <input type="hidden" name="command" value="login"/>
-    <fmt:message key="usersurname"/>:<br/>
+        <fmt:message key="usersurname"/>:<br/>
         <input type="text" name="surname" id="surname" value=""/>
         <br/><fmt:message key="username"/>:<br/>
         <input type="text" name="name" id="name" value=""/>
         <br/><fmt:message key="userpassword"/>:<br/>
         <input type="password" name="password" id="password" value=""/>
-    <br/> <font color="red">${errorLoginPassMessage} </font> <br/>
+        <br/> <font color="red">${errorLoginPassMessage} </font> <br/>
         ${wrongAction} <br/>
         ${nullPage} <br/>
         <input type="submit" value="<fmt:message key="entrance"/>"/>
@@ -26,10 +25,9 @@
     <form name="searchForm" method="POST" action="library">
         <input type="hidden" name="command" value="search"/>
         <img src="./images/book.png" width="30" height="30" alt="">
-        <input type="submit" value="Поиск книги">
+        <input type="submit" value="<fmt:message key="search"/>">
     </form>
     </p>
 </td>
 <script src="${pageContext.request.contextPath}/js/validator.js" type="text/javascript"></script>
 </body>
-

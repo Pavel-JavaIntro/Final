@@ -9,7 +9,8 @@ public enum CommandEnum {
   LOGIN(new LoginCommand()),
   LOGOUT(new LogoutCommand()),
   FIND_BOOK(new FindBookCommand()),
-  FIND_EDITION(new FindEditionCommand());
+  FIND_EDITION(new FindEditionCommand()),
+  SET_LANG(new SetLanguageCommand());
 
   private ActionCommand command;
 
