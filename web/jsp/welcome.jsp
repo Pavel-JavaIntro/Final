@@ -1,6 +1,8 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lan}"/>
+<fmt:setBundle basename="messages"/>
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -42,7 +44,7 @@
                         </form>
                         <p><fmt:message key="maintext6" /></p>
                         <p style="text-indent:20px">
-                            <fmt:message key="maintext20" /></p>
+                            <fmt:message key="maintext7" /></p>
                     </td>
                     <jsp:include page="${sessionScope.client.entrance}"/>
                 </tr>

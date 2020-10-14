@@ -1,6 +1,9 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lan}"/>
+<fmt:setBundle basename="messages"/>
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -24,17 +27,14 @@
                     <td
                             rowspan="2"
                             style="width:80%">
-                        <h2>Поиск книги</h2>
+                        <h2><fmt:message key="search" /></h2>
                         <br/>
-                        <h3>Введите название книги и / или фамилию автора(-ов)<br/>
-                            Фамилия должна быть написана без пробелов, без имени или инициалов<br/>
-                            Если вы осуществляете поиск по авторам для книг с более, чем одним автором,
-                            внесите в поле поиска любого<br/></h3>
+                        <h3><fmt:message key="searcher" /><br/></h3>
                         <form name="searchForm" method="POST" action="library" onsubmit="return validateAuthor();">
                             <input type="hidden" name="command" value="find_edition"/>
-                            <br/>Название:<br/>
+                            <br/><fmt:message key="booktitle" /><br/>
                             <input type="text" name="title" id="title" value=""/>
-                            <br/>Автор:<br/>
+                            <br/><fmt:message key="bookauthor" /><br/>
                             <input type="text" name="author" id="author" value=""/>
                             <br/><br/>
                             <input type="submit" value="Искать"/>
@@ -44,7 +44,7 @@
                             rowspan="2"
                             style="width:80%">
                         <h2>В вашей корзине ... книг<br/></h2>
-                        Результаты поиска будут отображены здесь:<br/>
+                        <fmt:message key="result" /><br/>
                         <select size="10">
                             <c:forEach var="item" items="${sessionScope.editions}">
                                 <option>${item}</option>
