@@ -7,11 +7,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setBundle basename="messages"/>
 <html>
 <head>
     <meta charset="utf-8"/>
     <title>Библиотека Павла Касичева</title>
+    <fmt:setLocale value="${sessionScope.lan}"/>
+    <fmt:setBundle basename="messages"/>
 </head>
 <body>
 <!--Создаём таблицу контейнер, которой задаём следующее

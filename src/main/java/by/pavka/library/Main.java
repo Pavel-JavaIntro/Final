@@ -23,7 +23,8 @@ public class Main {
     System.out.println(Objects.hash(i));
     System.out.println(Objects.hashCode(i));
     System.out.println("admin".hashCode());
-    logger.warn("Всем труба");
+    // logger.warn("Всем труба");
+    Locale.setDefault(new Locale("ru"));
 
     // ConfirmationMailSender.sendInvitation("pavkascool@gmail.com");
     System.out.println(Locale.getDefault());
