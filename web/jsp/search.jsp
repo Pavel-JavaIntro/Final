@@ -37,7 +37,7 @@
                             <br/><fmt:message key="bookauthor" /><br/>
                             <input type="text" name="author" id="author" value=""/>
                             <br/><br/>
-                            <input type="submit" value="Искать"/>
+                            <input type="submit" value="<fmt:message key="search" />"/>
                         </form>
                     </td>
                     <td
@@ -52,8 +52,8 @@
                         </select>
                         <br/>
                         <form name="orderForm" method="POST" action="library">
-                            <input type="checkbox" name="subscribe" id="subscribe">Абонемент</input><br/>
-                            <input type="submit" value="Заказать"/>
+                            <input type="checkbox" name="subscribe" id="subscribe"><fmt:message key="subscriber" /></input><br/>
+                            <input type="submit" value="<fmt:message key="order" />"/>
                         </form>
                     </td>
 
