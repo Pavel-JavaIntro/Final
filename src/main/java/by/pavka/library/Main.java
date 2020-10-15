@@ -23,6 +23,7 @@ public class Main {
     System.out.println(Objects.hash(i));
     System.out.println(Objects.hashCode(i));
     System.out.println("admin".hashCode());
+    System.out.println("System Hash = " + System.identityHashCode(s));
     // logger.warn("Всем труба");
     Locale.setDefault(new Locale("ru"));
 
@@ -32,5 +33,8 @@ public class Main {
     while (drivers.hasMoreElements()) {
       System.out.println(drivers.nextElement());
     }
+
+    Object test = new Object();
+    System.out.println(test.hashCode());
   }
 }
