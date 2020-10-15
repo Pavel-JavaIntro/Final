@@ -10,6 +10,5 @@ public class SearchCommand implements ActionCommand {
   @Override
   public void execute(HttpServletRequest request) {
     request.getSession().setAttribute("page", "/jsp/search.jsp");
-    logger.info("Searching...");
   }
 }

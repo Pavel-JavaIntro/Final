@@ -37,6 +37,7 @@ public class LoginCommand implements ActionCommand {
                     int roleId = user.getRoleId();
                     return ConstantManager.getRoleById(roleId);
                   } catch (LibraryEntityException e) {
+                    logger.warn("Login failed");
                     return ConstantManager.VISITOR;
                   }
                 }
@@ -48,6 +49,7 @@ public class LoginCommand implements ActionCommand {
             session.setAttribute("client", client);
           } catch (LibraryEntityException e) {
             page = ConfigurationManager.getProperty("error");
+            logger.warn("Login failed");
           }
         } else {
           request.setAttribute("errorLoginPassMessage", MessageManager.getProperty(

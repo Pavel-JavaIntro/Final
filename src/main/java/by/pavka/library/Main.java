@@ -15,7 +15,7 @@ public class Main {
 
   public static void main(String[] args) {
     // TODO remove this class when finish
-    String s = "abc1";
+    String s = "This is a Java string";
     int i = 2987023;
     System.out.println("s.hashCode() = " + s.hashCode());
     System.out.println("hash = " + Objects.hash(s));
