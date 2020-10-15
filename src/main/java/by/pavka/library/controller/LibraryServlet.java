@@ -34,7 +34,7 @@ public class LibraryServlet extends HttpServlet {
     // TODO this is only for test purposes and should be re-written processing exceptions
     ActionFactory client = new ActionFactory();
     ActionCommand command = client.defineCommand(request);
-    logger.info(command);
+    logger.info("Execution: " + command.getClass().getSimpleName());
     command.execute(request);
     String page = (String) request.getSession().getAttribute("page");
     if (page != null) {
