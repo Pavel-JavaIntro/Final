@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 public class FindEditionCommand implements ActionCommand {
   @Override
@@ -22,7 +23,14 @@ public class FindEditionCommand implements ActionCommand {
     List<Edition> editions = null;
     try {
       editions = welcomeService.findEditions(title, author);
-      session.setAttribute("editions", editions);
+    } catch (ServiceException e) {
+      page = ConfigurationManager.getProperty("error");
+      logger.error("FindEditionCommand hasn't completed");
+    }
+    Map<Edition, String> editionInfo = null;
+    try {
+      editionInfo = welcomeService.authorsByEdition(editions);
+      session.setAttribute("editions", editionInfo);
     } catch (ServiceException e) {
       page = ConfigurationManager.getProperty("error");
       logger.error("FindEditionCommand hasn't completed");

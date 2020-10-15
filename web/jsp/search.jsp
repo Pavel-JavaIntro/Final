@@ -26,14 +26,14 @@
                     <td
                             rowspan="2"
                             style="width:80%">
-                        <h2><fmt:message key="message.search" /></h2>
+                        <h2><fmt:message key="message.search"/></h2>
                         <br/>
-                        <h3><fmt:message key="message.searcher" /><br/></h3>
+                        <h3><fmt:message key="message.searcher"/><br/></h3>
                         <form name="searchForm" method="POST" action="library" onsubmit="return validateAuthor();">
                             <input type="hidden" name="command" value="find_edition"/>
-                            <br/><fmt:message key="message.booktitle" /><br/>
+                            <br/><fmt:message key="message.booktitle"/><br/>
                             <input type="text" name="title" id="title" value=""/>
-                            <br/><fmt:message key="message.bookauthor" /><br/>
+                            <br/><fmt:message key="message.bookauthor"/><br/>
                             <input type="text" name="author" id="author" value=""/>
                             <br/><br/>
                             <input type="submit" value="<fmt:message key="message.search" />"/>
@@ -42,10 +42,10 @@
                     <td
                             rowspan="2"
                             style="width:80%">
-                        <fmt:message key="message.result" /><br/>
+                        <fmt:message key="message.result"/><br/>
                         <select size="10">
                             <c:forEach var="item" items="${sessionScope.editions}">
-                                <option>${item["title"]}</option>
+                                <option>${item.key.fieldForName("title").value}, ${item.value}, ${item.key.fieldForName("year").value}</option>
                             </c:forEach>
                         </select>
                         <br/>

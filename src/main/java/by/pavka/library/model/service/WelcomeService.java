@@ -1,5 +1,6 @@
 package by.pavka.library.model.service;
 
+import by.pavka.library.entity.LibraryEntityException;
 import by.pavka.library.entity.SimpleListEntity;
 import by.pavka.library.entity.criteria.Criteria;
 import by.pavka.library.entity.criteria.EntityField;
@@ -12,6 +13,7 @@ import by.pavka.library.model.dao.LibraryDao;
 import by.pavka.library.model.dao.ManyToManyDao;
 import by.pavka.library.model.dao.impl.LibraryDaoFactory;
 import by.pavka.library.model.mapper.TableEntityMapper;
+import javafx.scene.control.Tab;
 
 import java.util.*;
 
@@ -235,5 +237,29 @@ public class WelcomeService {
     } catch (DaoException e) {
       throw new ServiceException("Cannot find books", e);
     }
+  }
+
+  public Map<Edition, String> authorsByEdition(List<Edition> editions) throws ServiceException {
+    Map<Edition, String> result = new HashMap<>();
+    try (ManyToManyDao<Edition, Author> editionDao =
+            LibraryDaoFactory.getInstance().obtainManyToManyDao();
+        LibraryDao<Author> authorDao =
+            LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.AUTHOR)) {
+      for (Edition edition : editions) {
+        Set<Author> authors = new HashSet<>();
+        Set<Integer> authorIds = editionDao.getSecond(edition.getId());
+        for (int id : authorIds) {
+          authors.add(authorDao.get(id));
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Author a : authors) {
+          stringBuilder.append(a.fieldForName("surname").getValue()).append(" ");
+        }
+        result.put(edition, stringBuilder.toString());
+      }
+    } catch (DaoException | LibraryEntityException e) {
+      throw new ServiceException("Cannot filter books", e);
+    }
+    return result;
   }
 }
