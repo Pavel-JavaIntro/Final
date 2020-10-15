@@ -42,18 +42,14 @@
                     <td
                             rowspan="2"
                             style="width:80%">
-                        <h2>В вашей корзине ... книг<br/></h2>
                         <fmt:message key="message.result" /><br/>
                         <select size="10">
                             <c:forEach var="item" items="${sessionScope.editions}">
-                                <option>${item}</option>
+                                <option>${item["title"]}</option>
                             </c:forEach>
                         </select>
                         <br/>
-                        <form name="orderForm" method="POST" action="library">
-                            <input type="checkbox" name="subscribe" id="subscribe"><fmt:message key="message.subscriber" /></input><br/>
-                            <input type="submit" value="<fmt:message key="message.order" />"/>
-                        </form>
+                        <jsp:include page="${sessionScope.client.bookOrder}"/>
                     </td>
 
                     <jsp:include page="${sessionScope.client.entrance}"/>

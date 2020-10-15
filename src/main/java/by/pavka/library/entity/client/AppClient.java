@@ -48,8 +48,6 @@ public abstract class AppClient implements Serializable {
     }
   }
 
-  //public void setEntrance(String entrance) {}
-
   public String getAdminSection() {
     switch (getRole()) {
       case ConstantManager.ADMIN:
@@ -63,7 +61,16 @@ public abstract class AppClient implements Serializable {
     }
   }
 
-  public void setAdminSection (String str) {}
+  public String getBookOrder() {
+    switch (getRole()) {
+      case ConstantManager.VISITOR:
+        return null;
+      case ConstantManager.READER:
+        return "block/reader_order.jsp";
+      default:
+        return "block/subscriber_order.jsp";
+    }
+  }
 
 
   @Override
