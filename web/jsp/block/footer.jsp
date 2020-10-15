@@ -10,11 +10,11 @@
         style="width:100%; border-radius:5px;">
     <tr>
         <th>
-            <h3><fmt:message key="waddress"/></h3>
-            <p><fmt:message key="libaddress"/></p>
-            <h3><fmt:message key="wtime"/></h3>
-            <p><fmt:message key="libtime"/></p>
-            <h3><fmt:message key="developer"/></h3>
+            <h3><fmt:message key="message.waddress"/></h3>
+            <p><fmt:message key="message.libaddress"/></p>
+            <h3><fmt:message key="message.wtime"/></h3>
+            <p><fmt:message key="message.libtime"/></p>
+            <h3><fmt:message key="message.developer"/></h3>
             <p> email: ${applicationScope.email}</p>
         </th>
     </tr>

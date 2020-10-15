@@ -26,24 +26,24 @@
                     <td
                             rowspan="2"
                             style="width:80%">
-                        <h2><fmt:message key="search" /></h2>
+                        <h2><fmt:message key="message.search" /></h2>
                         <br/>
-                        <h3><fmt:message key="searcher" /><br/></h3>
+                        <h3><fmt:message key="message.searcher" /><br/></h3>
                         <form name="searchForm" method="POST" action="library" onsubmit="return validateAuthor();">
                             <input type="hidden" name="command" value="find_edition"/>
-                            <br/><fmt:message key="booktitle" /><br/>
+                            <br/><fmt:message key="message.booktitle" /><br/>
                             <input type="text" name="title" id="title" value=""/>
-                            <br/><fmt:message key="bookauthor" /><br/>
+                            <br/><fmt:message key="message.bookauthor" /><br/>
                             <input type="text" name="author" id="author" value=""/>
                             <br/><br/>
-                            <input type="submit" value="<fmt:message key="search" />"/>
+                            <input type="submit" value="<fmt:message key="message.search" />"/>
                         </form>
                     </td>
                     <td
                             rowspan="2"
                             style="width:80%">
                         <h2>В вашей корзине ... книг<br/></h2>
-                        <fmt:message key="result" /><br/>
+                        <fmt:message key="message.result" /><br/>
                         <select size="10">
                             <c:forEach var="item" items="${sessionScope.editions}">
                                 <option>${item}</option>
@@ -51,8 +51,8 @@
                         </select>
                         <br/>
                         <form name="orderForm" method="POST" action="library">
-                            <input type="checkbox" name="subscribe" id="subscribe"><fmt:message key="subscriber" /></input><br/>
-                            <input type="submit" value="<fmt:message key="order" />"/>
+                            <input type="checkbox" name="subscribe" id="subscribe"><fmt:message key="message.subscriber" /></input><br/>
+                            <input type="submit" value="<fmt:message key="message.order" />"/>
                         </form>
                     </td>
 

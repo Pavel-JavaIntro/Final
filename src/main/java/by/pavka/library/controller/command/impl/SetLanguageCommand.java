@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 
 public class SetLanguageCommand implements ActionCommand {
   @Override
-  public void execute(HttpServletRequest request, HttpServletResponse response) {
+  public void execute(HttpServletRequest request) {
     String language = request.getParameter("lan");
     System.out.println(language);
     HttpSession session = request.getSession();

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class FindBookCommand implements ActionCommand {
   @Override
-  public void execute(HttpServletRequest request, HttpServletResponse response) {
+  public void execute(HttpServletRequest request) {
     String title = request.getParameter("title");
     String author = request.getParameter("author");
     WelcomeService welcomeService = WelcomeService.getInstance();

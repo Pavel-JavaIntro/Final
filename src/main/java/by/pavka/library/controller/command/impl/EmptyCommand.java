@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class EmptyCommand implements ActionCommand {
   @Override
-  public void execute(HttpServletRequest request, HttpServletResponse response) {
+  public void execute(HttpServletRequest request) {
     //Empty method for EmptyCommand
   }
 }

@@ -12,8 +12,8 @@
         style="width:100%; border-radius:5px;">
     <tr>
         <th>
-            <h1><fmt:message key="libheader"/></h1>
-            <h3><fmt:message key="libad"/></h3>
+            <h1><fmt:message key="message.libheader"/></h1>
+            <h3><fmt:message key="message.libad"/></h3>
         </th>
         <th>
             <form name="selectLang" method="POST" action="library">

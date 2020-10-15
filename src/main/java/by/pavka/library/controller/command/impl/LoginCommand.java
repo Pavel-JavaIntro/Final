@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 
 public class LoginCommand implements ActionCommand {
   @Override
-  public void execute(HttpServletRequest request, HttpServletResponse response) {
+  public void execute(HttpServletRequest request) {
     String surname = request.getParameter("surname");
     String name = request.getParameter("name");
     String password = request.getParameter("password");
@@ -50,14 +50,16 @@ public class LoginCommand implements ActionCommand {
             page = ConfigurationManager.getProperty("error");
           }
         } else {
-          request.setAttribute("errorLoginPassMessage", MessageManager.getProperty("loginerror"));
+          request.setAttribute("errorLoginPassMessage", MessageManager.getProperty(
+                  "message.loginerror"));
         }
       } catch (ServiceException e) {
         page = ConfigurationManager.getProperty("error");
         logger.error("LoginCommand hasn't completed");
       }
     } else {
-      request.setAttribute("errorLoginPassMessage", MessageManager.getProperty("emptyfields"));
+      request.setAttribute("errorLoginPassMessage", MessageManager.getProperty(
+              "message.emptyfields"));
     }
     session.setAttribute("page", page);
   }

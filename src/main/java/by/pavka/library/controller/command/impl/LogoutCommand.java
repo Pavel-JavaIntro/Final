@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 public class LogoutCommand implements ActionCommand {
   @Override
-  public void execute(HttpServletRequest request, HttpServletResponse response) {
+  public void execute(HttpServletRequest request) {
     HttpSession session = request.getSession();
     AppClient client = new AppClient() {
       @Override

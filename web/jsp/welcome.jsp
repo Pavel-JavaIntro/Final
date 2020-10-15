@@ -27,23 +27,23 @@
                     <td
                             rowspan="2"
                             style="width:80%">
-                        <h2><fmt:message key="welcome" /></h2>
+                        <h2><fmt:message key="message.welcome" /></h2>
                         <p style="text-indent:20px">
-                            <fmt:message key="maintext1" /></p>
+                            <fmt:message key="message.maintext1" /></p>
 
                         <p style="text-indent:20px">
-                            <fmt:message key="maintext2" /> ${applicationScope.books}
-                            <fmt:message key="maintext3" /> ${applicationScope.users}
-                            <fmt:message key="maintext4" /></p>
+                            <fmt:message key="message.maintext2" /> ${applicationScope.books}
+                            <fmt:message key="message.maintext3" /> ${applicationScope.users}
+                            <fmt:message key="message.maintext4" /></p>
 
-                        <p style="text-indent:20px"><fmt:message key="maintext5" />
+                        <p style="text-indent:20px"><fmt:message key="message.maintext5" />
                         <form action="library" method="post">
-                            <a href="#" onclick="parentNode.submit();"><fmt:message key="search" /></a>
+                            <a href="#" onclick="parentNode.submit();"><fmt:message key="message.search" /></a>
                             <input type="hidden" name="command" value="search"/>
                         </form>
-                        <p><fmt:message key="maintext6" /></p>
+                        <p><fmt:message key="message.maintext6" /></p>
                         <p style="text-indent:20px">
-                            <fmt:message key="maintext7" /></p>
+                            <fmt:message key="message.maintext7" /></p>
                     </td>
                     <jsp:include page="${sessionScope.client.entrance}"/>
                 </tr>

@@ -31,19 +31,18 @@ public class LibraryServlet extends HttpServlet {
 
   private void process(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    // TODO this is only for test purposes and should be re-written
+    // TODO this is only for test purposes and should be re-written processing exceptions
     ActionFactory client = new ActionFactory();
     ActionCommand command = client.defineCommand(request);
     logger.info(command);
-    command.execute(request, response);
+    command.execute(request);
     String page = (String) request.getSession().getAttribute("page");
     if (page != null) {
-      logger.warn(request.getSession().getAttribute("lan"));
       RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(page);
       requestDispatcher.forward(request, response);
     } else {
       page = ConfigurationManager.getProperty("index");
-      request.getSession().setAttribute("nullPage", MessageManager.getProperty("nullpage"));
+      request.getSession().setAttribute("nullPage", MessageManager.getProperty("message.nullpage"));
       response.sendRedirect(request.getContextPath() + page);
     }
   }

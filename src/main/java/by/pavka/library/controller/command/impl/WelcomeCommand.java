@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 public class WelcomeCommand implements ActionCommand {
   @Override
-  public void execute(HttpServletRequest request, HttpServletResponse response) {
+  public void execute(HttpServletRequest request) {
     //TODO
     WelcomeService welcomeService = WelcomeService.getInstance();
     HttpSession session = request.getSession();
