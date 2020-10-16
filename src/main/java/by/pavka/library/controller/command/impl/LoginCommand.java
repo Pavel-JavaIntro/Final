@@ -6,14 +6,12 @@ import by.pavka.library.controller.LibValidator;
 import by.pavka.library.controller.command.ActionCommand;
 import by.pavka.library.entity.LibraryEntityException;
 import by.pavka.library.entity.client.AppClient;
-import by.pavka.library.entity.impl.Role;
 import by.pavka.library.entity.impl.User;
 import by.pavka.library.model.mapper.ConstantManager;
 import by.pavka.library.model.service.ServiceException;
 import by.pavka.library.model.service.WelcomeService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class LoginCommand implements ActionCommand {

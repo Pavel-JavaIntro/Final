@@ -9,7 +9,6 @@ import by.pavka.library.model.service.WelcomeService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class WelcomeCommand implements ActionCommand {

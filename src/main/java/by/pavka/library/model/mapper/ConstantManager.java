@@ -25,8 +25,8 @@ public class ConstantManager {
   private ConstantManager()  {}
 
   static {
-    WelcomeService service = WelcomeService.getInstance();
     try {
+      WelcomeService service = WelcomeService.getInstance();
       service.initConstants(locations, TableEntityMapper.LOCATION);
       service.initConstants(operations, TableEntityMapper.OPERATION);
       service.initConstants(roles, TableEntityMapper.ROLE);

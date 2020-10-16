@@ -13,7 +13,6 @@ import by.pavka.library.model.dao.LibraryDao;
 import by.pavka.library.model.dao.ManyToManyDao;
 import by.pavka.library.model.dao.impl.LibraryDaoFactory;
 import by.pavka.library.model.mapper.TableEntityMapper;
-import javafx.scene.control.Tab;
 
 import java.util.*;
 
