@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.lan}"/>
 <fmt:setBundle basename="messages"/>
@@ -27,23 +28,18 @@
                     <td
                             rowspan="2"
                             style="width:80%">
-                        <h2><fmt:message key="message.welcome" /></h2>
-                        <p style="text-indent:20px">
-                            <fmt:message key="message.maintext1" /></p>
-
-                        <p style="text-indent:20px">
-                            <fmt:message key="message.maintext2" /> ${applicationScope.books}
-                            <fmt:message key="message.maintext3" /> ${applicationScope.users}
-                            <fmt:message key="message.maintext4" /></p>
-
-                        <p style="text-indent:20px"><fmt:message key="message.maintext5" />
-                        <form action="library" method="post">
-                            <a href="#" onclick="postTo('search');"><fmt:message key="message.search" /></a>
-                            <input type="hidden" name="command" value="search"/>
+                        <h2><fmt:message key="message.basket" /></h2>
+                        <form name="orderForm" method="POST" action="library">
+                            <select size="10" name="book">
+                                <c:forEach var="item" items="${sessionScope.editions}">
+                                    <option value="${item.key.id}">${item.key.fieldForName("title").value}, ${item.value}, ${item.key.fieldForName("year").value}</option>
+                                </c:forEach>
+                            </select>
+                            <br/>
+                            <input type="hidden" name="command" value="order_book"/>
+                            <button name="order" value="unselect"><fmt:message key="message.unselect"/> </button><br/>
+                            <button name="order" value="order"><fmt:message key="message.order"/></button>
                         </form>
-                        <p><fmt:message key="message.maintext6" /></p>
-                        <p style="text-indent:20px">
-                            <fmt:message key="message.maintext7" /></p>
                     </td>
                     <jsp:include page="${sessionScope.client.entrance}"/>
                 </tr>
@@ -55,6 +51,7 @@
         </td>
     </tr>
 </table>
-<script src="${pageContext.request.contextPath}/js/poster.js" type="text/javascript"></script>
+
 </body>
 </html>
+

@@ -42,14 +42,18 @@
                     <td
                             rowspan="2"
                             style="width:80%">
-                        <fmt:message key="message.result"/><br/>
-                        <select size="10">
-                            <c:forEach var="item" items="${sessionScope.editions}">
-                                <option>${item.key.fieldForName("title").value}, ${item.value}, ${item.key.fieldForName("year").value}</option>
-                            </c:forEach>
-                        </select>
-                        <br/>
-                        <jsp:include page="${sessionScope.client.bookOrder}"/>
+                        <jsp:include page="${sessionScope.client.basket}"/>
+
+                        <form name="selectForm" method="POST" action="library">
+                            <fmt:message key="message.result"/><br/>
+                            <select size="10" name="book">
+                                <c:forEach var="item" items="${sessionScope.editions}">
+                                    <option value="${item.key.id}">${item.key.fieldForName("title").value}, ${item.value}, ${item.key.fieldForName("year").value}</option>
+                                </c:forEach>
+                            </select>
+                            <br/>
+                            <jsp:include page="${sessionScope.client.bookSelection}"/>
+                        </form>
                     </td>
 
                     <jsp:include page="${sessionScope.client.entrance}"/>
@@ -65,5 +69,6 @@
 </table>
 
 <script src="${pageContext.request.contextPath}/js/validator.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/poster.js" type="text/javascript"></script>
 </body>
 </html>

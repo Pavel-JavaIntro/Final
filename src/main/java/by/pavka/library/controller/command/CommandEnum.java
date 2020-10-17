@@ -10,9 +10,11 @@ public enum CommandEnum {
   LOGOUT(new LogoutCommand()),
   FIND_BOOK(new FindBookCommand()),
   FIND_EDITION(new FindEditionCommand()),
-  SET_LANG(new SetLanguageCommand());
+  SET_LANG(new SetLanguageCommand()),
+  SELECT_BOOK(new SelectBookCommand()),
+  BASKET(new BasketCommand());
 
-  private ActionCommand command;
+  private final ActionCommand command;
 
   CommandEnum(ActionCommand command) {
     this.command = command;

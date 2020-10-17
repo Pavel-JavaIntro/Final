@@ -32,7 +32,7 @@
                             rowspan="2"
                             style="width:80%">
                         <h2><fmt:message key="message.error1"/>
-                            <a href="welcome.jsp"><fmt:message key="message.ret"/> </a></h2>
+                            <a href="../index.jsp"><fmt:message key="message.ret"/> </a></h2>
                         <h2><fmt:message key="message.error2"/></h2><br/>
                         ${pageContext.errorData.requestURI}
                         ${pageContext.errorData.servletName}

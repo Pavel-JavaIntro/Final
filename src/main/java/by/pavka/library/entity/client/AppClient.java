@@ -4,12 +4,15 @@ import by.pavka.library.entity.impl.Role;
 import by.pavka.library.model.mapper.ConstantManager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class AppClient implements Serializable {
   private String surname;
   private String name;
   private String email;
+  private List<Integer> editionIds = new ArrayList<>();
 
   public String getSurname() {
     return surname;
@@ -33,6 +36,22 @@ public abstract class AppClient implements Serializable {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public List<Integer> getEditionIds() {
+    return editionIds;
+  }
+
+  public void addEdition(int id) {
+    editionIds.add(id);
+  }
+
+  public int getBasketSize() {
+    return editionIds.size();
+  }
+
+  public void removeEdition(int id) {
+    editionIds.remove(id);
   }
 
   public abstract String getRole();
@@ -61,26 +80,32 @@ public abstract class AppClient implements Serializable {
     }
   }
 
-  public String getBookOrder() {
+  public String getBookSelection() {
     switch (getRole()) {
       case ConstantManager.VISITOR:
         return null;
-      case ConstantManager.READER:
-        return "block/reader_order.jsp";
       default:
-        return "block/subscriber_order.jsp";
+        return "block/reader_order.jsp";
     }
   }
 
+  public String getBasket() {
+    switch (getRole()) {
+      case ConstantManager.VISITOR:
+        return null;
+      default:
+        return "block/basket.jsp";
+    }
+  }
 
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (!(o instanceof AppClient)) return false;
     AppClient appClient = (AppClient) o;
-    return surname.equals(appClient.surname) &&
-        name.equals(appClient.name) &&
-        Objects.equals(email, appClient.email);
+    return surname.equals(appClient.surname)
+        && name.equals(appClient.name)
+        && Objects.equals(email, appClient.email);
   }
 
   @Override
