@@ -55,14 +55,13 @@ public abstract class LibraryEntity implements Serializable {
     if (this == o) return true;
     if (o == null || this.getClass() != o.getClass()) return false;
     LibraryEntity that = (LibraryEntity) o;
-    return id == that.id &&
-        Arrays.equals(fields, that.fields);
+    return id == that.id;
   }
 
   @Override
   public int hashCode() {
     int result = Objects.hash(id);
-    result = 31 * result + Arrays.hashCode(fields);
+    result = 31 * result + getClass().hashCode();
     return result;
   }
 

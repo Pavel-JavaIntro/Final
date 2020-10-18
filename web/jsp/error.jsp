@@ -32,15 +32,9 @@
                             rowspan="2"
                             style="width:80%">
                         <h2><fmt:message key="message.error1"/>
-                            <a href="../index.jsp"><fmt:message key="message.ret"/> </a></h2>
+                            <a href="#" onclick="postTo('welcome')"><fmt:message key="message.ret"/> </a></h2>
                         <h2><fmt:message key="message.error2"/></h2><br/>
-                        ${pageContext.errorData.requestURI}
-                        ${pageContext.errorData.servletName}
-                        ${pageContext.errorData.statusCode}
-                        ${pageContext.errorData.throwable.message}
-                        ${pageContext.errorData.throwable.cause}
-                        ${pageContext.errorData.throwable.stackTrace}
-
+                        <%pageContext.getErrorData().getThrowable().printStackTrace();%>
                     </td>
                     <jsp:include page="${sessionScope.client.entrance}"/>
                 </tr>
@@ -52,5 +46,6 @@
         </td>
     </tr>
 </table>
+<script src="${pageContext.request.contextPath}/js/poster.js" type="text/javascript"></script>
 </body>
 </html>

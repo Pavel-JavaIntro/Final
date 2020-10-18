@@ -41,6 +41,7 @@ public class LoginCommand implements ActionCommand {
                 }
               };
           try {
+            client.setId(user.getId());
             client.setSurname(user.getSurname());
             client.setName(user.getName());
             client.setEmail(user.getEmail());

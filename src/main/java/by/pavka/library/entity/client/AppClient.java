@@ -1,18 +1,29 @@
 package by.pavka.library.entity.client;
 
+import by.pavka.library.entity.EditionInfo;
+import by.pavka.library.entity.criteria.EntityField;
+import by.pavka.library.entity.impl.Book;
 import by.pavka.library.entity.impl.Role;
 import by.pavka.library.model.mapper.ConstantManager;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public abstract class AppClient implements Serializable {
+  private int id;
   private String surname;
   private String name;
   private String email;
-  private List<Integer> editionIds = new ArrayList<>();
+  private int reservedBooks;
+  private Set<EditionInfo> editioninfos = new HashSet<>();
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
 
   public String getSurname() {
     return surname;
@@ -38,20 +49,36 @@ public abstract class AppClient implements Serializable {
     this.email = email;
   }
 
-  public List<Integer> getEditionIds() {
-    return editionIds;
+  public int getReservedBooks() {
+    return reservedBooks;
   }
 
-  public void addEdition(int id) {
-    editionIds.add(id);
+  public void setReservedBooks(int reservedBooks) {
+    this.reservedBooks = reservedBooks;
+  }
+
+  public Set<EditionInfo> getEditionInfos() {
+    return editioninfos;
+  }
+
+  public boolean addEditionInfo(EditionInfo info) {
+    if (info.getBook() == null) {
+      return false;
+    }
+    boolean result = editioninfos.add(info);
+    if (result) {
+      reservedBooks++;
+    }
+    return result;
   }
 
   public int getBasketSize() {
-    return editionIds.size();
+    return editioninfos.size();
   }
 
-  public void removeEdition(int id) {
-    editionIds.remove(id);
+  public void removeEditionInfo(EditionInfo info) {
+    editioninfos.remove(info);
+    reservedBooks--;
   }
 
   public abstract String getRole();
@@ -85,7 +112,7 @@ public abstract class AppClient implements Serializable {
       case ConstantManager.VISITOR:
         return null;
       default:
-        return "block/reader_order.jsp";
+        return "block/reader_select.jsp";
     }
   }
 
@@ -115,6 +142,6 @@ public abstract class AppClient implements Serializable {
 
   @Override
   public String toString() {
-    return String.format("Уважаемый %s %s!", name, surname);
+    return name + " " + surname;
   }
 }

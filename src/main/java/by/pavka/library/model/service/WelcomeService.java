@@ -1,5 +1,6 @@
 package by.pavka.library.model.service;
 
+import by.pavka.library.entity.EditionInfo;
 import by.pavka.library.entity.LibraryEntityException;
 import by.pavka.library.entity.SimpleListEntity;
 import by.pavka.library.entity.criteria.Criteria;
@@ -238,27 +239,57 @@ public class WelcomeService {
     }
   }
 
-  public Map<Edition, String> authorsByEdition(List<Edition> editions) throws ServiceException {
-    Map<Edition, String> result = new HashMap<>();
+  public Book findBookByEdition(int id) throws ServiceException {
+    Book book = null;
+    try (LibraryDao<Book> bookDao =
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+      List<Book> result = new ArrayList<>();
+      Criteria criteria = new Criteria();
+      EntityField<Integer> edId = new EntityField<>("editionId");
+      edId.setValue(id);
+      criteria.addConstraint(edId);
+      result.addAll(bookDao.read(criteria, true));
+      for (Book b : result) {
+        if (!b.fieldForName("locationId").getValue().equals(4)
+            && !b.fieldForName("locationId").getValue().equals(5)) {
+          book = b;
+          break;
+        }
+      }
+    } catch (DaoException | LibraryEntityException e) {
+      throw new ServiceException("Cannot find books", e);
+    }
+    return book;
+  }
+
+  public void addAuthors(EditionInfo info) throws ServiceException {
     try (ManyToManyDao<Edition, Author> editionDao =
             LibraryDaoFactory.getInstance().obtainManyToManyDao();
         LibraryDao<Author> authorDao =
             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.AUTHOR)) {
-      for (Edition edition : editions) {
-        Set<Author> authors = new HashSet<>();
-        Set<Integer> authorIds = editionDao.getSecond(edition.getId());
-        for (int id : authorIds) {
-          authors.add(authorDao.get(id));
-        }
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Author a : authors) {
-          stringBuilder.append(a.fieldForName("surname").getValue()).append(" ");
-        }
-        result.put(edition, stringBuilder.toString());
+
+      Set<Author> authors = new HashSet<>();
+      Set<Integer> authorIds = editionDao.getSecond(info.getEdition().getId());
+      for (int id : authorIds) {
+        authors.add(authorDao.get(id));
       }
+      StringBuilder stringBuilder = new StringBuilder();
+      for (Author a : authors) {
+        stringBuilder.append(a.fieldForName("surname").getValue()).append(" ");
+      }
+      info.setAuthors(stringBuilder.toString());
+
     } catch (DaoException | LibraryEntityException e) {
-      throw new ServiceException("Cannot filter books", e);
+      throw new ServiceException("Cannot find relevant books", e);
     }
-    return result;
+  }
+
+  public void addBook(EditionInfo info) throws ServiceException {
+    try {
+      Book book = findBookByEdition(info.getEdition().getId());
+      info.setBook(book);
+    } catch (ServiceException e) {
+      throw new ServiceException("Cannot find relevant books", e);
+    }
   }
 }

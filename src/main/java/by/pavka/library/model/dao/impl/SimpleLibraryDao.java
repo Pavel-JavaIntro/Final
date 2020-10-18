@@ -11,6 +11,8 @@ import by.pavka.library.model.dao.LibraryDao;
 import by.pavka.library.model.mapper.ColumnFieldMapper;
 import by.pavka.library.model.mapper.TableEntityMapper;
 import by.pavka.library.model.dao.DaoException;
+import by.pavka.library.model.mapper.converter.ConverterFactory;
+import by.pavka.library.model.mapper.converter.FieldColumnConverter;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -60,6 +62,7 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
 
   @Override
   public List<T> read(Criteria criteria, boolean strict) throws DaoException {
+    System.out.println(LIST_ALL + getTableName() + interpret(criteria, strict));
     return list(LIST_ALL + getTableName() + interpret(criteria, strict));
   }
 
@@ -158,9 +161,10 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
       return "";
     }
     StringBuilder builder = new StringBuilder(" WHERE ");
+    FieldColumnConverter converter = ConverterFactory.getInstance().getConverter();
     for (int i = 0; i < criteria.size(); i++) {
       EntityField<?> field = criteria.getConstraint(i);
-      builder.append(field.getName());
+      builder.append(converter.formColumnName(field));
       if (!strict && field.getValue() instanceof String) {
         builder.append(" LIKE '%").append(field.getValue()).append("%'");
       } else {

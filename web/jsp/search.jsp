@@ -46,11 +46,15 @@
 
                         <form name="selectForm" method="POST" action="library">
                             <fmt:message key="message.result"/><br/>
-                            <select size="10" name="book">
+
+                            <select size="10" name="edition">
                                 <c:forEach var="item" items="${sessionScope.editions}">
-                                    <option value="${item.key.id}">${item.key.fieldForName("title").value}, ${item.value}, ${item.key.fieldForName("year").value}</option>
+                                    <option value="${item.edition.id}">
+                                            ${item}
+                                    </option>
                                 </c:forEach>
                             </select>
+
                             <br/>
                             <jsp:include page="${sessionScope.client.bookSelection}"/>
                         </form>

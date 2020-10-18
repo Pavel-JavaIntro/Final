@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.lan}"/>
 <fmt:setBundle basename="messages"/>
@@ -28,18 +27,10 @@
                     <td
                             rowspan="2"
                             style="width:80%">
-                        <h2><fmt:message key="message.basket" /></h2>
-                        <form name="orderForm" method="POST" action="library">
-                            <select size="10" name="book">
-                                <c:forEach var="item" items="${sessionScope.client.editionInfos}">
-                                    <option value="${item.edition.id}">${item}</option>
-                                </c:forEach>
-                            </select>
-                            <br/>
-                            <input type="hidden" name="command" value="order_book"/>
-                            <button name="order" value="unselect"><fmt:message key="message.unselect"/> </button><br/>
-                            <button name="order" value="order"><fmt:message key="message.order"/></button>
-                        </form>
+                        <h3><fmt:message key="message.reserve"/> ${sessionScope.client.reservedBooks} <fmt:message
+                                key="message.inreserve"/><br/>
+                            <a href="#" onclick="postTo('welcome')"><fmt:message key="message.start"/> </a></h3>
+
                     </td>
                     <jsp:include page="${sessionScope.client.entrance}"/>
                 </tr>
@@ -51,7 +42,6 @@
         </td>
     </tr>
 </table>
-
+<script src="${pageContext.request.contextPath}/js/poster.js" type="text/javascript"></script>
 </body>
 </html>
-

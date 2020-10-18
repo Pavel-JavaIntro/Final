@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Objects;
@@ -36,5 +37,11 @@ public class Main {
 
     Object test = new Object();
     System.out.println(test.hashCode());
+    Integer res = 600;
+    int ges = 600;
+    System.out.println(res == ges);
+    String[] ar1 = {null};
+    String[] ar2 = {null};
+    System.out.println(Arrays.equals(ar1, ar2));
   }
 }

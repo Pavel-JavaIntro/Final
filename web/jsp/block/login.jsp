@@ -2,7 +2,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.lan}"/>
 <fmt:setBundle basename="messages"/>
-<body>
 <td bgcolor="#e6e6fa">
     <p>
     <form name="loginForm" method="POST" action="library" onsubmit="return validateLogin();">
@@ -30,4 +29,4 @@
     </p>
 </td>
 <script src="${pageContext.request.contextPath}/js/validator.js" type="text/javascript"></script>
-</body>
+

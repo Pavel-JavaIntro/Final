@@ -26,3 +26,4 @@ function validateAuthor() {
     }
     return true;
 }
+

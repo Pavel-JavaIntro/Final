@@ -1,9 +1,10 @@
 package by.pavka.library.entity.criteria;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Criteria {
+public class Criteria implements Serializable {
   List<EntityField<?>> constraints = new ArrayList<>();
 
   public EntityField getConstraint(int index) {

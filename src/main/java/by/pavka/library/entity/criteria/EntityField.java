@@ -1,6 +1,8 @@
 package by.pavka.library.entity.criteria;
 
-public class EntityField<T> {
+import java.io.Serializable;
+
+public class EntityField<T> implements Serializable {
   private final String name;
   private T value;
 

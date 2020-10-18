@@ -12,7 +12,8 @@ public enum CommandEnum {
   FIND_EDITION(new FindEditionCommand()),
   SET_LANG(new SetLanguageCommand()),
   SELECT_BOOK(new SelectBookCommand()),
-  BASKET(new BasketCommand());
+  BASKET(new BasketCommand()),
+  ORDER_BOOK(new OrderBookCommand());
 
   private final ActionCommand command;
 

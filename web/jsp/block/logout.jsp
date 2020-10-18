@@ -5,7 +5,7 @@
 <td bgcolor="#e6e6fa">
     <p>
     <form name="logouForm" method="POST" action="library">
-        <h3>${sessionScope.client} <fmt:message key="message.salute"/><br/></h3>
+        <h3><fmt:message key="message.dear"/>${sessionScope.client} <fmt:message key="message.salute"/><br/></h3>
         <h3><fmt:message key="message.quit"/><br/></h3>
         <br/>
         <form name="searchForm" method="POST" action="library">
