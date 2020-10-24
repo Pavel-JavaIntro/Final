@@ -17,6 +17,7 @@ public class LibraryStarter implements ServletContextListener {
     logger.info("STARTED");
     DBConnectionPool.getInstance();
     ConstantManager.getLocationById(0);
+    OrderHolder.getInstance();
     ServletContext context = servletContextEvent.getServletContext();
     ResourceBundle resourceBundle = ResourceBundle.getBundle("database");
     String email = resourceBundle.getString("email");

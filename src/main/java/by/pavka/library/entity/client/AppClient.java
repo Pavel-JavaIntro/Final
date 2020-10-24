@@ -1,9 +1,6 @@
 package by.pavka.library.entity.client;
 
 import by.pavka.library.entity.EditionInfo;
-import by.pavka.library.entity.criteria.EntityField;
-import by.pavka.library.entity.impl.Book;
-import by.pavka.library.entity.impl.Role;
 import by.pavka.library.model.mapper.ConstantManager;
 
 import java.io.Serializable;
@@ -85,7 +82,7 @@ public abstract class AppClient implements Serializable {
 
   public String getEntrance() {
     switch (getRole()) {
-      case ConstantManager.VISITOR:
+      case ConstantManager.GUEST:
         System.out.println("INSIDE VISITOR1");
         return "block/login.jsp";
       default:
@@ -97,19 +94,17 @@ public abstract class AppClient implements Serializable {
   public String getAdminSection() {
     switch (getRole()) {
       case ConstantManager.ADMIN:
-        System.out.println("INSIDE ADMIN2");
         return "block/admin.jsp";
       case ConstantManager.LIBRARIAN:
         return "block/admin.jsp";
       default:
-        System.out.println("INSIDE VISITOR2");
         return "block/latin.jsp";
     }
   }
 
   public String getBookSelection() {
     switch (getRole()) {
-      case ConstantManager.VISITOR:
+      case ConstantManager.GUEST:
         return null;
       default:
         return "block/reader_select.jsp";
@@ -118,7 +113,7 @@ public abstract class AppClient implements Serializable {
 
   public String getBasket() {
     switch (getRole()) {
-      case ConstantManager.VISITOR:
+      case ConstantManager.GUEST:
         return null;
       default:
         return "block/basket.jsp";

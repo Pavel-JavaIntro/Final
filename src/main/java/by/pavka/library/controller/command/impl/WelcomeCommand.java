@@ -27,15 +27,15 @@ public class WelcomeCommand implements ActionCommand {
         AppClient client = new AppClient() {
           @Override
           public String getRole() {
-            return ConstantManager.VISITOR;
+            return ConstantManager.GUEST;
           }
         };
         session.setAttribute("client", client);
       }
-      session.setAttribute("page", ConfigurationManager.getProperty("welcome"));
+      session.setAttribute(PAGE, ConfigurationManager.getProperty("welcome"));
     } catch (ServiceException e) {
       session.setAttribute("page", ConfigurationManager.getProperty("error"));
-      logger.error("WelcomeCommand hasn't completed");
+      LOGGER.error("WelcomeCommand hasn't completed");
     }
   }
 }

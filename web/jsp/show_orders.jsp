@@ -26,11 +26,13 @@
                     <td
                             rowspan="2"
                             style="width:80%">
-                        <h2><fmt:message key="message.basket" /></h2>
+                        <h2><fmt:message key="message.users_orders" /></h2>
                         <form name="orderForm" method="POST" action="library">
                             <select size="10" name="book">
-                                <c:forEach var="item" items="${sessionScope.client.editionInfos}">
-                                    <option value="${item.edition.id}">${item}</option>
+                                <c:forEach var="item" items="${sessionScope.orders}">
+                                    <c:forEach var="edition" items="${item.editionInfoSet}">
+                                        <option value="${item.userId}">${item.userId} &lt;&lt; ${edition}</option>
+                                    </c:forEach>
                                 </c:forEach>
                             </select>
                             <br/>
@@ -52,4 +54,5 @@
 
 </body>
 </html>
+
 

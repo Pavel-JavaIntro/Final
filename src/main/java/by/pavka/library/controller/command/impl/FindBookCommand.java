@@ -17,15 +17,15 @@ public class FindBookCommand implements ActionCommand {
     String author = request.getParameter("author");
     WelcomeService welcomeService = WelcomeService.getInstance();
     HttpSession session = request.getSession();
-    String page = (String)session.getAttribute("page");
+    String page = (String)session.getAttribute(PAGE);
     List<Book> books = null;
     try {
       books = welcomeService.findBooks(title, author);
       session.setAttribute("books", books);
     } catch (ServiceException e) {
       page = ConfigurationManager.getProperty("error");
-      logger.error("FindBookCommand hasn't completed");
+      LOGGER.error("FindBookCommand hasn't completed");
     }
-    session.setAttribute("page", page);
+    session.setAttribute(PAGE, page);
   }
 }

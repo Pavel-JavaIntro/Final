@@ -7,7 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public interface ActionCommand {
-  public static final Logger logger = LogManager.getLogger(ActionCommand.class);
+  public static final Logger LOGGER = LogManager.getLogger(ActionCommand.class);
+  public static final String PAGE = "page";
 
   void execute(HttpServletRequest request);
 }

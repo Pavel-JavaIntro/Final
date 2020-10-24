@@ -13,7 +13,8 @@ public enum CommandEnum {
   SET_LANG(new SetLanguageCommand()),
   SELECT_BOOK(new SelectBookCommand()),
   BASKET(new BasketCommand()),
-  ORDER_BOOK(new OrderBookCommand());
+  ORDER_BOOK(new OrderBookCommand()),
+  SHOW_ORDERS(new ShowOrdersCommand());
 
   private final ActionCommand command;
 

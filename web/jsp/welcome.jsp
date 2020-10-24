@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>Библиотека Павла Касичева</title>
+    <title><fmt:message key="message.title" /></title>
     <fmt:setLocale value="${sessionScope.lan}"/>
     <fmt:setBundle basename="messages"/>
 </head>
@@ -39,7 +39,6 @@
                         <p style="text-indent:20px"><fmt:message key="message.maintext5" />
                         <form action="library" method="post">
                             <a href="#" onclick="postTo('search');"><fmt:message key="message.search" /></a>
-                            <input type="hidden" name="command" value="search"/>
                         </form>
                         <p><fmt:message key="message.maintext6" /></p>
                         <p style="text-indent:20px">

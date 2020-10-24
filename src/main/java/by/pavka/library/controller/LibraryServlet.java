@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class LibraryServlet extends HttpServlet {
-  private static final Logger logger = LogManager.getLogger(LibraryServlet.class);
+  private static final Logger LOGGER = LogManager.getLogger(LibraryServlet.class);
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -34,7 +34,7 @@ public class LibraryServlet extends HttpServlet {
     // TODO this is only for test purposes and should be re-written processing exceptions
     ActionFactory client = new ActionFactory();
     ActionCommand command = client.defineCommand(request);
-    logger.info("Execution: " + command.getClass().getSimpleName());
+    LOGGER.info("Execution: " + command.getClass().getSimpleName());
     command.execute(request);
     String page = (String) request.getSession().getAttribute("page");
     if (page != null) {

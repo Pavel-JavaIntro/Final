@@ -5,7 +5,6 @@ import by.pavka.library.entity.client.AppClient;
 import by.pavka.library.model.mapper.ConstantManager;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class LogoutCommand implements ActionCommand {
@@ -15,7 +14,7 @@ public class LogoutCommand implements ActionCommand {
     AppClient client = new AppClient() {
       @Override
       public String getRole() {
-        return ConstantManager.VISITOR;
+        return ConstantManager.GUEST;
       }
     };
     session.setAttribute("client", client);

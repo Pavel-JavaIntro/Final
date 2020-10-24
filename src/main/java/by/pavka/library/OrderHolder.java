@@ -1,22 +1,40 @@
 package by.pavka.library;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class OrderHolder {
   private static final OrderHolder instance = new OrderHolder();
-  private List<BookOrder> orders;
+  private Queue<BookOrder> placedOrders;
+  private Queue<BookOrder> preparedOrders;
 
   private OrderHolder() {
-    orders = new ArrayList<>();
+    placedOrders = new ConcurrentLinkedQueue<>();
+    preparedOrders = new ConcurrentLinkedQueue<>();
   }
 
   public static OrderHolder getInstance() {
     return instance;
   }
 
+  public Queue<BookOrder> getPlacedOrders() {
+    return placedOrders;
+  }
+
+  public Queue<BookOrder> getPreparedOrders() {
+    return preparedOrders;
+  }
+
   public void addOrder(BookOrder order) {
-    orders.add(order);
+    placedOrders.add(order);
+  }
+
+  public void prepareOrder(BookOrder order) {
+    placedOrders.remove(order);
+    preparedOrders.add(order);
+  }
+
+  public void fulfillOrder(BookOrder order) {
+    preparedOrders.remove(order);
   }
 }

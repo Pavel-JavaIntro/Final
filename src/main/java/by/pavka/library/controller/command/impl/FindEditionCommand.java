@@ -24,7 +24,7 @@ public class FindEditionCommand implements ActionCommand {
       editions = welcomeService.findEditions(title, author);
     } catch (ServiceException e) {
       page = ConfigurationManager.getProperty("error");
-      logger.error("FindEditionCommand hasn't completed");
+      LOGGER.error("FindEditionCommand hasn't completed");
     }
     Set<EditionInfo> infos = new HashSet<>();
     try {
@@ -38,7 +38,7 @@ public class FindEditionCommand implements ActionCommand {
       session.setAttribute("editions", infos);
     } catch (ServiceException e) {
       page = ConfigurationManager.getProperty("error");
-      logger.error("FindEditionCommand hasn't completed");
+      LOGGER.error("FindEditionCommand hasn't completed");
     }
     session.setAttribute("page", page);
   }

@@ -15,7 +15,7 @@ public class ConstantManager {
   public static final String LIBRARIAN = "librarian";
   public static final String SUBSCRIBER = "subscriber";
   public static final String READER = "reader";
-  public static final String VISITOR = "visitor";
+  public static final String GUEST = "guest";
 
   private static final Logger logger = LogManager.getLogger(ConstantManager.class.getName());
   private static final Map<Integer, String> locations = new HashMap<>();

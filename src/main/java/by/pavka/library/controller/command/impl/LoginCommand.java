@@ -35,8 +35,8 @@ public class LoginCommand implements ActionCommand {
                     int roleId = user.getRoleId();
                     return ConstantManager.getRoleById(roleId);
                   } catch (LibraryEntityException e) {
-                    logger.warn("Login failed");
-                    return ConstantManager.VISITOR;
+                    LOGGER.warn("Login failed");
+                    return ConstantManager.GUEST;
                   }
                 }
               };
@@ -48,7 +48,7 @@ public class LoginCommand implements ActionCommand {
             session.setAttribute("client", client);
           } catch (LibraryEntityException e) {
             page = ConfigurationManager.getProperty("error");
-            logger.warn("Login failed");
+            LOGGER.warn("Login failed");
           }
         } else {
           request.setAttribute("errorLoginPassMessage", MessageManager.getProperty(
@@ -56,7 +56,7 @@ public class LoginCommand implements ActionCommand {
         }
       } catch (ServiceException e) {
         page = ConfigurationManager.getProperty("error");
-        logger.error("LoginCommand hasn't completed");
+        LOGGER.error("LoginCommand hasn't completed");
       }
     } else {
       request.setAttribute("errorLoginPassMessage", MessageManager.getProperty(
