@@ -31,8 +31,8 @@ public class FindEditionCommand implements ActionCommand {
       for (Edition e : editions) {
         EditionInfo info = new EditionInfo();
         info.setEdition(e);
-        welcomeService.addAuthors(info);
-        welcomeService.addBook(info);
+        welcomeService.bindAuthors(info);
+        welcomeService.bindBookAndLocation(info);
         infos.add(info);
       }
       session.setAttribute("editions", infos);

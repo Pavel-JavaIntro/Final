@@ -26,19 +26,21 @@
                     <td
                             rowspan="2"
                             style="width:80%">
-                        <h2><fmt:message key="message.users_orders" /></h2>
+                        <h2><fmt:message key="message.users_orders"/></h2>
                         <form name="orderForm" method="POST" action="library">
                             <select size="10" name="book">
                                 <c:forEach var="item" items="${sessionScope.orders}">
                                     <c:forEach var="edition" items="${item.editionInfoSet}">
-                                        <option value="${item.userId}">${item.userId} &lt;&lt; ${edition}</option>
+                                        <option value="${edition.book.id}">${item.userId} &lt;&lt; ${edition}
+                                            &gt;&gt; ${edition.book.id} &gt;&gt; ${edition.locationId}</option>
                                     </c:forEach>
                                 </c:forEach>
                             </select>
                             <br/>
-                            <input type="hidden" name="command" value="order_book"/>
-                            <button name="order" value="unselect"><fmt:message key="message.unselect"/> </button><br/>
-                            <button name="order" value="order"><fmt:message key="message.order"/></button>
+                            <input type="hidden" name="command" value="prepare_book"/>
+                            <button name="preparation" value="deny"><fmt:message key="message.deny"/></button>
+                            <br/>
+                            <button name="preparation" value="prepare"><fmt:message key="message.prepare"/></button>
                         </form>
                     </td>
                     <jsp:include page="${sessionScope.client.entrance}"/>

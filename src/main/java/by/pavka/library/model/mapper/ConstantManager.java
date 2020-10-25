@@ -11,16 +11,23 @@ import java.util.Map;
 
 public class ConstantManager {
 
+  private static final Logger LOGGER = LogManager.getLogger(ConstantManager.class.getName());
+  private static final Map<Integer, String> locations = new HashMap<>();
+  private static final Map<Integer, String> operations = new HashMap<>();
+  private static final Map<Integer, String> roles = new HashMap<>();
   public static final String ADMIN = "admin";
   public static final String LIBRARIAN = "librarian";
   public static final String SUBSCRIBER = "subscriber";
   public static final String READER = "reader";
   public static final String GUEST = "guest";
-
-  private static final Logger logger = LogManager.getLogger(ConstantManager.class.getName());
-  private static final Map<Integer, String> locations = new HashMap<>();
-  private static final Map<Integer, String> operations = new HashMap<>();
-  private static final Map<Integer, String> roles = new HashMap<>();
+  public static final String DECOMISSIONED = "decomissioned";
+  public static final String ON_HAND = "on hand";
+  public static final String DELIVERY_DESK_RESERVE = "delivery desk reserve";
+  public static final String READING_HALL_RESERVE = "reading hall reserve";
+  public static final int LOCATION_DECOMISSIONED;
+  public static final int LOCATION_ON_HAND;
+  public static final int LOCATION_DELIVERY_DESK_RESERVE;
+  public static final int LOCATION_READING_HALL_RESERVE;
 
   private ConstantManager()  {}
 
@@ -30,14 +37,27 @@ public class ConstantManager {
       service.initConstants(locations, TableEntityMapper.LOCATION);
       service.initConstants(operations, TableEntityMapper.OPERATION);
       service.initConstants(roles, TableEntityMapper.ROLE);
+      LOCATION_DECOMISSIONED = getLocationIdByDescription(DECOMISSIONED);
+      LOCATION_ON_HAND = getLocationIdByDescription(ON_HAND);
+      LOCATION_DELIVERY_DESK_RESERVE = getLocationIdByDescription(DELIVERY_DESK_RESERVE);
+      LOCATION_READING_HALL_RESERVE = getLocationIdByDescription(READING_HALL_RESERVE);
     } catch (ServiceException e) {
-      logger.fatal("Cannot initialize constants");
+      LOGGER.fatal("Cannot initialize constants");
       throw new LibraryFatalException("Cannot initialize constants");
     }
   }
 
   public static String getLocationById(int i) {
     return locations.get(i);
+  }
+
+  public static int getLocationIdByDescription(String description) {
+    for (Map.Entry<Integer, String> entry : locations.entrySet()) {
+      if (entry.getValue().equals(description)) {
+        return entry.getKey();
+      }
+    }
+    return 0;
   }
 
   public static String getOperationById(int i) {

@@ -5,6 +5,7 @@ import by.pavka.library.entity.client.AppClient;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public class BookOrder {
   private final int userId;
@@ -12,13 +13,13 @@ public class BookOrder {
 
   public BookOrder(AppClient client) {
     this.userId = client.getId();
-    editionInfoSet = new HashSet<>(client.getEditionInfos());
+    editionInfoSet = new CopyOnWriteArraySet<>(client.getEditionInfos());
     client.getEditionInfos().clear();
   }
 
   public BookOrder(int id, EditionInfo editionInfo) {
     userId = id;
-    editionInfoSet = new HashSet<>();
+    editionInfoSet = new CopyOnWriteArraySet<>();
     editionInfoSet.add(editionInfo);
   }
 

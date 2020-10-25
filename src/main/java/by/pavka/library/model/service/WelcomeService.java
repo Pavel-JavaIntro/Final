@@ -13,6 +13,7 @@ import by.pavka.library.model.dao.DaoException;
 import by.pavka.library.model.dao.LibraryDao;
 import by.pavka.library.model.dao.ManyToManyDao;
 import by.pavka.library.model.dao.impl.LibraryDaoFactory;
+import by.pavka.library.model.mapper.ConstantManager;
 import by.pavka.library.model.mapper.TableEntityMapper;
 
 import java.util.*;
@@ -33,7 +34,7 @@ public class WelcomeService {
     try {
       dao = LibraryDaoFactory.getInstance().obtainDao(constant);
       list = dao.read();
-      dao.close();
+      //dao.close();
     } catch (DaoException e) {
       throw new ServiceException("Cannot initialize constants", e);
     } finally {
@@ -250,8 +251,8 @@ public class WelcomeService {
       criteria.addConstraint(edId);
       result.addAll(bookDao.read(criteria, true));
       for (Book b : result) {
-        if (!b.fieldForName("locationId").getValue().equals(4)
-            && !b.fieldForName("locationId").getValue().equals(5)) {
+        if (!b.fieldForName("locationId").getValue().equals(ConstantManager.LOCATION_DECOMISSIONED)
+            && !b.fieldForName("locationId").getValue().equals(ConstantManager.LOCATION_ON_HAND)) {
           book = b;
           break;
         }
@@ -262,7 +263,7 @@ public class WelcomeService {
     return book;
   }
 
-  public void addAuthors(EditionInfo info) throws ServiceException {
+  public void bindAuthors(EditionInfo info) throws ServiceException {
     try (ManyToManyDao<Edition, Author> editionDao =
             LibraryDaoFactory.getInstance().obtainManyToManyDao();
         LibraryDao<Author> authorDao =
@@ -284,11 +285,15 @@ public class WelcomeService {
     }
   }
 
-  public void addBook(EditionInfo info) throws ServiceException {
+  public void bindBookAndLocation(EditionInfo info) throws ServiceException {
     try {
       Book book = findBookByEdition(info.getEdition().getId());
       info.setBook(book);
-    } catch (ServiceException e) {
+      if (book != null) {
+        int locationId = (int)book.fieldForName("locationId").getValue();
+        info.setLocationId(locationId);
+      }
+    } catch (ServiceException | LibraryEntityException e) {
       throw new ServiceException("Cannot find relevant books", e);
     }
   }

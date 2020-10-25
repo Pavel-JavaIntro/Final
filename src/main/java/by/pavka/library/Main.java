@@ -25,7 +25,7 @@ public class Main {
       list.remove(a);
     }
     System.out.println(list.size());
-    System.out.println("librarian".hashCode());
+    System.out.println("reader".hashCode());
   }
 
 }

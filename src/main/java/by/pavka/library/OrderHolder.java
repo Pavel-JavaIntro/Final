@@ -30,7 +30,6 @@ public class OrderHolder {
   }
 
   public void prepareOrder(BookOrder order) {
-    placedOrders.remove(order);
     preparedOrders.add(order);
   }
 

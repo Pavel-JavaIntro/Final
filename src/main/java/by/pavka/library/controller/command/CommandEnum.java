@@ -14,7 +14,8 @@ public enum CommandEnum {
   SELECT_BOOK(new SelectBookCommand()),
   BASKET(new BasketCommand()),
   ORDER_BOOK(new OrderBookCommand()),
-  SHOW_ORDERS(new ShowOrdersCommand());
+  SHOW_ORDERS(new ShowOrdersCommand()),
+  PREPARE_BOOK(new PrepareBookCommand());
 
   private final ActionCommand command;
 

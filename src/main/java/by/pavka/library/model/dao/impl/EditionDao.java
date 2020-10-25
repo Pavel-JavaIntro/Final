@@ -13,10 +13,12 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class EditionDao extends SimpleLibraryDao<Edition> implements ManyToManyDao<Edition, Author> {
+public class EditionDao extends SimpleLibraryDao<Edition>
+    implements ManyToManyDao<Edition, Author> {
   private static final String EDITION_ID = "edition_id";
   private static final String AUTHOR_ID = "author_id";
   private static final String SQL = "SELECT * FROM edition_author WHERE %s=?";
+
   public EditionDao() throws DaoException {
     super(TableEntityMapper.EDITION);
   }
