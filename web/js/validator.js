@@ -26,4 +26,3 @@ function validateAuthor() {
     }
     return true;
 }
-

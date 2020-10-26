@@ -18,7 +18,11 @@ public class OrderBookCommand implements ActionCommand {
     AppClient client = (AppClient)session.getAttribute("client");
     String action = request.getParameter("order");
     if(action.equals(UNSELECT)) {
-      int editionId = Integer.parseInt(request.getParameter("book"));
+
+      int editionId = 0;
+      if (request.getParameter("book") != null) {
+        editionId = Integer.parseInt(request.getParameter("book"));
+      }
       for (EditionInfo ei : client.getEditionInfos()) {
         if (ei.getEdition().getId() == editionId) {
           client.removeEditionInfo(ei);

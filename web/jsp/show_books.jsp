@@ -26,10 +26,10 @@
                     <td
                             rowspan="2"
                             style="width:80%">
-                        <h2><fmt:message key="message.users_orders"/></h2>
+                        <h2><fmt:message key="message.dispatch"/></h2>
                         <form name="orderForm" id="orderForm" method="POST" action="library">
                             <select size="10" name="book" required>
-                                <c:forEach var="item" items="${sessionScope.orders}">
+                                <c:forEach var="item" items="${sessionScope.prepared}">
                                     <c:forEach var="edition" items="${item.editionInfoSet}">
                                         <option value="${edition.book.id}">${item.userId} &lt;&lt; ${edition}
                                             &gt;&gt; ${edition.book.id} &gt;&gt; ${edition.locationId}</option>
@@ -37,11 +37,9 @@
                                 </c:forEach>
                             </select>
                             <br/>
-                            <input type="hidden" name="command" value="prepare_book"/>
-                            <button name="preparation" value="deny"><fmt:message
-                                    key="message.deny"/></button>
-                            <br/>
-                            <button name="preparation" value="prepare"><fmt:message key="message.prepare"/></button>
+                            <input type="hidden" name="command" value="dispatch"/>
+
+                            <button name="dispatcher" value="dispatch"><fmt:message key="message.dispatch"/></button>
                         </form>
                     </td>
                     <jsp:include page="${sessionScope.client.entrance}"/>
@@ -57,5 +55,4 @@
 <script src="${pageContext.request.contextPath}/js/validator.js" type="text/javascript"></script>
 </body>
 </html>
-
 
