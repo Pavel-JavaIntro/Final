@@ -6,8 +6,6 @@
 <head>
     <meta charset="utf-8"/>
     <title><fmt:message key="message.title" /></title>
-    <fmt:setLocale value="${sessionScope.lan}"/>
-    <fmt:setBundle basename="messages"/>
 </head>
 <body>
 <table

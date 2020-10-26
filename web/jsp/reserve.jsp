@@ -5,9 +5,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>Библиотека Павла Касичева</title>
-    <fmt:setLocale value="${sessionScope.lan}"/>
-    <fmt:setBundle basename="messages"/>
+    <title><fmt:message key="message.title" /></title>
 </head>
 <body>
 <table
