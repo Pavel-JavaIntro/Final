@@ -224,7 +224,6 @@ public class WelcomeService {
             LibraryDaoFactory.getInstance().obtainManyToManyDao();
         LibraryDao<Author> authorDao =
             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.AUTHOR)) {
-
       Set<Author> authors = new HashSet<>();
       Set<Integer> authorIds = editionDao.getSecond(info.getEdition().getId());
       for (int id : authorIds) {
