@@ -19,6 +19,7 @@ public class LoginCommand implements ActionCommand {
   public void execute(HttpServletRequest request) {
     String surname = request.getParameter("surname");
     String name = request.getParameter("name");
+    System.out.println("INSIDE COMMAND: " + name);
     String password = request.getParameter("password");
     HttpSession session = request.getSession();
     String page = (String)session.getAttribute("page");

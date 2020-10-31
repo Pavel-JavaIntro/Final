@@ -1,18 +1,21 @@
 package by.pavka.library.model;
 
+import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.ResourceBundle;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class DBConnectionPool {
-  private static final Logger logger = LogManager.getLogger(DBConnectionPool.class);
+  private static final Logger LOGGER = LogManager.getLogger(DBConnectionPool.class);
   private static final DBConnectionPool instance = new DBConnectionPool();
   private static final int TIMEOUT = 3;
 
@@ -29,7 +32,7 @@ public class DBConnectionPool {
     try {
       Class.forName(driver);
     } catch (ClassNotFoundException e) {
-      logger.fatal("Database Driver not found");
+      LOGGER.fatal("Database Driver not found");
       throw new LibraryFatalException("Database Driver not found", e);
     }
     url = resourceBundle.getString("url");
@@ -41,7 +44,7 @@ public class DBConnectionPool {
     try {
       connectionsNumber = Integer.parseInt(num);
     } catch (NumberFormatException e) {
-      logger.error("Integer parcing failed");
+      LOGGER.error("Integer parcing failed");
       connectionsNumber = 2;
     }
     try {
@@ -65,7 +68,7 @@ public class DBConnectionPool {
     try {
       return DriverManager.getConnection(url, login, password);
     } catch (SQLException e) {
-      logger.fatal("Database Connection not created");
+      LOGGER.fatal("Database Connection not created");
       throw new LibraryFatalException("Database Connection not created", e);
     }
   }
@@ -77,7 +80,7 @@ public class DBConnectionPool {
     try {
       connections.add(DriverManager.getConnection(url, login, password));
     } catch (SQLException e) {
-      logger.error("Can't add a connection");
+      LOGGER.error("Can't add a connection");
       return false;
     }
     return true;
@@ -115,7 +118,7 @@ public class DBConnectionPool {
     return false;
   }
 
-  public void unconnect() {
+  public void disconnect() {
     for (Connection connection : usedConnections) {
       releaseConnection(connection);
     }
@@ -123,7 +126,17 @@ public class DBConnectionPool {
       try {
         connection.close();
       } catch (SQLException throwables) {
-        logger.error("Connection not closed while destroying the app");
+        LOGGER.error("Connection not closed while destroying the app");
+      }
+    }
+    Enumeration<Driver> drivers = DriverManager.getDrivers();
+    Driver driver;
+    while(drivers.hasMoreElements()) {
+      try {
+        driver = drivers.nextElement();
+        DriverManager.deregisterDriver(driver);
+      } catch (SQLException ex) {
+        LOGGER.error("Driver not deregistered while destroying the app");
       }
     }
   }

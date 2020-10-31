@@ -8,7 +8,6 @@ public enum CommandEnum {
   SEARCH(new SearchCommand()),
   LOGIN(new LoginCommand()),
   LOGOUT(new LogoutCommand()),
-  FIND_BOOK(new FindBookCommand()),
   FIND_EDITION(new FindEditionCommand()),
   SET_LANG(new SetLanguageCommand()),
   SELECT_BOOK(new SelectBookCommand()),
@@ -17,7 +16,9 @@ public enum CommandEnum {
   SHOW_ORDERS(new ShowOrdersCommand()),
   PREPARE_BOOK(new PrepareBookCommand()),
   SHOW_BOOKS(new ShowBooksCommand()),
-  DISPATCH(new DispatchCommand());
+  DISPATCH(new DispatchCommand()),
+  BOOK_OPTIONS(new BookOptionsCommand()),
+  FIND_CODE(new FindCodeCommand());
 
   private final ActionCommand command;
 

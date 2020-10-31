@@ -6,9 +6,11 @@ import java.io.IOException;
 
 public class CharacterSetFilter implements Filter {
 
+  private FilterConfig config;
+
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
-
+    config = filterConfig;
   }
 
   @Override

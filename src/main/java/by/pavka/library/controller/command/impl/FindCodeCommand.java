@@ -8,24 +8,27 @@ import by.pavka.library.model.service.WelcomeService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
-public class FindBookCommand implements ActionCommand {
+public class FindCodeCommand implements ActionCommand {
   @Override
   public void execute(HttpServletRequest request) {
-    String title = request.getParameter("title");
-    String author = request.getParameter("author");
+    String code = request.getParameter("code");
     WelcomeService welcomeService = WelcomeService.getInstance();
     HttpSession session = request.getSession();
-    String page = (String)session.getAttribute(PAGE);
-    List<Book> books = null;
+    String page = (String) session.getAttribute("page");
+    List<Book> books = new ArrayList<>();
     try {
-      books = welcomeService.findBooks(title, author);
-      session.setAttribute("books", books);
+      books = welcomeService.findBooksByEditionCode(code);
     } catch (ServiceException e) {
       page = ConfigurationManager.getProperty("error");
-      LOGGER.error("FindBookCommand hasn't completed");
+      LOGGER.error("FindCodeCommand hasn't completed");
     }
-    session.setAttribute(PAGE, page);
+    if (books.isEmpty()) {
+      session.setAttribute("addition", "block/book_addition.jsp");
+    } else {
+
+    }
   }
 }

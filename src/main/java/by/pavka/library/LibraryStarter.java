@@ -11,10 +11,10 @@ import javax.servlet.ServletContextListener;
 import java.util.ResourceBundle;
 
 public class LibraryStarter implements ServletContextListener {
-  private static final Logger logger = LogManager.getLogger(LibraryStarter.class.getName());
+  private static final Logger LOGGER = LogManager.getLogger(LibraryStarter.class.getName());
 
   public void contextInitialized(ServletContextEvent servletContextEvent) {
-    logger.info("STARTED");
+    LOGGER.info("STARTED");
     DBConnectionPool.getInstance();
     ConstantManager.getLocationById(0);
     OrderHolder.getInstance();
@@ -25,6 +25,7 @@ public class LibraryStarter implements ServletContextListener {
   }
 
   public void contextDestroyed(ServletContextEvent servletContextEvent) {
-    DBConnectionPool.getInstance().unconnect();
+    LOGGER.info("FINISHED");
+    DBConnectionPool.getInstance().disconnect();
   }
 }

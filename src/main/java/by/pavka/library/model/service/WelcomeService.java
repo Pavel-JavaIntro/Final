@@ -34,7 +34,7 @@ public class WelcomeService {
     try {
       dao = LibraryDaoFactory.getInstance().obtainDao(constant);
       list = dao.read();
-      //dao.close();
+      // dao.close();
     } catch (DaoException e) {
       throw new ServiceException("Cannot initialize constants", e);
     } finally {
@@ -85,85 +85,39 @@ public class WelcomeService {
     }
   }
 
-  public List<Book> findBooks(String title, String author) throws ServiceException {
+  public List<Book> findBooksByEditionCode(String code) throws ServiceException {
+    List<Book> books;
+    try (LibraryDao<Edition> editionDao =
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.EDITION)) {
+      EntityField<String> field = new EntityField<>("description");
+      field.setValue(code);
+      Criteria criteria = new Criteria();
+      criteria.addConstraint(field);
+      List<Edition> editions = editionDao.read(criteria, true);
+      int editionId = 0;
+      if (!editions.isEmpty()) {
+        editionId = editions.get(0).getId();
+      }
+      books = findBooksByEdition(editionId);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot find editions", e);
+    }
+    return books;
+  }
+
+  public List<Book> findBooksByEdition(int id) throws ServiceException {
+    List<Book> result = new ArrayList<>();
     try (LibraryDao<Book> bookDao =
-        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
-      if (title.isEmpty() && author.isEmpty()) {
-        return bookDao.read();
-      }
-      List<Book> result = new ArrayList<>();
-      List<Edition> titleEditions = null;
-      List<Edition> authorEditions = null;
-      try (ManyToManyDao<Edition, Author> editionDao =
-          LibraryDaoFactory.getInstance().obtainManyToManyDao()) {
-        if (!title.isEmpty()) {
-          Criteria criteriaT = new Criteria();
-          EntityField<String> titleField = new EntityField<>("title");
-          titleField.setValue(title);
-          criteriaT.addConstraint(titleField);
-          titleEditions = editionDao.read(criteriaT, false);
-          if (titleEditions.isEmpty()) {
-            return new ArrayList<>();
-          }
-        }
-        List<Author> authorList = null;
-        if (!author.isEmpty()) {
-          try (LibraryDao<Author> authorDao =
-              LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.AUTHOR)) {
-            Criteria criteriaA = new Criteria();
-            EntityField<String> authorField = new EntityField<>("surname");
-            authorField.setValue(author);
-            criteriaA.addConstraint(authorField);
-            authorList = authorDao.read(criteriaA, false);
-            if (authorList.isEmpty()) {
-              return new ArrayList<>();
-            }
-            Set<Integer> editionIds = new HashSet<>();
-            for (Author a : authorList) {
-              editionIds.addAll(editionDao.getFirst(a.getId()));
-            }
-            if (editionIds.isEmpty()) {
-              return new ArrayList<>();
-            }
-            authorEditions = new ArrayList<>();
-            for (int i : editionIds) {
-              authorEditions.add(editionDao.get(i));
-            }
-            if (authorEditions.isEmpty()) {
-              return new ArrayList<>();
-            }
-          }
-        }
-        List<Edition> finalEditions = null;
-        if (titleEditions == null) {
-          finalEditions = authorEditions;
-        }
-        if (authorEditions == null) {
-          finalEditions = titleEditions;
-        }
-        if (titleEditions != null && authorEditions != null) {
-          finalEditions = new ArrayList<>();
-          for (Edition edition : titleEditions) {
-            if (authorEditions.contains(edition)) {
-              finalEditions.add(edition);
-            }
-          }
-          if (finalEditions.isEmpty()) {
-            return new ArrayList<>();
-          }
-        }
-        for (Edition edition : finalEditions) {
-          Criteria criteria = new Criteria();
-          EntityField<Integer> edId = new EntityField<>("editionId");
-          edId.setValue(edition.getId());
-          criteria.addConstraint(edId);
-          result.addAll(bookDao.read(criteria, true));
-        }
-      }
-      return result;
+             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+      Criteria criteria = new Criteria();
+      EntityField<Integer> edId = new EntityField<>("editionId");
+      edId.setValue(id);
+      criteria.addConstraint(edId);
+      result.addAll(bookDao.read(criteria, true));
     } catch (DaoException e) {
       throw new ServiceException("Cannot find books", e);
     }
+    return result;
   }
 
   public List<Edition> findEditions(String title, String author) throws ServiceException {
@@ -244,12 +198,13 @@ public class WelcomeService {
     Book book = null;
     try (LibraryDao<Book> bookDao =
         LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
-      List<Book> result = new ArrayList<>();
-      Criteria criteria = new Criteria();
-      EntityField<Integer> edId = new EntityField<>("editionId");
-      edId.setValue(id);
-      criteria.addConstraint(edId);
-      result.addAll(bookDao.read(criteria, true));
+      List<Book> result = findBooksByEdition(id);
+//      List<Book> result = new ArrayList<>();
+//      Criteria criteria = new Criteria();
+//      EntityField<Integer> edId = new EntityField<>("editionId");
+//      edId.setValue(id);
+//      criteria.addConstraint(edId);
+//      result.addAll(bookDao.read(criteria, true));
       for (Book b : result) {
         if (!b.fieldForName("locationId").getValue().equals(ConstantManager.LOCATION_DECOMISSIONED)
             && !b.fieldForName("locationId").getValue().equals(ConstantManager.LOCATION_ON_HAND)) {
@@ -290,7 +245,7 @@ public class WelcomeService {
       Book book = findBookByEdition(info.getEdition().getId());
       info.setBook(book);
       if (book != null) {
-        int locationId = (int)book.fieldForName("locationId").getValue();
+        int locationId = (int) book.fieldForName("locationId").getValue();
         info.setLocationId(locationId);
       }
     } catch (ServiceException | LibraryEntityException e) {
