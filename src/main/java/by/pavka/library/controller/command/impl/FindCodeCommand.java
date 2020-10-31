@@ -18,18 +18,41 @@ public class FindCodeCommand implements ActionCommand {
     WelcomeService welcomeService = WelcomeService.getInstance();
     HttpSession session = request.getSession();
     String page = (String) session.getAttribute("page");
-    List<Book> books = new ArrayList<>();
+    int editionId = 0;
     try {
-      books = welcomeService.findBooksByEditionCode(code);
+      editionId = welcomeService.editionIdByCode(code);
     } catch (ServiceException e) {
       page = ConfigurationManager.getProperty("error");
       LOGGER.error("FindCodeCommand hasn't completed");
     }
-    session.setAttribute(PAGE, page);
-    if (books.isEmpty()) {
-      session.setAttribute("addition", "block/book_addition.jsp");
+    session.setAttribute("code", code);
+    if (editionId == 0) {
+      session.setAttribute("addition", "block/edition_addition.jsp");
     } else {
+      List<Book> books = new ArrayList<>();
+      try {
+        books = welcomeService.findBooksByEditionCode(code);
+      } catch (ServiceException e) {
+        page = ConfigurationManager.getProperty("error");
+        LOGGER.error("FindCodeCommand hasn't completed");
+      }
+      session.setAttribute("addition", "block/book_addition.jsp");
       session.setAttribute("decommission", books);
     }
+//    List<Book> books = new ArrayList<>();
+//    try {
+//      books = welcomeService.findBooksByEditionCode(code);
+//    } catch (ServiceException e) {
+//      page = ConfigurationManager.getProperty("error");
+//      LOGGER.error("FindCodeCommand hasn't completed");
+//    }
+//    session.setAttribute(PAGE, page);
+//    if (books.isEmpty()) {
+//      session.setAttribute("addition", "block/edition_addition.jsp");
+//      session.setAttribute("code", code);
+//    } else {
+//      session.setAttribute("decommission", books);
+//    }
+    session.setAttribute(PAGE, page);
   }
 }

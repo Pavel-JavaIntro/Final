@@ -56,8 +56,8 @@
                             </select>
 
                             <br/>
-                            <input type="submit" value="<fmt:message key="message.select" />"/>
-                            <input type="hidden" name="command" value="select_book"/>
+                            <input type="submit" value="<fmt:message key="message.decommission_book" />"/>
+                            <input type="hidden" name="command" value="decommission_book"/>
                         </form>
                     </td>
                     <jsp:include page="${sessionScope.client.entrance}"/>

@@ -1,0 +1,40 @@
+package by.pavka.library.controller.command.impl;
+
+import by.pavka.library.ConfigurationManager;
+import by.pavka.library.controller.command.ActionCommand;
+import by.pavka.library.entity.LibraryEntityException;
+import by.pavka.library.entity.impl.Book;
+import by.pavka.library.model.service.ServiceException;
+import by.pavka.library.model.service.WelcomeService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+
+public class AddBookCommand implements ActionCommand {
+  @Override
+  public void execute(HttpServletRequest request) {
+    HttpSession session = request.getSession();
+    String page = (String)session.getAttribute(PAGE);
+    String code = (String)session.getAttribute("code");
+    List<Book> books = (List<Book>)session.getAttribute("decommission");
+    int editionId = 0;
+    int locationId = 3;
+    if (books != null && !books.isEmpty()) {
+      Book book = books.get(0);
+      try {
+        editionId = (int)book.fieldForName("editionId").getValue();
+        locationId = (int)book.fieldForName("standardLocationId").getValue();
+        Book newBook = new Book();
+        newBook.fieldForName("editionId").setValue(editionId);
+        newBook.fieldForName("locationId").setValue(locationId);
+        newBook.fieldForName("standardLocationId").setValue(locationId);
+      } catch (LibraryEntityException e) {
+        page = ConfigurationManager.getProperty("error");
+        LOGGER.error("FindCodeCommand hasn't completed");
+      }
+      session.setAttribute(PAGE, page);
+
+    }
+  }
+}

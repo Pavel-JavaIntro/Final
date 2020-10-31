@@ -18,7 +18,8 @@ public enum CommandEnum {
   SHOW_BOOKS(new ShowBooksCommand()),
   DISPATCH(new DispatchCommand()),
   BOOK_OPTIONS(new BookOptionsCommand()),
-  FIND_CODE(new FindCodeCommand());
+  FIND_CODE(new FindCodeCommand()),
+  ADD_BOOK(new AddBookCommand());
 
   private final ActionCommand command;
 

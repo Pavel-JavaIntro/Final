@@ -199,16 +199,10 @@ public class WelcomeService {
     try (LibraryDao<Book> bookDao =
         LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
       List<Book> result = findBooksByEdition(id);
-      //      List<Book> result = new ArrayList<>();
-      //      Criteria criteria = new Criteria();
-      //      EntityField<Integer> edId = new EntityField<>("editionId");
-      //      edId.setValue(id);
-      //      criteria.addConstraint(edId);
-      //      result.addAll(bookDao.read(criteria, true));
       for (Book b : result) {
         if (!b.fieldForName("locationId").getValue().equals(ConstantManager.LOCATION_DECOMMISSIONED)
             && !b.fieldForName("locationId").getValue().equals(ConstantManager.LOCATION_ON_HAND)
-            && !((boolean)(b.fieldForName("reserved").getValue()))) {
+            && !((boolean) (b.fieldForName("reserved").getValue()))) {
           book = b;
           break;
         }
@@ -251,5 +245,34 @@ public class WelcomeService {
     } catch (ServiceException | LibraryEntityException e) {
       throw new ServiceException("Cannot find relevant books", e);
     }
+  }
+
+  public void addCode(String code) throws ServiceException {
+    try (LibraryDao<Edition> editionLibraryDao =
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.EDITION)) {
+      Edition edition = new Edition();
+      edition.setValue("standardNumber", code);
+      editionLibraryDao.add(edition);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot add an edition code", e);
+    }
+  }
+
+  public int editionIdByCode(String code) throws ServiceException {
+    int editionId = 0;
+    try (LibraryDao<Edition> editionDao =
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.EDITION)) {
+      EntityField<String> field = new EntityField<>("standard_number");
+      field.setValue(code);
+      Criteria criteria = new Criteria();
+      criteria.addConstraint(field);
+      List<Edition> editions = editionDao.read(criteria, true);
+      if (!editions.isEmpty()) {
+        editionId = editions.get(0).getId();
+      }
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot identify edition standard number", e);
+    }
+    return editionId;
   }
 }
