@@ -25,10 +25,11 @@ public class FindCodeCommand implements ActionCommand {
       page = ConfigurationManager.getProperty("error");
       LOGGER.error("FindCodeCommand hasn't completed");
     }
+    session.setAttribute(PAGE, page);
     if (books.isEmpty()) {
       session.setAttribute("addition", "block/book_addition.jsp");
     } else {
-
+      session.setAttribute("decommission", books);
     }
   }
 }

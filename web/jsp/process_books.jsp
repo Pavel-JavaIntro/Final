@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.lan}"/>
 <fmt:setBundle basename="messages"/>
@@ -43,21 +44,20 @@
                     <td
                             rowspan="2"
                             style="width:80%">
-                        <jsp:include page="${sessionScope.client.basket}"/>
 
-                        <form name="selectForm" method="POST" action="library">
-                            <fmt:message key="message.result"/><br/>
-
-                            <select size="10" name="edition">
-                                <c:forEach var="item" items="${sessionScope.editions}">
-                                    <option value="${item.edition.id}">
+                        <form name="decomForm" method="POST" action="library">
+                            <fmt:message key="message.decommission"/><br/>
+                            <select size="10" name="decom" required>
+                                <c:forEach var="item" items="${sessionScope.decommission}">
+                                    <option value="${item.id}">
                                             ${item}
                                     </option>
                                 </c:forEach>
                             </select>
 
                             <br/>
-                            <jsp:include page="${sessionScope.client.bookSelection}"/>
+                            <input type="submit" value="<fmt:message key="message.select" />"/>
+                            <input type="hidden" name="command" value="select_book"/>
                         </form>
                     </td>
                     <jsp:include page="${sessionScope.client.entrance}"/>

@@ -13,9 +13,9 @@ public class Book extends LibraryEntity {
     EntityField<Integer> locationId = new EntityField<>("locationId");
     EntityField<Integer> readerId = new EntityField<>("readerId");
     EntityField<Integer> standardLocationId = new EntityField<>("standardLocationId");
-    EntityField<Boolean> forDelivery = new EntityField<>("reserved");
+    EntityField<Boolean> reserved = new EntityField<>("reserved");
     EntityField<Date> dueDate = new EntityField<>("dueDate");
-    return new EntityField[] {editionId, forDelivery, locationId, readerId, dueDate,
+    return new EntityField[] {editionId, reserved, locationId, readerId, dueDate,
             standardLocationId};
   }
 

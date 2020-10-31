@@ -89,7 +89,7 @@ public class WelcomeService {
     List<Book> books;
     try (LibraryDao<Edition> editionDao =
         LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.EDITION)) {
-      EntityField<String> field = new EntityField<>("description");
+      EntityField<String> field = new EntityField<>("standard_number");
       field.setValue(code);
       Criteria criteria = new Criteria();
       criteria.addConstraint(field);
@@ -108,7 +108,7 @@ public class WelcomeService {
   public List<Book> findBooksByEdition(int id) throws ServiceException {
     List<Book> result = new ArrayList<>();
     try (LibraryDao<Book> bookDao =
-             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
       Criteria criteria = new Criteria();
       EntityField<Integer> edId = new EntityField<>("editionId");
       edId.setValue(id);
@@ -199,15 +199,16 @@ public class WelcomeService {
     try (LibraryDao<Book> bookDao =
         LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
       List<Book> result = findBooksByEdition(id);
-//      List<Book> result = new ArrayList<>();
-//      Criteria criteria = new Criteria();
-//      EntityField<Integer> edId = new EntityField<>("editionId");
-//      edId.setValue(id);
-//      criteria.addConstraint(edId);
-//      result.addAll(bookDao.read(criteria, true));
+      //      List<Book> result = new ArrayList<>();
+      //      Criteria criteria = new Criteria();
+      //      EntityField<Integer> edId = new EntityField<>("editionId");
+      //      edId.setValue(id);
+      //      criteria.addConstraint(edId);
+      //      result.addAll(bookDao.read(criteria, true));
       for (Book b : result) {
-        if (!b.fieldForName("locationId").getValue().equals(ConstantManager.LOCATION_DECOMISSIONED)
-            && !b.fieldForName("locationId").getValue().equals(ConstantManager.LOCATION_ON_HAND)) {
+        if (!b.fieldForName("locationId").getValue().equals(ConstantManager.LOCATION_DECOMMISSIONED)
+            && !b.fieldForName("locationId").getValue().equals(ConstantManager.LOCATION_ON_HAND)
+            && !((boolean)(b.fieldForName("reserved").getValue()))) {
           book = b;
           break;
         }

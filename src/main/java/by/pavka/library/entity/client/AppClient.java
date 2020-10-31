@@ -94,7 +94,6 @@ public abstract class AppClient implements Serializable {
   public String getAdminSection() {
     switch (getRole()) {
       case ConstantManager.ADMIN:
-        return "block/admin.jsp";
       case ConstantManager.LIBRARIAN:
         return "block/admin.jsp";
       default:
@@ -106,8 +105,10 @@ public abstract class AppClient implements Serializable {
     switch (getRole()) {
       case ConstantManager.GUEST:
         return null;
-      default:
+      case ConstantManager.READER:
         return "block/reader_select.jsp";
+      default:
+        return "block/subscriber_select.jsp";
     }
   }
 

@@ -47,7 +47,7 @@
                         <form name="selectForm" method="POST" action="library">
                             <fmt:message key="message.result"/><br/>
 
-                            <select size="10" name="edition">
+                            <select size="10" name="edition" required>
                                 <c:forEach var="item" items="${sessionScope.editions}">
                                     <option value="${item.edition.id}">
                                             ${item}

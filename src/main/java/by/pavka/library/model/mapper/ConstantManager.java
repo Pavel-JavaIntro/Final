@@ -20,11 +20,11 @@ public class ConstantManager {
   public static final String SUBSCRIBER = "subscriber";
   public static final String READER = "reader";
   public static final String GUEST = "guest";
-  public static final String DECOMISSIONED = "decomissioned";
+  public static final String DECOMMISSIONED = "decommissioned";
   public static final String ON_HAND = "on hand";
   public static final String DELIVERY_DESK_RESERVE = "delivery desk reserve";
   public static final String READING_HALL_RESERVE = "reading hall reserve";
-  public static final int LOCATION_DECOMISSIONED;
+  public static final int LOCATION_DECOMMISSIONED;
   public static final int LOCATION_ON_HAND;
   public static final int LOCATION_DELIVERY_DESK_RESERVE;
   public static final int LOCATION_READING_HALL_RESERVE;
@@ -37,7 +37,7 @@ public class ConstantManager {
       service.initConstants(locations, TableEntityMapper.LOCATION);
       service.initConstants(operations, TableEntityMapper.OPERATION);
       service.initConstants(roles, TableEntityMapper.ROLE);
-      LOCATION_DECOMISSIONED = getLocationIdByDescription(DECOMISSIONED);
+      LOCATION_DECOMMISSIONED = getLocationIdByDescription(DECOMMISSIONED);
       LOCATION_ON_HAND = getLocationIdByDescription(ON_HAND);
       LOCATION_DELIVERY_DESK_RESERVE = getLocationIdByDescription(DELIVERY_DESK_RESERVE);
       LOCATION_READING_HALL_RESERVE = getLocationIdByDescription(READING_HALL_RESERVE);

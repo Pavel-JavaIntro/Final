@@ -27,7 +27,7 @@
                                                                            id="name3" value=""/>
     <label for="secondname3"><fmt:message key="message.secondname"/></label><input type="text" name="secondname3"
                                                                                    id="secondname3" value=""/>
-    <br/><fmt:message key="message.booktitle"/>:<br/>
+    <br/><fmt:message key="message.booktitle"/><br/>
     <input type="text" name="booktitle" id="booktitle" value=""/>
     <br/><fmt:message key="message.year"/>:<br/>
     <input type="number" name="bookyear" id="bookyear" value=""/>

@@ -7,6 +7,7 @@
         align="center">
     <h3><fmt:message key="message.admin"/></h3>
     <form action="library" method="post">
+        <a href="#" onclick="postTo('welcome');"><fmt:message key="message.main" /></a><br/>
         <a href="#" onclick="postTo('show_orders');"><fmt:message key="message.users_orders" /></a><br/>
         <a href="#" onclick="postTo('show_books');"><fmt:message key="message.dispatch" /></a><br/>
         <a href="#" onclick="postTo('book_options');"><fmt:message key="message.book_manage" /></a>
