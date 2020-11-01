@@ -1,4 +1,4 @@
-﻿package by.pavka.library.controller.command.impl;
+package by.pavka.library.controller.command.impl;
 
 import by.pavka.library.ConfigurationManager;
 import by.pavka.library.controller.command.ActionCommand;
