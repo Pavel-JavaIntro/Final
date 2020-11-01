@@ -14,27 +14,57 @@ import java.util.List;
 public class AddBookCommand implements ActionCommand {
   @Override
   public void execute(HttpServletRequest request) {
+//    Book book = new Book();
+//    try {
+//      book.fieldForName("editionId").setValue(9);
+//      book.fieldForName("locationId").setValue(3);
+//      book.fieldForName("standardLocationId").setValue(3);
+//      WelcomeService welcomeService = WelcomeService.getInstance();
+//      welcomeService.addBook(book);
+//    } catch (LibraryEntityException e) {
+//      e.printStackTrace();
+//    } catch (ServiceException e) {
+//      e.printStackTrace();
+//    }
+
     HttpSession session = request.getSession();
-    String page = (String)session.getAttribute(PAGE);
-    String code = (String)session.getAttribute("code");
-    List<Book> books = (List<Book>)session.getAttribute("decommission");
+    String page = (String) session.getAttribute(PAGE);
+    String code = (String) session.getAttribute("code");
+    String loc = request.getParameter("booklocation");
+    int locationId = loc.isEmpty() ? 0 : Integer.parseInt(loc);
+    List<Book> books = (List<Book>) session.getAttribute("decommission");
     int editionId = 0;
-    int locationId = 3;
     if (books != null && !books.isEmpty()) {
       Book book = books.get(0);
       try {
-        editionId = (int)book.fieldForName("editionId").getValue();
-        locationId = (int)book.fieldForName("standardLocationId").getValue();
-        Book newBook = new Book();
-        newBook.fieldForName("editionId").setValue(editionId);
-        newBook.fieldForName("locationId").setValue(locationId);
-        newBook.fieldForName("standardLocationId").setValue(locationId);
+        editionId = (int) book.fieldForName("editionId").getValue();
+        if (locationId == 0) {
+          locationId = (int) book.fieldForName("standardLocationId").getValue();
+        }
       } catch (LibraryEntityException e) {
         page = ConfigurationManager.getProperty("error");
-        LOGGER.error("FindCodeCommand hasn't completed");
+        LOGGER.error("AddBookCommand hasn't completed");
       }
-      session.setAttribute(PAGE, page);
-
     }
+    Book newBook = new Book();
+    WelcomeService welcomeService = WelcomeService.getInstance();
+    try {
+      if (editionId == 0) {
+        System.out.println(code);
+        editionId = welcomeService.editionIdByCode(code);
+        System.out.println("EDITION ID = "+ editionId);
+      }
+      if (locationId != 0) {
+        newBook.fieldForName("locationId").setValue(locationId);
+        newBook.fieldForName("standardLocationId").setValue(locationId);
+      }
+      newBook.fieldForName("editionId").setValue(editionId);
+      System.out.println("OK?");
+      welcomeService.addBook(newBook);
+    } catch (LibraryEntityException | ServiceException e) {
+      page = ConfigurationManager.getProperty("error");
+      LOGGER.error("AddBookCommand hasn't completed");
+    }
+    session.setAttribute(PAGE, page);
   }
 }

@@ -275,4 +275,13 @@ public class WelcomeService {
     }
     return editionId;
   }
+
+  public void addBook(Book book) throws ServiceException {
+    try (LibraryDao<Book> bookDao =
+             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+      bookDao.add(book);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot add book", e);
+    }
+  }
 }

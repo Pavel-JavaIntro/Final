@@ -44,10 +44,13 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
   public void add(T entity) throws DaoException {
     PreparedStatement statement = null;
     String sql = String.format(INSERT, getTableName());
+    System.out.println(sql);
     try {
       sql += formInsertRequest(entity);
+      System.out.println(sql);
       statement = connector.obtainPreparedStatement(sql);
       statement.executeUpdate();
+      System.out.println(statement);
     } catch (DaoException | SQLException e) {
       throw new DaoException("SimpleLibraryDao add exception", e);
     } finally {
@@ -216,6 +219,9 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
     StringBuilder values = new StringBuilder(" VALUES (");
     ColumnFieldMapper<T> mapper = ColumnFieldMapper.getInstance(entity);
     for (EntityField field : entity.getFields()) {
+      if (field.getValue() == null) {
+        continue;
+      }
       template.append(mapper.getColumnName(field)).append(",");
       values.append("'").append(field.getValue()).append("',");
     }

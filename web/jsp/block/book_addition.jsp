@@ -8,5 +8,7 @@
 <form name="bookAddingForm" method="POST" action="library">
     <br/>
     <input type="hidden" name="command" value="add_book"/>
+    <br/><fmt:message key="message.booklocation"/>:<br/>
+    <input type="number" name="booklocation" id="booklocation" value=""/>
     <br/><input type="submit" value="<fmt:message key="message.addbook"/>"/>
 </form>
