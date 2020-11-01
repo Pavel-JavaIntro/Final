@@ -14,19 +14,6 @@ import java.util.List;
 public class AddBookCommand implements ActionCommand {
   @Override
   public void execute(HttpServletRequest request) {
-//    Book book = new Book();
-//    try {
-//      book.fieldForName("editionId").setValue(9);
-//      book.fieldForName("locationId").setValue(3);
-//      book.fieldForName("standardLocationId").setValue(3);
-//      WelcomeService welcomeService = WelcomeService.getInstance();
-//      welcomeService.addBook(book);
-//    } catch (LibraryEntityException e) {
-//      e.printStackTrace();
-//    } catch (ServiceException e) {
-//      e.printStackTrace();
-//    }
-
     HttpSession session = request.getSession();
     String page = (String) session.getAttribute(PAGE);
     String code = (String) session.getAttribute("code");

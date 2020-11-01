@@ -6,6 +6,7 @@
     <servlet>
         <servlet-name>LibraryServlet</servlet-name>
         <servlet-class>by.pavka.library.controller.LibraryServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>LibraryServlet</servlet-name>
