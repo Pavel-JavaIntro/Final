@@ -315,4 +315,13 @@ public class WelcomeService {
       throw new ServiceException("Cannot bind editions and authors", e);
     }
   }
+
+  public List<Author> findAuthors(Criteria criterion) throws ServiceException {
+    try (LibraryDao<Author> authorDao =
+             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.AUTHOR)) {
+      return authorDao.read(criterion, true);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot add a book", e);
+    }
+  }
 }

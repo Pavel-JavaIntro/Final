@@ -37,16 +37,13 @@ public class AddBookCommand implements ActionCommand {
     WelcomeService welcomeService = WelcomeService.getInstance();
     try {
       if (editionId == 0) {
-        System.out.println(code);
         editionId = welcomeService.editionIdByCode(code);
-        System.out.println("EDITION ID = "+ editionId);
       }
       if (locationId != 0) {
         newBook.fieldForName("locationId").setValue(locationId);
         newBook.fieldForName("standardLocationId").setValue(locationId);
       }
       newBook.fieldForName("editionId").setValue(editionId);
-      System.out.println("OK?");
       welcomeService.addBook(newBook);
     } catch (LibraryEntityException | ServiceException e) {
       page = ConfigurationManager.getProperty("error");
