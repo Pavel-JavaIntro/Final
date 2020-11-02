@@ -7,7 +7,7 @@ import by.pavka.library.entity.LibraryEntity;
 import java.util.List;
 
 public interface LibraryDao<T extends LibraryEntity> extends AutoCloseable {
-  void add(T entity) throws DaoException;
+  int add(T entity) throws DaoException;
   List<T> read(Criteria criteria, boolean strict) throws DaoException;
   List<T> read() throws DaoException;
   T get(int id) throws DaoException;

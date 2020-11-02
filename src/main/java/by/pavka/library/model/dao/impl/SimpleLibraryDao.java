@@ -41,7 +41,7 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
   }
 
   @Override
-  public void add(T entity) throws DaoException {
+  public int add(T entity) throws DaoException {
     PreparedStatement statement = null;
     String sql = String.format(INSERT, getTableName());
     System.out.println(sql);
@@ -51,6 +51,12 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
       statement = connector.obtainPreparedStatement(sql);
       statement.executeUpdate();
       System.out.println(statement);
+      ResultSet resultSet = statement.getGeneratedKeys();
+      if (resultSet.next()) {
+        return resultSet.getInt("id");
+      } else {
+        throw new DaoException("No generated key");
+      }
     } catch (DaoException | SQLException e) {
       throw new DaoException("SimpleLibraryDao add exception", e);
     } finally {

@@ -9,7 +9,7 @@
     <br/>
     <input type="hidden" name="command" value="add_edition"/>
     <fmt:message key="message.genre"/>:<br/>
-    <input type="number" name="genre" id="genre" value=""/>
+    <input type="number" name="genre" id="genre" value="" required/>
     <br/><fmt:message key="message.authors"/>:<br/>
     <label for="surname1"><fmt:message key="message.usersurname"/></label><input type="text" name="surname1"
                                                                                  id="surname1" value=""/>
@@ -30,7 +30,7 @@
     <br/><label for="secondname3"><fmt:message key="message.secondname"/></label><input type="text" name="secondname3"
                                                                                    id="secondname3" value=""/>
     <br/><fmt:message key="message.booktitle"/><br/>
-    <input type="text" name="booktitle" id="booktitle" value=""/>
+    <input type="text" name="booktitle" id="booktitle" value="" required/>
     <br/><fmt:message key="message.year"/>:<br/>
     <input type="number" name="bookyear" id="bookyear" value=""/>
     <br/><fmt:message key="message.booklocation"/>:<br/>

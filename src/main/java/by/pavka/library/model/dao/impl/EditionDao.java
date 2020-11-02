@@ -66,4 +66,11 @@ public class EditionDao extends SimpleLibraryDao<Edition>
     }
     return results;
   }
+
+  @Override
+  public void bind(int editionId, int authorId) {
+
+  }
+
+
 }

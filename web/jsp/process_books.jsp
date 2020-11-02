@@ -31,7 +31,7 @@
                                 <form name="adminBookForm" method="POST" action="library">
                                     <input type="hidden" name="command" value="find_code"/>
                                     <br/><fmt:message key="message.findcode"/><br/>
-                                    <input type="text" name="code" id="code" value=""/>
+                                    <input type="text" name="code" id="code" value="" required/>
                                     <br/>
                                     <input type="submit" value="<fmt:message key="message.select" />"/>
                                 </form>

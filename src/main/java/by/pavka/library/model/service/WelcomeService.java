@@ -278,10 +278,41 @@ public class WelcomeService {
 
   public void addBook(Book book) throws ServiceException {
     try (LibraryDao<Book> bookDao =
-             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
       bookDao.add(book);
     } catch (DaoException e) {
-      throw new ServiceException("Cannot add book", e);
+      throw new ServiceException("Cannot add a book", e);
+    }
+  }
+
+  public int addEdition(Edition edition) throws ServiceException {
+    try (LibraryDao<Edition> editionDao =
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.EDITION)) {
+      return editionDao.add(edition);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot add an edition code", e);
+    }
+  }
+
+  public int addAuthor(Author author) throws ServiceException {
+    try (LibraryDao<Author> authorDao =
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.AUTHOR)) {
+      return authorDao.add(author);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot add an author", e);
+    }
+  }
+
+  public void bindEditionAndAuthors(int editionId, int[] authorsId) throws ServiceException {
+    try (ManyToManyDao<Edition, Author> dao =
+        LibraryDaoFactory.getInstance().obtainManyToManyDao()) {
+      for (int id : authorsId) {
+        if (id != 0) {
+          dao.bind(editionId, id);
+        }
+      }
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot bind editions and authors", e);
     }
   }
 }
