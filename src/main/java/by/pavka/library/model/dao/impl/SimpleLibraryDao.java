@@ -49,15 +49,19 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
       sql += formInsertRequest(entity);
       System.out.println(sql);
       statement = connector.obtainPreparedStatement(sql);
-      statement.executeUpdate();
+      int affectedRows = statement.executeUpdate();
       System.out.println(statement);
       ResultSet resultSet = statement.getGeneratedKeys();
+      System.out.println("GENERATED KEYS " + affectedRows);
       if (resultSet.next()) {
-        return resultSet.getInt("id");
+        System.out.println("KEY = " );
+        return resultSet.getInt(1);
       } else {
+        System.out.println("No generated key");
         throw new DaoException("No generated key");
       }
     } catch (DaoException | SQLException e) {
+      System.out.println("SimpleLibraryDao add exception");
       throw new DaoException("SimpleLibraryDao add exception", e);
     } finally {
       connector.closeStatement(statement);

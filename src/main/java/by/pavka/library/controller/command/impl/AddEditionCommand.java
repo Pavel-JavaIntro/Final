@@ -32,15 +32,15 @@ public class AddEditionCommand implements ActionCommand {
       String surname = "surname" + i;
       String name = "name" + i;
       String secondname = "secondname" + i;
-      authors[i][0] = surname.isEmpty() ? null : surname;
-      authors[i][1] = name.isEmpty() ? null : name;
-      authors[i][2] = secondname.isEmpty() ? null : secondname;
+      authors[i][0] = surname.isEmpty() ? null : request.getParameter(surname);
+      authors[i][1] = name.isEmpty() ? null : request.getParameter(name);
+      authors[i][2] = secondname.isEmpty() ? null : request.getParameter(secondname);
     }
     Edition edition = new Edition();
     Book book = new Book();
     WelcomeService welcomeService = WelcomeService.getInstance();
-    edition.setValue("standard_number", code);
-    edition.setValue("genre", genre);
+    edition.setValue("standardNumber", code);
+    edition.setValue("genreId", genre);
     edition.setValue("title", title);
     if (year != 0) {
       edition.setValue("year", year);
@@ -68,7 +68,7 @@ public class AddEditionCommand implements ActionCommand {
         }
         if (authors[1][2] != null) {
           author.setValue("secondName", authors[i][2]);
-          EntityField<String> secondName = new EntityField<>("seondName");
+          EntityField<String> secondName = new EntityField<>("secondName");
           secondName.setValue(authors[i][2]);
           criteria[i].addConstraint(secondName);
         }
@@ -78,6 +78,7 @@ public class AddEditionCommand implements ActionCommand {
 
     try {
       int id = welcomeService.addEdition(edition);
+      System.out.println("EDITION ID = " + id);
       book.setValue("editionId", id);
       welcomeService.addBook(book);
       for (int i = 0; i < 3; i++) {

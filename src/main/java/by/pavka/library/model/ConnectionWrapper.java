@@ -31,7 +31,7 @@ public class ConnectionWrapper {
   public PreparedStatement obtainPreparedStatement(String sql) throws DaoException {
     if (connection != null) {
       try {
-        return connection.prepareStatement(sql);
+        return connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
       } catch (SQLException e) {
         throw new DaoException("Not obtained statement", e);
       }
