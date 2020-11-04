@@ -32,9 +32,9 @@ public class AddEditionCommand implements ActionCommand {
       String surname = "surname" + i;
       String name = "name" + i;
       String secondname = "secondname" + i;
-      authors[i][0] = surname.isEmpty() ? null : request.getParameter(surname);
-      authors[i][1] = name.isEmpty() ? null : request.getParameter(name);
-      authors[i][2] = secondname.isEmpty() ? null : request.getParameter(secondname);
+      authors[i][0] = request.getParameter(surname).isEmpty() ? null : request.getParameter(surname);
+      authors[i][1] = request.getParameter(name).isEmpty() ? null : request.getParameter(name);
+      authors[i][2] = request.getParameter(secondname).isEmpty() ? null : request.getParameter(secondname);
     }
     Edition edition = new Edition();
     Book book = new Book();
