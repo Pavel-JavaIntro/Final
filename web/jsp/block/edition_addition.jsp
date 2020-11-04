@@ -11,7 +11,13 @@
     <fmt:message key="message.genre"/>:<br/>
     <input type="number" name="genre" id="genre" value="" required/>
     <br/><fmt:message key="message.authors"/>:<br/>
-    <label for="surname1"><fmt:message key="message.usersurname"/></label><input type="text" name="surname1"
+    <label for="surname0"><fmt:message key="message.usersurname"/></label><input type="text" name="surname0"
+                                                                                 id="surname0" value=""/>
+    <br/><label for="name0"><fmt:message key="message.username"/></label><input type="text" name="name0"
+                                                                           id="name0" value=""/>
+    <br/><label for="secondname0"><fmt:message key="message.secondname"/></label><input type="text" name="secondname0"
+                                                                                   id="secondname0" value=""/>
+    <br/><label for="surname1"><fmt:message key="message.usersurname"/></label><input type="text" name="surname1"
                                                                                  id="surname1" value=""/>
     <br/><label for="name1"><fmt:message key="message.username"/></label><input type="text" name="name1"
                                                                            id="name1" value=""/>
@@ -23,12 +29,6 @@
                                                                            id="name2" value=""/>
     <br/><label for="secondname2"><fmt:message key="message.secondname"/></label><input type="text" name="secondname2"
                                                                                    id="secondname2" value=""/>
-    <br/><label for="surname3"><fmt:message key="message.usersurname"/></label><input type="text" name="surname3"
-                                                                                 id="surname3" value=""/>
-    <br/><label for="name3"><fmt:message key="message.username"/></label><input type="text" name="name3"
-                                                                           id="name3" value=""/>
-    <br/><label for="secondname3"><fmt:message key="message.secondname"/></label><input type="text" name="secondname3"
-                                                                                   id="secondname3" value=""/>
     <br/><fmt:message key="message.booktitle"/><br/>
     <input type="text" name="booktitle" id="booktitle" value="" required/>
     <br/><fmt:message key="message.year"/>:<br/>

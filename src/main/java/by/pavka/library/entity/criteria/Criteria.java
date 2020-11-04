@@ -24,4 +24,9 @@ public class Criteria implements Serializable {
   public int size() {
     return constraints.size();
   }
+
+  @Override
+  public String toString() {
+    return constraints.toString();
+  }
 }

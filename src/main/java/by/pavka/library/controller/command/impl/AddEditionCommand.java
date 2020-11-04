@@ -23,18 +23,23 @@ public class AddEditionCommand implements ActionCommand {
     String code = (String) session.getAttribute("code");
     int genre = Integer.parseInt(request.getParameter("genre"));
     String yearS = request.getParameter("bookyear");
-    int year = yearS.isEmpty()? 0 : Integer.parseInt(yearS);
+    int year = yearS.isEmpty() ? 0 : Integer.parseInt(yearS);
     String title = request.getParameter("booktitle");
     String locationS = request.getParameter("booklocation");
-    int locationId = yearS.isEmpty()? 0 : Integer.parseInt(locationS);
+    int locationId = locationS.isEmpty() ? 0 : Integer.parseInt(locationS);
     String[][] authors = new String[3][3];
     for (int i = 0; i < 3; i++) {
       String surname = "surname" + i;
       String name = "name" + i;
       String secondname = "secondname" + i;
-      authors[i][0] = request.getParameter(surname).isEmpty() ? null : request.getParameter(surname);
+      authors[i][0] =
+          request.getParameter(surname).isEmpty() ? null : request.getParameter(surname);
       authors[i][1] = request.getParameter(name).isEmpty() ? null : request.getParameter(name);
-      authors[i][2] = request.getParameter(secondname).isEmpty() ? null : request.getParameter(secondname);
+      authors[i][2] =
+          request.getParameter(secondname).isEmpty() ? null : request.getParameter(secondname);
+    }
+    for (int i = 0; i < 3; i++) {
+      System.out.println(authors[i][0] + authors[i][1] + authors[i][2]);
     }
     Edition edition = new Edition();
     Book book = new Book();
@@ -52,7 +57,7 @@ public class AddEditionCommand implements ActionCommand {
     int[] ids = new int[3];
     Author[] athrs = new Author[3];
     Criteria[] criteria = new Criteria[3];
-    for (int i = 1; i < 3; i++) {
+    for (int i = 0; i < 3; i++) {
       if (authors[i][0] != null) {
         Author author = new Author();
         author.setValue("surname", authors[i][0]);
@@ -66,7 +71,7 @@ public class AddEditionCommand implements ActionCommand {
           name.setValue(authors[i][1]);
           criteria[i].addConstraint(name);
         }
-        if (authors[1][2] != null) {
+        if (authors[i][2] != null) {
           author.setValue("secondName", authors[i][2]);
           EntityField<String> secondName = new EntityField<>("secondName");
           secondName.setValue(authors[i][2]);
@@ -78,15 +83,19 @@ public class AddEditionCommand implements ActionCommand {
 
     try {
       int id = welcomeService.addEdition(edition);
-      System.out.println("EDITION ID = " + id);
       book.setValue("editionId", id);
       welcomeService.addBook(book);
       for (int i = 0; i < 3; i++) {
-        List<Author> authorList = welcomeService.findAuthors(criteria[i]);
-        if (!authorList.isEmpty()) {
-          ids[i] = authorList.get(0).getId();
+        if (criteria[i] != null) {
+          System.out.println("CRITERIA = " + criteria[i]);
+          List<Author> authorList = welcomeService.findAuthors(criteria[i]);
+          if (!authorList.isEmpty()) {
+            ids[i] = authorList.get(0).getId();
+          } else {
+            ids[i] = welcomeService.addAuthor(athrs[i]);
+          }
         } else {
-          ids[i] = welcomeService.addAuthor(athrs[i]);
+          ids[i] = 0;
         }
       }
       welcomeService.bindEditionAndAuthors(id, ids);

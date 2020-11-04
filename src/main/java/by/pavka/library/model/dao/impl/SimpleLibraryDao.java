@@ -54,7 +54,6 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
       ResultSet resultSet = statement.getGeneratedKeys();
       System.out.println("GENERATED KEYS " + affectedRows);
       if (resultSet.next()) {
-        System.out.println("KEY = " );
         return resultSet.getInt(1);
       } else {
         System.out.println("No generated key");
