@@ -20,7 +20,8 @@ public enum CommandEnum {
   BOOK_OPTIONS(new BookOptionsCommand()),
   FIND_CODE(new FindCodeCommand()),
   ADD_BOOK(new AddBookCommand()),
-  ADD_EDITION(new AddEditionCommand());
+  ADD_EDITION(new AddEditionCommand()),
+  DECOMMISSION_BOOK(new DecommissionBookCommand());
 
   private final ActionCommand command;
 

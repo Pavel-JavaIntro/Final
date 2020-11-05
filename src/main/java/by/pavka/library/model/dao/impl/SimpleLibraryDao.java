@@ -18,12 +18,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>, EntityExtractor<T>, AutoCloseable {
+public class SimpleLibraryDao<T extends LibraryEntity>
+    implements LibraryDao<T>, EntityExtractor<T>, AutoCloseable {
 
   private static final String INSERT = "INSERT INTO %s ";
   private static final String LIST_ALL = "SELECT * FROM ";
   private static final String GET = "SELECT * FROM %s WHERE id=?";
-  private static final String UPDATE = "UPDATE %s %s WHERE id=?";
+  private static final String UPDATE = "UPDATE %s SET %s WHERE id=?";
   private static final String DELETE = "DELETE FROM %s WHERE id=?";
 
   private final String tableName;
@@ -99,18 +100,22 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
     }
   }
 
-
   @Override
   public void update(int id, EntityField<?>... fields) throws DaoException {
-    if (fields.length != 1 || !fields[0].getName().equals(SimpleListEntity.COLUMN_NAME)) {
-      throw new DaoException("Wrong Update request");
-    }
+    //    if (fields.length != 1 || !fields[0].getName().equals(SimpleListEntity.COLUMN_NAME)) {
+    //      throw new DaoException("Wrong Update request");
+    //    }
     PreparedStatement statement = null;
-    String sql = String.format(UPDATE, getTableName(), SimpleListEntity.COLUMN_NAME);
+    String assignment =
+        ConverterFactory.getInstance().getConverter().formColumnName(fields[0])
+            + "="
+            + fields[0].getValue();
+    String sql = String.format(UPDATE, getTableName(), assignment);
     try {
       statement = connector.obtainPreparedStatement(sql);
-      statement.setString(1, (String) (fields[0].getValue()));
-      statement.setInt(2, id);
+      //statement.setString(1, (String) (fields[0].getValue()));
+      statement.setInt(1, id);
+      System.out.println("INSIDE DAO: " + statement);
       statement.executeUpdate();
     } catch (DaoException | SQLException e) {
       throw new DaoException("SimpleLibraryDao update exception", e);
@@ -213,7 +218,8 @@ public class SimpleLibraryDao<T extends LibraryEntity> implements LibraryDao<T>,
     int id = resultSet.getInt("id");
     item.setId(id);
     ResultSetMetaData metaData = resultSet.getMetaData();
-    int count = metaData.getColumnCount();;
+    int count = metaData.getColumnCount();
+    ;
     ColumnFieldMapper<T> mapper = ColumnFieldMapper.getInstance(item);
     for (int i = 2; i <= count; i++) {
       String name = metaData.getColumnName(i);

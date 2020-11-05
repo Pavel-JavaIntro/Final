@@ -196,8 +196,7 @@ public class WelcomeService {
 
   public Book findBookByEdition(int id) throws ServiceException {
     Book book = null;
-    try (LibraryDao<Book> bookDao =
-        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+    try  {
       List<Book> result = findBooksByEdition(id);
       for (Book b : result) {
         if (!b.fieldForName("locationId").getValue().equals(ConstantManager.LOCATION_DECOMMISSIONED)
@@ -207,7 +206,7 @@ public class WelcomeService {
           break;
         }
       }
-    } catch (DaoException | LibraryEntityException e) {
+    } catch (LibraryEntityException e) {
       throw new ServiceException("Cannot find books", e);
     }
     return book;
@@ -322,6 +321,17 @@ public class WelcomeService {
       return authorDao.read(criterion, true);
     } catch (DaoException e) {
       throw new ServiceException("Cannot add a book", e);
+    }
+  }
+
+  public void decommissionBook(int bookId) throws ServiceException {
+    try (LibraryDao<Book> bookDao =
+             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+      EntityField<Integer> field = new EntityField<>("locationId");
+      field.setValue(ConstantManager.LOCATION_DECOMMISSIONED);
+      bookDao.update(bookId, field);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot decommission a book", e);
     }
   }
 }
