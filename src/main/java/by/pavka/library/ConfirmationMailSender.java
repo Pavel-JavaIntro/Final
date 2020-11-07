@@ -41,7 +41,7 @@ public class ConfirmationMailSender {
 
       Transport.send(message);
     } catch (MessagingException e) {
-      // TODO process this exception
+      e.printStackTrace();
     }
     return readerPassword;
   }
