@@ -121,6 +121,15 @@ public abstract class AppClient implements Serializable {
     }
   }
 
+  public String getAssignment() {
+    switch (getRole()) {
+      case ConstantManager.ADMIN:
+        return "admin_assign.jsp";
+      default:
+        return "librarian_assign.jsp";
+    }
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

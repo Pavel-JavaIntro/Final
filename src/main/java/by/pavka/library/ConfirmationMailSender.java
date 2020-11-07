@@ -27,6 +27,7 @@ public class ConfirmationMailSender {
               }
             });
     String readerPassword = RandomStringUtils.randomAlphanumeric(8);
+
     try {
 
       Message message = new MimeMessage(session);

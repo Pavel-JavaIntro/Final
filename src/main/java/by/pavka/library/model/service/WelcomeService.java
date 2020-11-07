@@ -196,12 +196,13 @@ public class WelcomeService {
 
   public Book findBookByEdition(int id) throws ServiceException {
     Book book = null;
-    try  {
+    try {
       List<Book> result = findBooksByEdition(id);
       for (Book b : result) {
+        System.out.println(b.fieldForName("reserved").getValue());
         if (!b.fieldForName("locationId").getValue().equals(ConstantManager.LOCATION_DECOMMISSIONED)
             && !b.fieldForName("locationId").getValue().equals(ConstantManager.LOCATION_ON_HAND)
-            && !((boolean) (b.fieldForName("reserved").getValue()))) {
+            && !b.fieldForName("reserved").getValue().equals(ConstantManager.RESERVED)) {
           book = b;
           break;
         }
@@ -317,7 +318,7 @@ public class WelcomeService {
 
   public List<Author> findAuthors(Criteria criterion) throws ServiceException {
     try (LibraryDao<Author> authorDao =
-             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.AUTHOR)) {
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.AUTHOR)) {
       return authorDao.read(criterion, true);
     } catch (DaoException e) {
       throw new ServiceException("Cannot add a book", e);
@@ -326,12 +327,37 @@ public class WelcomeService {
 
   public void decommissionBook(int bookId) throws ServiceException {
     try (LibraryDao<Book> bookDao =
-             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
       EntityField<Integer> field = new EntityField<>("locationId");
       field.setValue(ConstantManager.LOCATION_DECOMMISSIONED);
       bookDao.update(bookId, field);
     } catch (DaoException e) {
       throw new ServiceException("Cannot decommission a book", e);
+    }
+  }
+
+  public List<User> findUsers(String surname, String name) throws ServiceException {
+    try (LibraryDao<User> userDao =
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER)) {
+      EntityField<String> surnameField = new EntityField<>("surname");
+      surnameField.setValue(surname);
+      EntityField<String> nameField = new EntityField<>("name");
+      nameField.setValue(name);
+      Criteria criteria = new Criteria();
+      criteria.addConstraints(surnameField, nameField);
+      List<User> users = userDao.read(criteria, true);
+      return users;
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot find users", e);
+    }
+  }
+
+  public void addUser(User user) throws ServiceException {
+    try (LibraryDao<User> userDao =
+             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER)) {
+      userDao.add(user);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot add users", e);
     }
   }
 }

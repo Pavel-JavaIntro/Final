@@ -21,7 +21,10 @@ public enum CommandEnum {
   FIND_CODE(new FindCodeCommand()),
   ADD_BOOK(new AddBookCommand()),
   ADD_EDITION(new AddEditionCommand()),
-  DECOMMISSION_BOOK(new DecommissionBookCommand());
+  DECOMMISSION_BOOK(new DecommissionBookCommand()),
+  USER_OPTIONS(new UserOptionsCommand()),
+  FIND_USER(new FindUsersCommand()),
+  ADD_USER(new AddUserCommand());
 
   private final ActionCommand command;
 

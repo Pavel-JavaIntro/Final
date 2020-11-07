@@ -26,7 +26,9 @@ public class Main {
     }
     System.out.println(list.size());
     System.out.println("admin".hashCode());
-    System.out.println(Integer.parseInt(""));
+    //System.out.println(Integer.parseInt(""));
+
+    System.out.println(ConfirmationMailSender.sendInvitation("pavkascool@gmail.com"));
   }
 
 }

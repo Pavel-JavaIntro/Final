@@ -28,6 +28,7 @@ public class ConstantManager {
   public static final int LOCATION_ON_HAND;
   public static final int LOCATION_DELIVERY_DESK_RESERVE;
   public static final int LOCATION_READING_HALL_RESERVE;
+  public static final int RESERVED = 1;
 
   private ConstantManager()  {}
 
@@ -66,5 +67,14 @@ public class ConstantManager {
 
   public static String getRoleById(int i) {
     return roles.get(i);
+  }
+
+  public static int getRoleId(String role) {
+    for (Map.Entry<Integer, String> entry : roles.entrySet()) {
+      if (entry.getValue().equals(role)) {
+        return entry.getKey();
+      }
+    }
+    return 0;
   }
 }

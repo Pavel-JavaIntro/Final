@@ -10,7 +10,8 @@
         <a href="#" onclick="postTo('welcome');"><fmt:message key="message.main" /></a><br/>
         <a href="#" onclick="postTo('show_orders');"><fmt:message key="message.users_orders" /></a><br/>
         <a href="#" onclick="postTo('show_books');"><fmt:message key="message.dispatch" /></a><br/>
-        <a href="#" onclick="postTo('book_options');"><fmt:message key="message.book_manage" /></a>
+        <a href="#" onclick="postTo('book_options');"><fmt:message key="message.book_manage" /></a><br/>
+        <a href="#" onclick="postTo('user_options');"><fmt:message key="message.user_manage" /></a>
     </form>
 
 </td>
