@@ -46,9 +46,9 @@
                             rowspan="2"
                             style="width:80%">
 
-                        <form name="decomForm" method="POST" action="library">
-                            <fmt:message key="message.decommission"/><br/>
-                            <select size="10" name="decom" required>
+                        <form name="changeStatusForm" method="POST" action="library">
+                            <fmt:message key="message.status"/><br/>
+                            <select size="4" name="user" required>
                                 <c:forEach var="item" items="${sessionScope.users}">
                                     <option value="${item.id}">
                                             ${item}
@@ -57,8 +57,11 @@
                             </select>
 
                             <br/>
-                            <input type="submit" value="<fmt:message key="message.decommission_book" />"/>
-                            <input type="hidden" name="command" value="decommission_book"/>
+                            <input type="radio" name="status" value="subscriber"><fmt:message key="message.subsc"/> <br/>
+                            <input type="radio" name="status" value="reader"><fmt:message key="message.reader"/><br/>
+                            <input type="radio" name="status" value="guest"><fmt:message key="message.excluded"/><br/>
+                            <input type="submit" value="<fmt:message key="message.status" />"/>
+                            <input type="hidden" name="command" value="change_status"/>
                         </form>
                     </td>
                     <jsp:include page="${sessionScope.client.entrance}"/>

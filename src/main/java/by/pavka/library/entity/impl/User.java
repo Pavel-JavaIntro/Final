@@ -14,8 +14,7 @@ public class User extends LibraryEntity {
     EntityField<String> phone = new EntityField<>("phone");
     EntityField<String> email = new EntityField<>("email");
     EntityField<Integer> password = new EntityField<>("password");
-    EntityField<Boolean> isBlocked = new EntityField<>("isBlocked");
-    return new EntityField[] {roleId, surname, name, address, phone, email, password, isBlocked};
+    return new EntityField[] {roleId, surname, name, address, phone, email, password};
   }
 
   public int getRoleId() throws LibraryEntityException {

@@ -24,7 +24,8 @@ public enum CommandEnum {
   DECOMMISSION_BOOK(new DecommissionBookCommand()),
   USER_OPTIONS(new UserOptionsCommand()),
   FIND_USER(new FindUsersCommand()),
-  ADD_USER(new AddUserCommand());
+  ADD_USER(new AddUserCommand()),
+  CHANGE_STATUS(new ChangeStatusCommand());
 
   private final ActionCommand command;
 

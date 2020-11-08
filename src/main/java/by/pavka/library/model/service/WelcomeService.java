@@ -360,4 +360,15 @@ public class WelcomeService {
       throw new ServiceException("Cannot add users", e);
     }
   }
+
+  public void changeStatus(int userId, int roleId) throws ServiceException {
+    try (LibraryDao<User> userDao =
+             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER)) {
+      EntityField<Integer> field = new EntityField<>("roleId");
+      field.setValue(roleId);
+      userDao.update(userId, field);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot change user status", e);
+    }
+  }
 }

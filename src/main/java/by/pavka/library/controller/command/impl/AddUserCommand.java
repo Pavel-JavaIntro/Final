@@ -41,7 +41,7 @@ public class AddUserCommand implements ActionCommand {
       welcomeService.addUser(user);
     } catch (ServiceException e) {
       page = ConfigurationManager.getProperty("error");
-      LOGGER.error("AddEditionCommand hasn't completed");
+      LOGGER.error("AddUserCommand hasn't completed");
     }
     session.setAttribute(PAGE, page);
   }
