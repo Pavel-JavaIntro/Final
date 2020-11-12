@@ -17,6 +17,7 @@ import by.pavka.library.model.dao.impl.LibraryDaoFactory;
 import by.pavka.library.model.mapper.ConstantManager;
 import by.pavka.library.model.mapper.TableEntityMapper;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.*;
 
 public class WelcomeService {
@@ -437,12 +438,33 @@ public class WelcomeService {
       int bookId = book.getId();
       EntityField<Integer> reserveField = new EntityField<>("reserved");
       reserveField.setValue(ConstantManager.NOT_RESERVED);
-      EntityField<Integer> userField = new EntityField<>("userId");
+      EntityField<Integer> userField = new EntityField<>("readerId");
       userField.setValue(null);
+      EntityField<Integer> standardLocationField = book.fieldForName("standardLocationId");
+      int locationId = standardLocationField.getValue();
+      EntityField<Integer> locationField = new EntityField<>("locationId");
+      locationField.setValue(locationId);
       bookDao.update(bookId, reserveField);
       bookDao.update(bookId, userField);
-    } catch (DaoException e) {
+      bookDao.update(bookId, locationField);
+    } catch (DaoException | LibraryEntityException e) {
       throw new ServiceException("Cannot return book", e);
     }
+  }
+
+  public Collection<BookOrder> getPlacedOrder() throws ServiceException {
+    List<BookOrder> placedOrders = null;
+    try (LibraryDao<Book> bookDao =
+             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+      EntityField<Integer> reserved = new EntityField<>("reserved");
+      reserved.setValue(ConstantManager.RESERVED);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot get placed orders", e);
+    }
+    return null;
+  }
+
+  public Collection<BookOrder> getPreparedOrders() {
+    return null;
   }
 }
