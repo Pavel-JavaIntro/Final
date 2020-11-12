@@ -25,7 +25,10 @@ public enum CommandEnum {
   USER_OPTIONS(new UserOptionsCommand()),
   FIND_USER(new FindUsersCommand()),
   ADD_USER(new AddUserCommand()),
-  CHANGE_STATUS(new ChangeStatusCommand());
+  CHANGE_STATUS(new ChangeStatusCommand()),
+  RETURN_BOOKS(new ReturnBookCommand()),
+  RETURN(new ReturnCommand()),
+  FIX_RETURN(new FixReturnCommand());
 
   private final ActionCommand command;
 

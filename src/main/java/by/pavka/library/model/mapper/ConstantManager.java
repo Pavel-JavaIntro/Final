@@ -29,6 +29,7 @@ public class ConstantManager {
   public static final int LOCATION_DELIVERY_DESK_RESERVE;
   public static final int LOCATION_READING_HALL_RESERVE;
   public static final int RESERVED = 1;
+  public static final int NOT_RESERVED = 0;
 
   private ConstantManager()  {}
 

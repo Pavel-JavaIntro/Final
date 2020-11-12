@@ -12,7 +12,7 @@ public abstract class AppClient implements Serializable {
   private String name;
   private String email;
   private int reservedBooks;
-  private Set<EditionInfo> editioninfos = new HashSet<>();
+  private Set<EditionInfo> editionInfos = new HashSet<>();
 
   public int getId() {
     return id;
@@ -55,14 +55,14 @@ public abstract class AppClient implements Serializable {
   }
 
   public Set<EditionInfo> getEditionInfos() {
-    return editioninfos;
+    return editionInfos;
   }
 
   public boolean addEditionInfo(EditionInfo info) {
     if (info.getBook() == null) {
       return false;
     }
-    boolean result = editioninfos.add(info);
+    boolean result = editionInfos.add(info);
     if (result) {
       reservedBooks++;
     }
@@ -70,11 +70,11 @@ public abstract class AppClient implements Serializable {
   }
 
   public int getBasketSize() {
-    return editioninfos.size();
+    return editionInfos.size();
   }
 
   public void removeEditionInfo(EditionInfo info) {
-    editioninfos.remove(info);
+    editionInfos.remove(info);
     reservedBooks--;
   }
 

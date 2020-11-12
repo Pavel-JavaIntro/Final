@@ -1,5 +1,6 @@
 package by.pavka.library.model.service;
 
+import by.pavka.library.BookOrder;
 import by.pavka.library.entity.EditionInfo;
 import by.pavka.library.entity.LibraryEntityException;
 import by.pavka.library.entity.SimpleListEntity;
@@ -369,6 +370,79 @@ public class WelcomeService {
       userDao.update(userId, field);
     } catch (DaoException e) {
       throw new ServiceException("Cannot change user status", e);
+    }
+  }
+
+  public void orderBook(BookOrder bookOrder) throws ServiceException {
+    try (LibraryDao<Book> bookDao =
+             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+      int userId = bookOrder.getUserId();
+      for (EditionInfo editionInfo : bookOrder.getEditionInfoSet()) {
+        Book book = editionInfo.getBook();
+        int bookId = book.getId();
+        EntityField<Integer> userField = new EntityField<>("readerId");
+        userField.setValue(userId);
+        EntityField<Integer> reserveField = new EntityField<>("reserved");
+        reserveField.setValue(ConstantManager.RESERVED);
+        bookDao.update(bookId, userField);
+        bookDao.update(bookId, reserveField);
+      }
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot order book", e);
+    }
+  }
+
+  public void prepareOrder(BookOrder bookOrder) throws ServiceException {
+    try (LibraryDao<Book> bookDao =
+             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+      for (EditionInfo editionInfo : bookOrder.getEditionInfoSet()) {
+        Book book = editionInfo.getBook();
+        int bookId = book.getId();
+        EntityField<Integer> locField = new EntityField<>("locationId");
+        locField.setValue(ConstantManager.LOCATION_READING_HALL_RESERVE);
+        bookDao.update(bookId, locField);
+      }
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot prepare book", e);
+    }
+  }
+
+  public void fulfillOrder(BookOrder dispatchedOrder) throws ServiceException {
+    try (LibraryDao<Book> bookDao =
+             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+      for (EditionInfo editionInfo : dispatchedOrder.getEditionInfoSet()) {
+        Book book = editionInfo.getBook();
+        int bookId = book.getId();
+        EntityField<Integer> locField = new EntityField<>("locationId");
+        locField.setValue(ConstantManager.LOCATION_ON_HAND);
+        bookDao.update(bookId, locField);
+      }
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot dispatch book", e);
+    }
+  }
+
+  public Book findBookById(int bookId) throws ServiceException {
+    try (LibraryDao<Book> bookDao =
+             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+      return bookDao.get(bookId);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot find book", e);
+    }
+  }
+
+  public void fixReturn(Book book) throws ServiceException {
+    try (LibraryDao<Book> bookDao =
+             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+      int bookId = book.getId();
+      EntityField<Integer> reserveField = new EntityField<>("reserved");
+      reserveField.setValue(ConstantManager.NOT_RESERVED);
+      EntityField<Integer> userField = new EntityField<>("userId");
+      userField.setValue(null);
+      bookDao.update(bookId, reserveField);
+      bookDao.update(bookId, userField);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot return book", e);
     }
   }
 }
