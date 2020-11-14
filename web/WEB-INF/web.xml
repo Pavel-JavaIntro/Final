@@ -44,7 +44,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>LibraryConstraints</web-resource-name>
-            <url-pattern>/jsp/*</url-pattern>
+            <url-pattern>/jsp/block/*</url-pattern>
         </web-resource-collection>
         <auth-constraint/>
     </security-constraint>

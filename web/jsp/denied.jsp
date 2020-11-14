@@ -1,9 +1,9 @@
 
-<%@ page isErrorPage="true" contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>ERROR</title>
+    <title>ACCESS DENIED</title>
     <fmt:setLocale value="${sessionScope.lan}"/>
     <fmt:setBundle basename="messages"/>
 </head>
@@ -25,10 +25,10 @@
                     <td
                             rowspan="2"
                             style="width:80%">
-                        <h2><fmt:message key="message.error1"/>
-                            <a href="#" onclick="postTo('welcome')"><fmt:message key="message.ret"/> </a></h2>
+                        <h2><fmt:message key="message.denied"/>
+                            <a href="../" onclick="postTo('welcome')"><fmt:message key="message.ret"/> </a></h2>
                         <h2><fmt:message key="message.error2"/></h2><br/>
-                        <%pageContext.getErrorData().getThrowable().printStackTrace();%>
+
                     </td>
                     <jsp:include page="${sessionScope.client.entrance}"/>
                 </tr>
