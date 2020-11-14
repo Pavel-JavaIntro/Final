@@ -401,7 +401,10 @@ public class WelcomeService {
         int bookId = book.getId();
         EntityField<Integer> locField = new EntityField<>("locationId");
         locField.setValue(ConstantManager.LOCATION_READING_HALL_RESERVE);
+        EntityField<Integer> reserveField = new EntityField<>("reserved");
+        reserveField.setValue(ConstantManager.PREPARED);
         bookDao.update(bookId, locField);
+        bookDao.update(bookId, reserveField);
       }
     } catch (DaoException e) {
       throw new ServiceException("Cannot prepare book", e);
@@ -416,7 +419,10 @@ public class WelcomeService {
         int bookId = book.getId();
         EntityField<Integer> locField = new EntityField<>("locationId");
         locField.setValue(ConstantManager.LOCATION_ON_HAND);
+        EntityField<Integer> reserveField = new EntityField<>("reserved");
+        reserveField.setValue(ConstantManager.NOT_RESERVED);
         bookDao.update(bookId, locField);
+        bookDao.update(bookId, reserveField);
       }
     } catch (DaoException e) {
       throw new ServiceException("Cannot dispatch book", e);
@@ -436,15 +442,12 @@ public class WelcomeService {
     try (LibraryDao<Book> bookDao =
              LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
       int bookId = book.getId();
-      EntityField<Integer> reserveField = new EntityField<>("reserved");
-      reserveField.setValue(ConstantManager.NOT_RESERVED);
       EntityField<Integer> userField = new EntityField<>("readerId");
       userField.setValue(null);
       EntityField<Integer> standardLocationField = book.fieldForName("standardLocationId");
       int locationId = standardLocationField.getValue();
       EntityField<Integer> locationField = new EntityField<>("locationId");
       locationField.setValue(locationId);
-      bookDao.update(bookId, reserveField);
       bookDao.update(bookId, userField);
       bookDao.update(bookId, locationField);
     } catch (DaoException | LibraryEntityException e) {
@@ -453,11 +456,14 @@ public class WelcomeService {
   }
 
   public Collection<BookOrder> getPlacedOrder() throws ServiceException {
-    List<BookOrder> placedOrders = null;
+    List<BookOrder> placedOrders = new ArrayList<>();
     try (LibraryDao<Book> bookDao =
              LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
       EntityField<Integer> reserved = new EntityField<>("reserved");
       reserved.setValue(ConstantManager.RESERVED);
+      Criteria criteria = new Criteria();
+      criteria.addConstraint(reserved);
+      List<Book> books = bookDao.read(criteria, true);
     } catch (DaoException e) {
       throw new ServiceException("Cannot get placed orders", e);
     }
