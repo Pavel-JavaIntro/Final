@@ -5,24 +5,26 @@ import javax.servlet.*;
 import java.io.IOException;
 
 public class CharacterSetFilter implements Filter {
-
-  private FilterConfig config;
+  private String code;
 
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
-    config = filterConfig;
+    code = filterConfig.getInitParameter("encoding");
   }
 
   @Override
   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-    servletRequest.setCharacterEncoding("UTF-8");
-    servletResponse.setContentType("text/html; charset=UTF-8");
-    servletResponse.setCharacterEncoding("UTF-8");
+    if (code != null) {
+      servletRequest.setCharacterEncoding(code);
+      //servletResponse.setContentType("text/html; charset=UTF-8");
+      servletResponse.setCharacterEncoding(code);
+      System.out.println("CODE = " + code);
+    }
     filterChain.doFilter(servletRequest, servletResponse);
   }
 
   @Override
   public void destroy() {
-
+    code = null;
   }
 }

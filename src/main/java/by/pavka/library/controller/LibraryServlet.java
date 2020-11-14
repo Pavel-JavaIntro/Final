@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
 
 public class LibraryServlet extends HttpServlet {
   private static final Logger LOGGER = LogManager.getLogger(LibraryServlet.class);
@@ -26,7 +27,11 @@ public class LibraryServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    process(request, response);
+    if (request.getParameter("command").equals("welcome")) {
+      process(request, response);
+    } else {
+      response.sendError(403);
+    }
   }
 
   private void process(HttpServletRequest request, HttpServletResponse response)
