@@ -17,10 +17,9 @@ import by.pavka.library.model.dao.impl.LibraryDaoFactory;
 import by.pavka.library.model.mapper.ConstantManager;
 import by.pavka.library.model.mapper.TableEntityMapper;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.*;
 
-public class WelcomeService {
+public class WelcomeService implements WelcomeServiceInterface {
   private static WelcomeService instance = new WelcomeService();
 
   private WelcomeService() {}
@@ -29,6 +28,7 @@ public class WelcomeService {
     return instance;
   }
 
+  @Override
   public <T extends SimpleListEntity> void initConstants(
       Map<Integer, String> constants, TableEntityMapper constant) throws ServiceException {
     List<T> list = null;
@@ -49,6 +49,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public int countBooks() throws ServiceException {
     try (LibraryDao<Book> dao = LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
       return dao.read().size();
@@ -57,6 +58,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public int countUsers() throws ServiceException {
     try (LibraryDao<User> dao = LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER)) {
       return dao.read().size() - 1;
@@ -65,6 +67,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public User auth(String surname, String name, String password) throws ServiceException {
     int hashPass = password.hashCode();
     try (LibraryDao<User> dao = LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER)) {
@@ -87,6 +90,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public List<Book> findBooksByEditionCode(String code) throws ServiceException {
     List<Book> books;
     try (LibraryDao<Edition> editionDao =
@@ -107,6 +111,7 @@ public class WelcomeService {
     return books;
   }
 
+  @Override
   public List<Book> findBooksByEdition(int id) throws ServiceException {
     List<Book> result = new ArrayList<>();
     try (LibraryDao<Book> bookDao =
@@ -122,6 +127,7 @@ public class WelcomeService {
     return result;
   }
 
+  @Override
   public List<Edition> findEditions(String title, String author) throws ServiceException {
     try (ManyToManyDao<Edition, Author> editionDao =
         LibraryDaoFactory.getInstance().obtainManyToManyDao()) {
@@ -196,6 +202,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public Book findBookByEdition(int id) throws ServiceException {
     Book book = null;
     try {
@@ -215,6 +222,7 @@ public class WelcomeService {
     return book;
   }
 
+  @Override
   public void bindAuthors(EditionInfo info) throws ServiceException {
     try (ManyToManyDao<Edition, Author> editionDao =
             LibraryDaoFactory.getInstance().obtainManyToManyDao();
@@ -236,6 +244,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public void bindBookAndLocation(EditionInfo info) throws ServiceException {
     try {
       Book book = findBookByEdition(info.getEdition().getId());
@@ -249,6 +258,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public void addCode(String code) throws ServiceException {
     try (LibraryDao<Edition> editionLibraryDao =
         LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.EDITION)) {
@@ -260,6 +270,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public int editionIdByCode(String code) throws ServiceException {
     int editionId = 0;
     try (LibraryDao<Edition> editionDao =
@@ -278,6 +289,7 @@ public class WelcomeService {
     return editionId;
   }
 
+  @Override
   public void addBook(Book book) throws ServiceException {
     try (LibraryDao<Book> bookDao =
         LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
@@ -287,6 +299,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public int addEdition(Edition edition) throws ServiceException {
     try (LibraryDao<Edition> editionDao =
         LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.EDITION)) {
@@ -296,6 +309,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public int addAuthor(Author author) throws ServiceException {
     try (LibraryDao<Author> authorDao =
         LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.AUTHOR)) {
@@ -305,6 +319,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public void bindEditionAndAuthors(int editionId, int[] authorsId) throws ServiceException {
     try (ManyToManyDao<Edition, Author> dao =
         LibraryDaoFactory.getInstance().obtainManyToManyDao()) {
@@ -318,6 +333,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public List<Author> findAuthors(Criteria criterion) throws ServiceException {
     try (LibraryDao<Author> authorDao =
         LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.AUTHOR)) {
@@ -327,6 +343,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public void decommissionBook(int bookId) throws ServiceException {
     try (LibraryDao<Book> bookDao =
         LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
@@ -338,6 +355,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public List<User> findUsers(String surname, String name) throws ServiceException {
     try (LibraryDao<User> userDao =
         LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER)) {
@@ -354,6 +372,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public void addUser(User user) throws ServiceException {
     try (LibraryDao<User> userDao =
              LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER)) {
@@ -363,6 +382,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public void changeStatus(int userId, int roleId) throws ServiceException {
     try (LibraryDao<User> userDao =
              LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER)) {
@@ -374,6 +394,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public void orderBook(BookOrder bookOrder) throws ServiceException {
     try (LibraryDao<Book> bookDao =
              LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
@@ -393,6 +414,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public void prepareOrder(BookOrder bookOrder) throws ServiceException {
     try (LibraryDao<Book> bookDao =
              LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
@@ -411,6 +433,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public void fulfillOrder(BookOrder dispatchedOrder) throws ServiceException {
     try (LibraryDao<Book> bookDao =
              LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
@@ -429,6 +452,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public Book findBookById(int bookId) throws ServiceException {
     try (LibraryDao<Book> bookDao =
              LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
@@ -438,6 +462,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public void fixReturn(Book book) throws ServiceException {
     try (LibraryDao<Book> bookDao =
              LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
@@ -455,6 +480,7 @@ public class WelcomeService {
     }
   }
 
+  @Override
   public Collection<BookOrder> getPlacedOrder() throws ServiceException {
     List<BookOrder> placedOrders = new ArrayList<>();
     try (LibraryDao<Book> bookDao =
@@ -470,6 +496,7 @@ public class WelcomeService {
     return null;
   }
 
+  @Override
   public Collection<BookOrder> getPreparedOrders() {
     return null;
   }

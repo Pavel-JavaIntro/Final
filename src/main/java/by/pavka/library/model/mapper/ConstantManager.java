@@ -1,6 +1,7 @@
 package by.pavka.library.model.mapper;
 
 import by.pavka.library.model.LibraryFatalException;
+import by.pavka.library.model.service.LibraryService;
 import by.pavka.library.model.service.ServiceException;
 import by.pavka.library.model.service.WelcomeService;
 import org.apache.logging.log4j.LogManager;
@@ -37,6 +38,7 @@ public class ConstantManager {
   static {
     try {
       WelcomeService service = WelcomeService.getInstance();
+      //LibraryService service = LibraryService.getInstance();
       service.initConstants(locations, TableEntityMapper.LOCATION);
       service.initConstants(operations, TableEntityMapper.OPERATION);
       service.initConstants(roles, TableEntityMapper.ROLE);

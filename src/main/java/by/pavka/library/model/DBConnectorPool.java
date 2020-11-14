@@ -1,6 +1,6 @@
 package by.pavka.library.model;
 
-import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
+import by.pavka.library.model.dao.DaoException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,19 +14,19 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-public class DBConnectionPool {
-  private static final Logger LOGGER = LogManager.getLogger(DBConnectionPool.class);
-  private static final DBConnectionPool instance = new DBConnectionPool();
+public class DBConnectorPool {
+  private static final Logger LOGGER = LogManager.getLogger(DBConnectorPool.class);
+  private static final DBConnectorPool INSTANCE = new DBConnectorPool();
   private static final int TIMEOUT = 3;
 
-  private BlockingQueue<Connection> connections;
-  private BlockingQueue<Connection> usedConnections;
+  private BlockingQueue<DBConnector> connections;
+  private BlockingQueue<DBConnector> usedConnections;
   private int maxSize;
   private String url;
   private String login;
   private String password;
 
-  private DBConnectionPool() {
+  private DBConnectorPool() {
     ResourceBundle resourceBundle = ResourceBundle.getBundle("database");
     String driver = resourceBundle.getString("driver");
     try {
@@ -60,14 +60,15 @@ public class DBConnectionPool {
     }
   }
 
-  public static DBConnectionPool getInstance() {
-    return instance;
+  public static DBConnectorPool getInstance() {
+    return INSTANCE;
   }
 
-  private Connection createConnection(String url, String login, String password) {
+  private DBConnector createConnection(String url, String login, String password) {
     try {
-      return DriverManager.getConnection(url, login, password);
-    } catch (SQLException e) {
+      Connection connection = DriverManager.getConnection(url, login, password);
+      return new DBConnector(connection);
+    } catch (SQLException | DaoException e) {
       LOGGER.fatal("Database Connection not created");
       throw new LibraryFatalException("Database Connection not created", e);
     }
@@ -78,54 +79,55 @@ public class DBConnectionPool {
       return false;
     }
     try {
-      connections.add(DriverManager.getConnection(url, login, password));
-    } catch (SQLException e) {
+      Connection connection = DriverManager.getConnection(url, login, password);
+      DBConnector connector = new DBConnector(connection);
+      connections.add(connector);
+    } catch (SQLException | DaoException e) {
       LOGGER.error("Can't add a connection");
       return false;
     }
     return true;
   }
 
-  public Connection obtainConnection() {
-    // TODO
-    Connection connection = pickConnection();
-    if (connection == null) {
+  public DBConnector obtainConnector() {
+    DBConnector connector = pickConnector();
+    if (connector == null) {
       if (addConnection()) {
-        connection = pickConnection();
+        connector = pickConnector();
       }
     }
-    if (connection != null) {
-      usedConnections.offer(connection);
+    if (connector != null) {
+      usedConnections.offer(connector);
     }
-    return connection;
+    return connector;
   }
 
-  private Connection pickConnection() {
-    Connection connection = null;
+  private DBConnector pickConnector() {
+    DBConnector connector = null;
     try {
-      connection = connections.poll(TIMEOUT, TimeUnit.SECONDS);
+      connector = connections.poll(TIMEOUT, TimeUnit.SECONDS);
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
     }
-    return connection;
+    return connector;
   }
 
-  public boolean releaseConnection(Connection connection) {
-    if (connection != null) {
-      connections.offer(connection);
-      return usedConnections.remove(connection);
+  public boolean releaseConnector(DBConnector connector) {
+    if (connector != null) {
+      connections.offer(connector);
+      return usedConnections.remove(connector);
     }
     return false;
   }
 
   public void disconnect() {
-    for (Connection connection : usedConnections) {
-      releaseConnection(connection);
+    for (DBConnector connector : usedConnections) {
+      releaseConnector(connector);
     }
-    for (Connection connection :  connections) {
+    for (DBConnector connector :  connections) {
       try {
-        connection.close();
-      } catch (SQLException throwables) {
+        connector.getConnection().close();
+      } catch (SQLException ex) {
         LOGGER.error("Connection not closed while destroying the app");
       }
     }

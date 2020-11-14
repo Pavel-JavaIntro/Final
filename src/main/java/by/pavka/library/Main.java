@@ -29,6 +29,11 @@ public class Main {
     //System.out.println(Integer.parseInt(""));
 
     System.out.println(ConfirmationMailSender.sendInvitation("pavkascool@gmail.com"));
+
+    List<String> lst = null;
+    for (String s: lst) {
+      System.out.println(s);
+    }
   }
 
 }

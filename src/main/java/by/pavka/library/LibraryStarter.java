@@ -1,6 +1,7 @@
 package by.pavka.library;
 
 import by.pavka.library.model.DBConnectionPool;
+import by.pavka.library.model.DBConnectorPool;
 import by.pavka.library.model.mapper.ConstantManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +17,7 @@ public class LibraryStarter implements ServletContextListener {
   public void contextInitialized(ServletContextEvent servletContextEvent) {
     LOGGER.info("STARTED");
     DBConnectionPool.getInstance();
+    //DBConnectorPool.getInstance();
     ConstantManager.getLocationById(0);
     OrderHolder.getInstance();
     ServletContext context = servletContextEvent.getServletContext();
@@ -27,5 +29,6 @@ public class LibraryStarter implements ServletContextListener {
   public void contextDestroyed(ServletContextEvent servletContextEvent) {
     LOGGER.info("FINISHED");
     DBConnectionPool.getInstance().disconnect();
+    //DBConnectorPool.getInstance().disconnect();
   }
 }

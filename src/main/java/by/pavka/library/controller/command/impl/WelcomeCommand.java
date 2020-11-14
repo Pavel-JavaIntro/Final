@@ -4,6 +4,7 @@ import by.pavka.library.ConfigurationManager;
 import by.pavka.library.controller.command.ActionCommand;
 import by.pavka.library.entity.client.AppClient;
 import by.pavka.library.model.mapper.ConstantManager;
+import by.pavka.library.model.service.LibraryService;
 import by.pavka.library.model.service.ServiceException;
 import by.pavka.library.model.service.WelcomeService;
 
@@ -16,6 +17,7 @@ public class WelcomeCommand implements ActionCommand {
   public void execute(HttpServletRequest request) {
     //TODO
     WelcomeService welcomeService = WelcomeService.getInstance();
+    //LibraryService welcomeService = LibraryService.getInstance();
     HttpSession session = request.getSession();
     try {
       int books = welcomeService.countBooks();
