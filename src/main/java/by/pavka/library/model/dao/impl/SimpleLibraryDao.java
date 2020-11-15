@@ -101,15 +101,15 @@ public class SimpleLibraryDao<T extends LibraryEntity>
   }
 
   @Override
-  public void update(int id, EntityField<?>... fields) throws DaoException {
+  public void update(int id, EntityField<?> fields) throws DaoException {
     //    if (fields.length != 1 || !fields[0].getName().equals(SimpleListEntity.COLUMN_NAME)) {
     //      throw new DaoException("Wrong Update request");
     //    }
     PreparedStatement statement = null;
     String assignment =
-        ConverterFactory.getInstance().getConverter().formColumnName(fields[0])
+        ConverterFactory.getInstance().getConverter().formColumnName(fields)
             + "="
-            + fields[0].getValue();
+            + fields.getValue();
     String sql = String.format(UPDATE, getTableName(), assignment);
     try {
       statement = connector.obtainPreparedStatement(sql);

@@ -1,7 +1,6 @@
 package by.pavka.library.model.mapper;
 
 import by.pavka.library.model.LibraryFatalException;
-import by.pavka.library.model.service.LibraryService;
 import by.pavka.library.model.service.ServiceException;
 import by.pavka.library.model.service.WelcomeService;
 import org.apache.logging.log4j.LogManager;

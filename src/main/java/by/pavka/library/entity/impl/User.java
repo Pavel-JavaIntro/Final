@@ -5,15 +5,23 @@ import by.pavka.library.entity.LibraryEntityException;
 import by.pavka.library.entity.criteria.EntityField;
 
 public class User extends LibraryEntity {
+  public static final String ROLE_ID = "roleId";
+  public static final String SURNAME = "surname";
+  public static final String NAME = "name";
+  public static final String ADDRESS = "address";
+  public static final String PHONE = "phone";
+  public static final String EMAIL = "email";
+  public static final String PASSWORD = "password";
+
   @Override
   public EntityField[] listFields() {
-    EntityField<Integer> roleId = new EntityField<>("roleId");
-    EntityField<String> surname = new EntityField<>("surname");
-    EntityField<String> name = new EntityField<>("name");
-    EntityField<String> address = new EntityField<>("address");
-    EntityField<String> phone = new EntityField<>("phone");
-    EntityField<String> email = new EntityField<>("email");
-    EntityField<Integer> password = new EntityField<>("password");
+    EntityField<Integer> roleId = new EntityField<>(ROLE_ID);
+    EntityField<String> surname = new EntityField<>(SURNAME);
+    EntityField<String> name = new EntityField<>(NAME);
+    EntityField<String> address = new EntityField<>(ADDRESS);
+    EntityField<String> phone = new EntityField<>(PHONE);
+    EntityField<String> email = new EntityField<>(EMAIL);
+    EntityField<Integer> password = new EntityField<>(PASSWORD);
     return new EntityField[] {roleId, surname, name, address, phone, email, password};
   }
 

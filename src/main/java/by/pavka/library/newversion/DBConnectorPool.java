@@ -1,5 +1,6 @@
-package by.pavka.library.model;
+package by.pavka.library.newversion;
 
+import by.pavka.library.model.LibraryFatalException;
 import by.pavka.library.model.dao.DaoException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class DBConnectorPool {
   private static final Logger LOGGER = LogManager.getLogger(DBConnectorPool.class);
   private static final DBConnectorPool INSTANCE = new DBConnectorPool();
-  private static final int TIMEOUT = 3;
+  private static final int TIMEOUT = 10;
 
   private BlockingQueue<DBConnector> connections;
   private BlockingQueue<DBConnector> usedConnections;

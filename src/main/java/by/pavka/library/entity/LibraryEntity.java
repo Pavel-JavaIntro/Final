@@ -26,7 +26,7 @@ public abstract class LibraryEntity implements Serializable {
         return field;
       }
     }
-    throw new LibraryEntityException("Entity for name " + name + "doesn't exist");
+    throw new LibraryEntityException("EntityField for name " + name + " doesn't exist");
   }
 
   public int getId() {

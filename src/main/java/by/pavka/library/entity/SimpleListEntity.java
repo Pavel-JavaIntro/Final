@@ -3,11 +3,11 @@ package by.pavka.library.entity;
 import by.pavka.library.entity.criteria.EntityField;
 
 public abstract class SimpleListEntity extends LibraryEntity {
-  public static final String COLUMN_NAME = "description";
+  public static final String DESCRIPTION = "description";
 
   @Override
   public EntityField<String>[] listFields() {
-    EntityField<String> description = new EntityField<>(COLUMN_NAME);
+    EntityField<String> description = new EntityField<>(DESCRIPTION);
     return new EntityField[]{description};
   }
 

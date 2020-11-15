@@ -1,6 +1,5 @@
 package by.pavka.library.controller;
 
-
 import javax.servlet.*;
 import java.io.IOException;
 
@@ -13,10 +12,13 @@ public class CharacterSetFilter implements Filter {
   }
 
   @Override
-  public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-    if (code != null) {
+  public void doFilter(
+      ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+      throws IOException, ServletException {
+    String requestCode = servletRequest.getCharacterEncoding();
+    if (code != null && !code.equalsIgnoreCase(requestCode)) {
       servletRequest.setCharacterEncoding(code);
-      //servletResponse.setContentType("text/html; charset=UTF-8");
+      // servletResponse.setContentType("text/html; charset=UTF-8");
       servletResponse.setCharacterEncoding(code);
       System.out.println("CODE = " + code);
     }

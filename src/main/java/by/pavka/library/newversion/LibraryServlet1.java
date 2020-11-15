@@ -1,7 +1,8 @@
-package by.pavka.library.controller;
+package by.pavka.library.newversion;
 
 import by.pavka.library.ConfigurationManager;
 import by.pavka.library.MessageManager;
+import by.pavka.library.controller.LibraryServlet;
 import by.pavka.library.controller.command.ActionCommand;
 import by.pavka.library.controller.command.ActionFactory;
 import org.apache.logging.log4j.LogManager;
@@ -13,10 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Enumeration;
 
-public class LibraryServlet extends HttpServlet {
-  private static final Logger LOGGER = LogManager.getLogger(LibraryServlet.class);
+public class LibraryServlet1 extends HttpServlet {
+  private static final Logger LOGGER = LogManager.getLogger(LibraryServlet1.class);
+  private static final String WELCOME = "welcome";
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -27,7 +28,7 @@ public class LibraryServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    if (request.getParameter("command").equals("welcome")) {
+    if (request.getParameter(ParameterManager.COMMAND).equals(WELCOME)) {
       process(request, response);
     } else {
       response.sendError(403);
@@ -36,20 +37,15 @@ public class LibraryServlet extends HttpServlet {
 
   private void process(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    // TODO Old version
-    ActionFactory client = new ActionFactory();
-    ActionCommand command = client.defineCommand(request);
+    Command1 command = ActionFactory1.defineCommand(request);
     LOGGER.info("Execution: " + command.getClass().getSimpleName());
-    command.execute(request);
-    String page = (String) request.getSession().getAttribute("page");
-    if (page != null) {
+    PageRouter pageRouter = command.executeCommand(request);
+    String page = pageRouter.getPage();
+    if (pageRouter.getType() == PageRouter.TransitionType.FORWARD) {
       RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(page);
       requestDispatcher.forward(request, response);
     } else {
-      page = ConfigurationManager.getProperty("index");
-      request.getSession().setAttribute("nullPage", MessageManager.getProperty("message.nullpage"));
-      response.sendRedirect(request.getContextPath() + page);
+      response.sendRedirect(page);
     }
-
   }
 }

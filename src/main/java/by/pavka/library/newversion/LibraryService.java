@@ -1,20 +1,19 @@
-package by.pavka.library.model.service;
+package by.pavka.library.newversion;
 
 import by.pavka.library.BookOrder;
 import by.pavka.library.entity.EditionInfo;
 import by.pavka.library.entity.SimpleListEntity;
 import by.pavka.library.entity.criteria.Criteria;
+import by.pavka.library.entity.criteria.EntityField;
 import by.pavka.library.entity.impl.Author;
 import by.pavka.library.entity.impl.Book;
 import by.pavka.library.entity.impl.Edition;
 import by.pavka.library.entity.impl.User;
-import by.pavka.library.model.DBConnectionPool;
-import by.pavka.library.model.DBConnector;
-import by.pavka.library.model.DBConnectorPool;
+import by.pavka.library.model.dao.impl.LibraryDaoFactory;
+import by.pavka.library.model.service.ServiceException;
+import by.pavka.library.model.service.WelcomeServiceInterface;
 import by.pavka.library.model.dao.DaoException;
 import by.pavka.library.model.dao.LibraryDao;
-import by.pavka.library.model.dao.impl.LibraryDaoFactory;
-import by.pavka.library.model.dao.impl.LibraryDaoImpl;
 import by.pavka.library.model.mapper.TableEntityMapper;
 
 import java.util.Collection;
@@ -63,7 +62,26 @@ public class LibraryService implements WelcomeServiceInterface {
 
   @Override
   public User auth(String surname, String name, String password) throws ServiceException {
-    return null;
+    int hashPass = password.hashCode();
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<User> userDao = new LibraryDaoImpl<>(TableEntityMapper.USER, connector);
+      Criteria criteria = new Criteria();
+      EntityField<String> surnameField = new EntityField<>(User.SURNAME);
+      surnameField.setValue(surname);
+      EntityField<String> nameField = new EntityField<>(User.NAME);
+      nameField.setValue(name);
+      EntityField<Integer> passField = new EntityField<>(User.PASSWORD);
+      passField.setValue(hashPass);
+      criteria.addConstraints(surnameField, nameField, passField);
+      List<User> users = userDao.read(criteria, true);
+      if (users.size() > 0) {
+        return users.get(0);
+      } else {
+        return null;
+      }
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot authorize the user", e);
+    }
   }
 
   @Override

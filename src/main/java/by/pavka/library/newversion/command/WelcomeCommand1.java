@@ -1,29 +1,30 @@
-package by.pavka.library.controller.command.impl;
+package by.pavka.library.newversion.command;
 
 import by.pavka.library.ConfigurationManager;
-import by.pavka.library.controller.command.ActionCommand;
 import by.pavka.library.entity.client.AppClient;
 import by.pavka.library.model.mapper.ConstantManager;
 import by.pavka.library.model.service.ServiceException;
 import by.pavka.library.model.service.WelcomeService;
+import by.pavka.library.newversion.Command1;
+import by.pavka.library.newversion.LibraryService;
+import by.pavka.library.newversion.PageRouter;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class WelcomeCommand implements ActionCommand {
+public class WelcomeCommand1 implements Command1 {
   @Override
-  public void execute(HttpServletRequest request) {
-    //TODO
-    WelcomeService service = WelcomeService.getInstance();
-    //LibraryService service = LibraryService.getInstance();
+  public PageRouter execute(HttpServletRequest request) {
+    LibraryService service = LibraryService.getInstance();
     HttpSession session = request.getSession();
+    PageRouter pageRouter = new PageRouter();
     try {
       int books = service.countBooks();
       int users = service.countUsers();
       ServletContext servletContext = request.getServletContext();
-      servletContext.setAttribute("books", books);
-      servletContext.setAttribute("users", users);
+      servletContext.setAttribute(APP_ATTRIBUTE_BOOKS, books);
+      servletContext.setAttribute(APP_ATTRIBUTE_USERS, users);
       if (session.isNew()) {
         AppClient client = new AppClient() {
           @Override
@@ -31,12 +32,13 @@ public class WelcomeCommand implements ActionCommand {
             return ConstantManager.GUEST;
           }
         };
-        session.setAttribute("client", client);
+        session.setAttribute(SESSION_ATTRIBUTE_CLIENT, client);
       }
-      session.setAttribute(PAGE, ConfigurationManager.getProperty("welcome"));
+      pageRouter.setPage(PageRouter.WELCOME);
     } catch (ServiceException e) {
-      session.setAttribute("page", ConfigurationManager.getProperty("error"));
+      pageRouter.setPage(PageRouter.ERROR);
       LOGGER.error("WelcomeCommand hasn't completed");
     }
+    return pageRouter;
   }
 }

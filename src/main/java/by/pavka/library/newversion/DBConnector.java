@@ -1,7 +1,6 @@
-package by.pavka.library.model;
+package by.pavka.library.newversion;
 
 import by.pavka.library.model.dao.DaoException;
-import by.pavka.library.model.dao.impl.LibraryDaoImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

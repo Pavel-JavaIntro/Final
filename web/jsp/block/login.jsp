@@ -17,7 +17,6 @@
         <input type="password" name="password" id="password" value=""/>
         <br/> <font color="red">${errorLoginPassMessage} </font> <br/>
         ${wrongAction} <br/>
-        ${nullPage} <br/>
         <input type="submit" value="<fmt:message key="message.entrance"/>"/>
     </form>
     </p>

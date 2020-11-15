@@ -1,20 +1,17 @@
-package by.pavka.library.model.dao.impl;
+package by.pavka.library.newversion;
 
-import by.pavka.library.controller.LibraryServlet;
 import by.pavka.library.entity.EntityExtractor;
 import by.pavka.library.entity.LibraryEntity;
 import by.pavka.library.entity.LibraryEntityException;
 import by.pavka.library.entity.criteria.Criteria;
 import by.pavka.library.entity.criteria.EntityField;
-import by.pavka.library.model.DBConnector;
+import by.pavka.library.newversion.DBConnector;
 import by.pavka.library.model.dao.DaoException;
 import by.pavka.library.model.dao.LibraryDao;
 import by.pavka.library.model.mapper.ColumnFieldMapper;
 import by.pavka.library.model.mapper.TableEntityMapper;
 import by.pavka.library.model.mapper.converter.ConverterFactory;
 import by.pavka.library.model.mapper.converter.FieldColumnConverter;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -103,15 +100,15 @@ public class LibraryDaoImpl<T extends LibraryEntity>
   }
 
   @Override
-  public void update(int id, EntityField<?>... fields) throws DaoException {
+  public void update(int id, EntityField<?> field) throws DaoException {
     //    if (fields.length != 1 || !fields[0].getName().equals(SimpleListEntity.COLUMN_NAME)) {
     //      throw new DaoException("Wrong Update request");
     //    }
     PreparedStatement statement = null;
     String assignment =
-        ConverterFactory.getInstance().getConverter().formColumnName(fields[0])
+        ConverterFactory.getInstance().getConverter().formColumnName(field)
             + "="
-            + fields[0].getValue();
+            + field.getValue();
     String sql = String.format(UPDATE, getTableName(), assignment);
     try {
       statement = connector.obtainPreparedStatement(sql);

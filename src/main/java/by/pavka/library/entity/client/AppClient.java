@@ -2,6 +2,7 @@ package by.pavka.library.entity.client;
 
 import by.pavka.library.entity.EditionInfo;
 import by.pavka.library.model.mapper.ConstantManager;
+import by.pavka.library.newversion.PageRouter;
 
 import java.io.Serializable;
 import java.util.*;
@@ -83,11 +84,9 @@ public abstract class AppClient implements Serializable {
   public String getEntrance() {
     switch (getRole()) {
       case ConstantManager.GUEST:
-        System.out.println("INSIDE VISITOR1");
-        return "block/login.jsp";
+        return PageRouter.LOGIN;
       default:
-        System.out.println("INSIDE ADMIN1");
-        return "block/logout.jsp";
+        return PageRouter.LOGOUT;
     }
   }
 
@@ -95,9 +94,9 @@ public abstract class AppClient implements Serializable {
     switch (getRole()) {
       case ConstantManager.ADMIN:
       case ConstantManager.LIBRARIAN:
-        return "block/admin.jsp";
+        return PageRouter.ADMIN;
       default:
-        return "block/latin.jsp";
+        return PageRouter.LATIN;
     }
   }
 
@@ -106,9 +105,9 @@ public abstract class AppClient implements Serializable {
       case ConstantManager.GUEST:
         return null;
       case ConstantManager.READER:
-        return "block/reader_select.jsp";
+        return PageRouter.READER_SELECT;
       default:
-        return "block/subscriber_select.jsp";
+        return PageRouter.SUBSCRIBER_SELECT;
     }
   }
 
@@ -117,16 +116,16 @@ public abstract class AppClient implements Serializable {
       case ConstantManager.GUEST:
         return null;
       default:
-        return "block/basket.jsp";
+        return PageRouter.BASKET;
     }
   }
 
   public String getAssignment() {
     switch (getRole()) {
       case ConstantManager.ADMIN:
-        return "admin_assign.jsp";
+        return PageRouter.ADMIN_ASSIGN;
       default:
-        return "librarian_assign.jsp";
+        return PageRouter.LIBRARIAN_ASSIGN;
     }
   }
 

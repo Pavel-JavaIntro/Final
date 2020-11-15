@@ -1,0 +1,70 @@
+package by.pavka.library.newversion.command;
+
+import by.pavka.library.ConfigurationManager;
+import by.pavka.library.MessageManager;
+import by.pavka.library.controller.LibValidator;
+import by.pavka.library.entity.LibraryEntityException;
+import by.pavka.library.entity.client.AppClient;
+import by.pavka.library.entity.impl.User;
+import by.pavka.library.model.mapper.ConstantManager;
+import by.pavka.library.model.service.ServiceException;
+import by.pavka.library.model.service.WelcomeService;
+import by.pavka.library.newversion.Command1;
+import by.pavka.library.newversion.LibraryService;
+import by.pavka.library.newversion.PageRouter;
+import by.pavka.library.newversion.ParameterManager;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+public class LoginCommand1 implements Command1 {
+  @Override
+  public PageRouter execute(HttpServletRequest request) {
+    PageRouter pageRouter = new PageRouter();
+    String surname = request.getParameter(ParameterManager.SURNAME);
+    String name = request.getParameter(ParameterManager.NAME);
+    String password = request.getParameter(ParameterManager.PASSWORD);
+    HttpSession session = request.getSession();
+    if (LibValidator.validateLogin(surname, name, password)) {
+      LibraryService service = LibraryService.getInstance();
+      try {
+        User user = service.auth(surname, name, password);
+        if (user != null) {
+          AppClient client =
+              new AppClient() {
+                @Override
+                public String getRole() {
+                  try {
+                    int roleId = user.getRoleId();
+                    return ConstantManager.getRoleById(roleId);
+                  } catch (LibraryEntityException e) {
+                    LOGGER.warn("Login failed");
+                    return ConstantManager.GUEST;
+                  }
+                }
+              };
+          try {
+            client.setId(user.getId());
+            client.setSurname(user.getSurname());
+            client.setName(user.getName());
+            client.setEmail(user.getEmail());
+            session.setAttribute(SESSION_ATTRIBUTE_CLIENT, client);
+          } catch (LibraryEntityException e) {
+            pageRouter.setPage(PageRouter.ERROR);
+            LOGGER.warn("Login failed");
+          }
+        } else {
+          request.setAttribute(ParameterManager.ERROR_LOGIN_PASS, MessageManager.getProperty(
+              "message.loginerror"));
+        }
+      } catch (ServiceException e) {
+        pageRouter.setPage(PageRouter.ERROR);
+        LOGGER.error("LoginCommand hasn't completed");
+      }
+    } else {
+      request.setAttribute(ParameterManager.ERROR_LOGIN_PASS, MessageManager.getProperty(
+          "message.emptyfields"));
+    }
+    return pageRouter;
+  }
+}
