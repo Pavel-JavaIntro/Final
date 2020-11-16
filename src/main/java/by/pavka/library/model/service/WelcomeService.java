@@ -203,15 +203,18 @@ public class WelcomeService implements WelcomeServiceInterface {
   }
 
   @Override
-  public Book findBookByEdition(int id) throws ServiceException {
+  public Book findFreeBookByEdition(int id) throws ServiceException {
     Book book = null;
     try {
       List<Book> result = findBooksByEdition(id);
       for (Book b : result) {
-        System.out.println(b.fieldForName("reserved").getValue());
-        if (!b.fieldForName("locationId").getValue().equals(ConstantManager.LOCATION_DECOMMISSIONED)
-            && !b.fieldForName("locationId").getValue().equals(ConstantManager.LOCATION_ON_HAND)
-            && !b.fieldForName("reserved").getValue().equals(ConstantManager.RESERVED)) {
+        System.out.println(b.fieldForName(Book.RESERVED).getValue());
+        if (!b.fieldForName(Book.LOCATION_ID)
+                .getValue()
+                .equals(ConstantManager.LOCATION_DECOMMISSIONED)
+            && !b.fieldForName(Book.LOCATION_ID).getValue().equals(ConstantManager.LOCATION_ON_HAND)
+            && !b.fieldForName(Book.RESERVED).getValue().equals(ConstantManager.RESERVED)
+            && !b.fieldForName(Book.RESERVED).getValue().equals(ConstantManager.PREPARED)) {
           book = b;
           break;
         }
@@ -247,7 +250,7 @@ public class WelcomeService implements WelcomeServiceInterface {
   @Override
   public void bindBookAndLocation(EditionInfo info) throws ServiceException {
     try {
-      Book book = findBookByEdition(info.getEdition().getId());
+      Book book = findFreeBookByEdition(info.getEdition().getId());
       info.setBook(book);
       if (book != null) {
         int locationId = (int) book.fieldForName("locationId").getValue();
@@ -375,7 +378,7 @@ public class WelcomeService implements WelcomeServiceInterface {
   @Override
   public void addUser(User user) throws ServiceException {
     try (LibraryDao<User> userDao =
-             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER)) {
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER)) {
       userDao.add(user);
     } catch (DaoException e) {
       throw new ServiceException("Cannot add users", e);
@@ -385,7 +388,7 @@ public class WelcomeService implements WelcomeServiceInterface {
   @Override
   public void changeStatus(int userId, int roleId) throws ServiceException {
     try (LibraryDao<User> userDao =
-             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER)) {
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.USER)) {
       EntityField<Integer> field = new EntityField<>("roleId");
       field.setValue(roleId);
       userDao.update(userId, field);
@@ -397,7 +400,7 @@ public class WelcomeService implements WelcomeServiceInterface {
   @Override
   public void orderBook(BookOrder bookOrder) throws ServiceException {
     try (LibraryDao<Book> bookDao =
-             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
       int userId = bookOrder.getUserId();
       for (EditionInfo editionInfo : bookOrder.getEditionInfoSet()) {
         Book book = editionInfo.getBook();
@@ -417,7 +420,7 @@ public class WelcomeService implements WelcomeServiceInterface {
   @Override
   public void prepareOrder(BookOrder bookOrder) throws ServiceException {
     try (LibraryDao<Book> bookDao =
-             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
       for (EditionInfo editionInfo : bookOrder.getEditionInfoSet()) {
         Book book = editionInfo.getBook();
         int bookId = book.getId();
@@ -436,7 +439,7 @@ public class WelcomeService implements WelcomeServiceInterface {
   @Override
   public void fulfillOrder(BookOrder dispatchedOrder) throws ServiceException {
     try (LibraryDao<Book> bookDao =
-             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
       for (EditionInfo editionInfo : dispatchedOrder.getEditionInfoSet()) {
         Book book = editionInfo.getBook();
         int bookId = book.getId();
@@ -455,7 +458,7 @@ public class WelcomeService implements WelcomeServiceInterface {
   @Override
   public Book findBookById(int bookId) throws ServiceException {
     try (LibraryDao<Book> bookDao =
-             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
       return bookDao.get(bookId);
     } catch (DaoException e) {
       throw new ServiceException("Cannot find book", e);
@@ -465,7 +468,7 @@ public class WelcomeService implements WelcomeServiceInterface {
   @Override
   public void fixReturn(Book book) throws ServiceException {
     try (LibraryDao<Book> bookDao =
-             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
       int bookId = book.getId();
       EntityField<Integer> userField = new EntityField<>("readerId");
       userField.setValue(null);
@@ -484,7 +487,7 @@ public class WelcomeService implements WelcomeServiceInterface {
   public Collection<BookOrder> getPlacedOrder() throws ServiceException {
     List<BookOrder> placedOrders = new ArrayList<>();
     try (LibraryDao<Book> bookDao =
-             LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
+        LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {
       EntityField<Integer> reserved = new EntityField<>("reserved");
       reserved.setValue(ConstantManager.RESERVED);
       Criteria criteria = new Criteria();

@@ -2,6 +2,7 @@ package by.pavka.library;
 
 import by.pavka.library.model.DBConnectionPool;
 import by.pavka.library.model.mapper.ConstantManager;
+import by.pavka.library.newversion.Command1;
 import by.pavka.library.newversion.DBConnectorPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,7 +24,7 @@ public class LibraryStarter implements ServletContextListener {
     ServletContext context = servletContextEvent.getServletContext();
     ResourceBundle resourceBundle = ResourceBundle.getBundle("database");
     String email = resourceBundle.getString("email");
-    context.setAttribute("email", email);
+    context.setAttribute(Command1.APP_ATTRIBUTE_EMAIL, email);
   }
 
   public void contextDestroyed(ServletContextEvent servletContextEvent) {

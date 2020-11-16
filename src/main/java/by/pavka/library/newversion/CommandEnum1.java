@@ -9,11 +9,11 @@ public enum CommandEnum1 {
   WELCOME(new WelcomeCommand1()),
   SEARCH(new SearchCommand1()),
   LOGIN(new LoginCommand1()),
-  LOGOUT(new LogoutCommand1());
-//  FIND_EDITION(new FindEditionCommand1()),
-//  SET_LANG(new SetLanguageCommand1()),
-//  SELECT_BOOK(new SelectBookCommand1()),
-//  BASKET(new BasketCommand1()),
+  LOGOUT(new LogoutCommand1()),
+  FIND_EDITION(new FindEditionCommand1()),
+  SET_LANG(new SetLanguageCommand1()),
+  SELECT_BOOK(new SelectBookCommand1()),
+  BASKET(new BasketCommand1());
 //  ORDER_BOOK(new OrderBookCommand1()),
 //  SHOW_ORDERS(new ShowOrdersCommand1()),
 //  PREPARE_BOOK(new PrepareBookCommand1()),

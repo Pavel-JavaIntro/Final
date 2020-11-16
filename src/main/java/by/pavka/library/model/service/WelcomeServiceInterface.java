@@ -30,7 +30,7 @@ public interface WelcomeServiceInterface {
 
   List<Edition> findEditions(String title, String author) throws ServiceException;
 
-  Book findBookByEdition(int id) throws ServiceException;
+  Book findFreeBookByEdition(int id) throws ServiceException;
 
   void bindAuthors(EditionInfo info) throws ServiceException;
 

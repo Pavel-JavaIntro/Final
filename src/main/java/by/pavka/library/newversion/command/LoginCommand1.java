@@ -1,6 +1,5 @@
 package by.pavka.library.newversion.command;
 
-import by.pavka.library.ConfigurationManager;
 import by.pavka.library.MessageManager;
 import by.pavka.library.controller.LibValidator;
 import by.pavka.library.entity.LibraryEntityException;
@@ -8,11 +7,9 @@ import by.pavka.library.entity.client.AppClient;
 import by.pavka.library.entity.impl.User;
 import by.pavka.library.model.mapper.ConstantManager;
 import by.pavka.library.model.service.ServiceException;
-import by.pavka.library.model.service.WelcomeService;
 import by.pavka.library.newversion.Command1;
 import by.pavka.library.newversion.LibraryService;
 import by.pavka.library.newversion.PageRouter;
-import by.pavka.library.newversion.ParameterManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,9 +18,9 @@ public class LoginCommand1 implements Command1 {
   @Override
   public PageRouter execute(HttpServletRequest request) {
     PageRouter pageRouter = new PageRouter();
-    String surname = request.getParameter(ParameterManager.SURNAME);
-    String name = request.getParameter(ParameterManager.NAME);
-    String password = request.getParameter(ParameterManager.PASSWORD);
+    String surname = request.getParameter(SURNAME);
+    String name = request.getParameter(NAME);
+    String password = request.getParameter(PASSWORD);
     HttpSession session = request.getSession();
     if (LibValidator.validateLogin(surname, name, password)) {
       LibraryService service = LibraryService.getInstance();
@@ -54,7 +51,7 @@ public class LoginCommand1 implements Command1 {
             LOGGER.warn("Login failed");
           }
         } else {
-          request.setAttribute(ParameterManager.ERROR_LOGIN_PASS, MessageManager.getProperty(
+          request.setAttribute(ERROR_LOGIN_PASS, MessageManager.getProperty(
               "message.loginerror"));
         }
       } catch (ServiceException e) {
@@ -62,7 +59,7 @@ public class LoginCommand1 implements Command1 {
         LOGGER.error("LoginCommand hasn't completed");
       }
     } else {
-      request.setAttribute(ParameterManager.ERROR_LOGIN_PASS, MessageManager.getProperty(
+      request.setAttribute(ERROR_LOGIN_PASS, MessageManager.getProperty(
           "message.emptyfields"));
     }
     return pageRouter;

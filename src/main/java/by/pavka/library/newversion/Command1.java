@@ -13,6 +13,18 @@ public interface Command1 {
   public static final String SESSION_ATTRIBUTE_PAGE = "page";
   public static final String APP_ATTRIBUTE_BOOKS = "books";
   public static final String APP_ATTRIBUTE_USERS = "users";
+  public static final String APP_ATTRIBUTE_EMAIL = "email";
+  public static final String COMMAND = "command";
+  public static final String WRONG_ACTION = "wrongAction";
+  public static final String SURNAME = "surname";
+  public static final String NAME = "name";
+  public static final String PASSWORD = "password";
+  public static final String ERROR_LOGIN_PASS = "errorLoginPassMessage";
+  public static final String TITLE = "title";
+  public static final String AUTHOR = "author";
+  public static final String EDITIONS = "editions";
+  public static final String LANGUAGE = "lan";
+  public static final String EDITION = "edition";
 
   default PageRouter executeCommand(HttpServletRequest request) {
     HttpSession session = request.getSession();

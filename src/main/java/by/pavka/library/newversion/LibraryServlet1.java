@@ -28,7 +28,7 @@ public class LibraryServlet1 extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    if (request.getParameter(ParameterManager.COMMAND).equals(WELCOME)) {
+    if (request.getParameter(Command1.COMMAND).equals(WELCOME)) {
       process(request, response);
     } else {
       response.sendError(403);

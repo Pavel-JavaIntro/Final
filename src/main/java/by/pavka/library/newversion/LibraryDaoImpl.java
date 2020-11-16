@@ -41,6 +41,10 @@ public class LibraryDaoImpl<T extends LibraryEntity>
     entityExtractor = mapper.getExtractor();
   }
 
+  public DBConnector getConnector() {
+    return connector;
+  }
+
   @Override
   public int add(T entity) throws DaoException {
     PreparedStatement statement = null;
@@ -101,9 +105,6 @@ public class LibraryDaoImpl<T extends LibraryEntity>
 
   @Override
   public void update(int id, EntityField<?> field) throws DaoException {
-    //    if (fields.length != 1 || !fields[0].getName().equals(SimpleListEntity.COLUMN_NAME)) {
-    //      throw new DaoException("Wrong Update request");
-    //    }
     PreparedStatement statement = null;
     String assignment =
         ConverterFactory.getInstance().getConverter().formColumnName(field)
@@ -112,7 +113,6 @@ public class LibraryDaoImpl<T extends LibraryEntity>
     String sql = String.format(UPDATE, getTableName(), assignment);
     try {
       statement = connector.obtainPreparedStatement(sql);
-      //statement.setString(1, (String) (fields[0].getValue()));
       statement.setInt(1, id);
       System.out.println("INSIDE DAO: " + statement);
       statement.executeUpdate();

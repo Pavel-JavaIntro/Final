@@ -2,6 +2,7 @@ package by.pavka.library.newversion;
 
 import by.pavka.library.BookOrder;
 import by.pavka.library.entity.EditionInfo;
+import by.pavka.library.entity.LibraryEntityException;
 import by.pavka.library.entity.SimpleListEntity;
 import by.pavka.library.entity.criteria.Criteria;
 import by.pavka.library.entity.criteria.EntityField;
@@ -9,16 +10,16 @@ import by.pavka.library.entity.impl.Author;
 import by.pavka.library.entity.impl.Book;
 import by.pavka.library.entity.impl.Edition;
 import by.pavka.library.entity.impl.User;
+import by.pavka.library.model.dao.ManyToManyDao;
 import by.pavka.library.model.dao.impl.LibraryDaoFactory;
+import by.pavka.library.model.mapper.ConstantManager;
 import by.pavka.library.model.service.ServiceException;
 import by.pavka.library.model.service.WelcomeServiceInterface;
 import by.pavka.library.model.dao.DaoException;
 import by.pavka.library.model.dao.LibraryDao;
 import by.pavka.library.model.mapper.TableEntityMapper;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class LibraryService implements WelcomeServiceInterface {
   private static final LibraryService INSTANCE = new LibraryService();
@@ -91,27 +92,151 @@ public class LibraryService implements WelcomeServiceInterface {
 
   @Override
   public List<Book> findBooksByEdition(int id) throws ServiceException {
-    return null;
+    List<Book> result = new ArrayList<>();
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<Book> dao = new LibraryDaoImpl<>(TableEntityMapper.BOOK, connector);
+      Criteria criteria = new Criteria();
+      EntityField<Integer> edId = new EntityField<>(Book.EDITION_ID);
+      edId.setValue(id);
+      criteria.addConstraint(edId);
+      result.addAll(dao.read(criteria, true));
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot find books", e);
+    }
+    return result;
   }
 
   @Override
   public List<Edition> findEditions(String title, String author) throws ServiceException {
-    return null;
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      ManyToManyDao<Edition, Author> dao = new ManyToManyDaoImpl(connector);
+      if (title.isEmpty() && author.isEmpty()) {
+        return dao.read();
+      }
+      List<Edition> titleEditions = null;
+      List<Edition> authorEditions = null;
+
+      if (!title.isEmpty()) {
+        Criteria criteriaT = new Criteria();
+        EntityField<String> titleField = new EntityField<>(Edition.TITLE);
+        titleField.setValue(title);
+        criteriaT.addConstraint(titleField);
+        titleEditions = dao.read(criteriaT, false);
+        if (titleEditions.isEmpty()) {
+          return new ArrayList<>();
+        }
+      }
+
+      List<Author> authorList = null;
+      if (!author.isEmpty()) {
+        try (LibraryDao<Author> authorDao =
+                 LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.AUTHOR)) {
+          Criteria criteriaA = new Criteria();
+          EntityField<String> authorField = new EntityField<>(Author.SURNAME);
+          authorField.setValue(author);
+          criteriaA.addConstraint(authorField);
+          authorList = authorDao.read(criteriaA, false);
+          if (authorList.isEmpty()) {
+            return new ArrayList<>();
+          }
+          Set<Integer> editionIds = new HashSet<>();
+          for (Author a : authorList) {
+            editionIds.addAll(dao.getFirst(a.getId()));
+          }
+          if (editionIds.isEmpty()) {
+            return new ArrayList<>();
+          }
+          authorEditions = new ArrayList<>();
+          for (int i : editionIds) {
+            authorEditions.add(dao.get(i));
+          }
+          if (authorEditions.isEmpty()) {
+            return new ArrayList<>();
+          }
+        }
+      }
+      List<Edition> finalEditions = null;
+      if (titleEditions == null) {
+        finalEditions = authorEditions;
+      }
+      if (authorEditions == null) {
+        finalEditions = titleEditions;
+      }
+      if (titleEditions != null && authorEditions != null) {
+        finalEditions = new ArrayList<>();
+        for (Edition edition : titleEditions) {
+          if (authorEditions.contains(edition)) {
+            finalEditions.add(edition);
+          }
+        }
+        if (finalEditions.isEmpty()) {
+          return new ArrayList<>();
+        }
+      }
+      return finalEditions;
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot find books", e);
+    }
   }
 
   @Override
-  public Book findBookByEdition(int id) throws ServiceException {
-    return null;
+  public Book findFreeBookByEdition(int id) throws ServiceException {
+    Book book = null;
+    try {
+      List<Book> result = findBooksByEdition(id);
+      for (Book b : result) {
+        System.out.println(b.fieldForName(Book.RESERVED).getValue());
+        if (!b.fieldForName(Book.LOCATION_ID)
+            .getValue()
+            .equals(ConstantManager.LOCATION_DECOMMISSIONED)
+            && !b.fieldForName(Book.LOCATION_ID).getValue().equals(ConstantManager.LOCATION_ON_HAND)
+            && !b.fieldForName(Book.RESERVED).getValue().equals(ConstantManager.RESERVED)
+            && !b.fieldForName(Book.RESERVED).getValue().equals(ConstantManager.PREPARED)) {
+          book = b;
+          break;
+        }
+      }
+    } catch (LibraryEntityException e) {
+      throw new ServiceException("Cannot find books", e);
+    }
+    return book;
   }
 
   @Override
   public void bindAuthors(EditionInfo info) throws ServiceException {
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      ManyToManyDao<Edition, Author> editionDao = new ManyToManyDaoImpl(connector);
+      LibraryDao<Author> authorDao = new LibraryDaoImpl<>(TableEntityMapper.AUTHOR, connector);
+      Set<Author> authors = new HashSet<>();
+      //TODO start transaction
+      Set<Integer> authorIds = editionDao.getSecond(info.getEdition().getId());
+      for (int id : authorIds) {
+        authors.add(authorDao.get(id));
+      }
+      //TODO finish transaction
+      StringBuilder stringBuilder = new StringBuilder();
+      for (Author a : authors) {
+        stringBuilder.append(a.fieldForName(Author.SURNAME).getValue()).append(" ");
+      }
+      info.setAuthors(stringBuilder.toString());
 
+    } catch (DaoException | LibraryEntityException e) {
+      throw new ServiceException("Cannot find relevant books", e);
+    }
   }
 
   @Override
   public void bindBookAndLocation(EditionInfo info) throws ServiceException {
-
+    try {
+      Book book = findFreeBookByEdition(info.getEdition().getId());
+      info.setBook(book);
+      if (book != null) {
+        int locationId = (int) book.fieldForName(Book.LOCATION_ID).getValue();
+        info.setLocationId(locationId);
+      }
+    } catch (ServiceException | LibraryEntityException e) {
+      throw new ServiceException("Cannot find relevant books", e);
+    }
   }
 
   @Override

@@ -31,6 +31,7 @@ public class ConstantManager {
   public static final int NOT_RESERVED = 0;
   public static final int RESERVED = 1;
   public static final int PREPARED = 2;
+  public static final int ISSUED = 3;
 
   private ConstantManager()  {}
 
