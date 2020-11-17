@@ -45,6 +45,22 @@ public class DBConnector implements AutoCloseable {
     }
   }
 
+  public void suspendAutoCommit() throws SQLException {
+    connection.setAutoCommit(false);
+  }
+
+  public void confirmAutoCommit() throws SQLException {
+    connection.setAutoCommit(true);
+  }
+
+  public void commit() throws SQLException {
+    connection.commit();
+  }
+
+  public void rollback() throws SQLException {
+    connection.rollback();
+  }
+
   @Override
   public void close() {
     DBConnectorPool.getInstance().releaseConnector(this);

@@ -25,6 +25,9 @@ public interface Command1 {
   public static final String EDITIONS = "editions";
   public static final String LANGUAGE = "lan";
   public static final String EDITION = "edition";
+  public static final String ORDER = "order";
+  public static final String BOOK = "book";
+  public static final String ORDERS = "orders";
 
   default PageRouter executeCommand(HttpServletRequest request) {
     HttpSession session = request.getSession();

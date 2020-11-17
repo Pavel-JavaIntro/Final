@@ -15,6 +15,8 @@ public class PageRouter {
   public static final String LIBRARIAN_ASSIGN = "librarian_assign.jsp";
   public static final String INDEX = "/index.jsp";
   public static final String ORDER = "/jsp/order.jsp";
+  public static final String RESERVE = "/jsp/reserve.jsp";
+  public static final String SHOW_ORDERS = "/jsp/show_orders.jsp";
 
   public enum TransitionType {
     FORWARD,

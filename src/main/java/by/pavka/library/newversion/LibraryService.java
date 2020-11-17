@@ -19,6 +19,7 @@ import by.pavka.library.model.dao.DaoException;
 import by.pavka.library.model.dao.LibraryDao;
 import by.pavka.library.model.mapper.TableEntityMapper;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class LibraryService implements WelcomeServiceInterface {
@@ -130,7 +131,7 @@ public class LibraryService implements WelcomeServiceInterface {
       List<Author> authorList = null;
       if (!author.isEmpty()) {
         try (LibraryDao<Author> authorDao =
-                 LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.AUTHOR)) {
+            LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.AUTHOR)) {
           Criteria criteriaA = new Criteria();
           EntityField<String> authorField = new EntityField<>(Author.SURNAME);
           authorField.setValue(author);
@@ -187,8 +188,8 @@ public class LibraryService implements WelcomeServiceInterface {
       for (Book b : result) {
         System.out.println(b.fieldForName(Book.RESERVED).getValue());
         if (!b.fieldForName(Book.LOCATION_ID)
-            .getValue()
-            .equals(ConstantManager.LOCATION_DECOMMISSIONED)
+                .getValue()
+                .equals(ConstantManager.LOCATION_DECOMMISSIONED)
             && !b.fieldForName(Book.LOCATION_ID).getValue().equals(ConstantManager.LOCATION_ON_HAND)
             && !b.fieldForName(Book.RESERVED).getValue().equals(ConstantManager.RESERVED)
             && !b.fieldForName(Book.RESERVED).getValue().equals(ConstantManager.PREPARED)) {
@@ -208,12 +209,12 @@ public class LibraryService implements WelcomeServiceInterface {
       ManyToManyDao<Edition, Author> editionDao = new ManyToManyDaoImpl(connector);
       LibraryDao<Author> authorDao = new LibraryDaoImpl<>(TableEntityMapper.AUTHOR, connector);
       Set<Author> authors = new HashSet<>();
-      //TODO start transaction
+      // TODO start transaction
       Set<Integer> authorIds = editionDao.getSecond(info.getEdition().getId());
       for (int id : authorIds) {
         authors.add(authorDao.get(id));
       }
-      //TODO finish transaction
+      // TODO finish transaction
       StringBuilder stringBuilder = new StringBuilder();
       for (Author a : authors) {
         stringBuilder.append(a.fieldForName(Author.SURNAME).getValue()).append(" ");
@@ -240,9 +241,7 @@ public class LibraryService implements WelcomeServiceInterface {
   }
 
   @Override
-  public void addCode(String code) throws ServiceException {
-
-  }
+  public void addCode(String code) throws ServiceException {}
 
   @Override
   public int editionIdByCode(String code) throws ServiceException {
@@ -250,9 +249,7 @@ public class LibraryService implements WelcomeServiceInterface {
   }
 
   @Override
-  public void addBook(Book book) throws ServiceException {
-
-  }
+  public void addBook(Book book) throws ServiceException {}
 
   @Override
   public int addEdition(Edition edition) throws ServiceException {
@@ -265,9 +262,7 @@ public class LibraryService implements WelcomeServiceInterface {
   }
 
   @Override
-  public void bindEditionAndAuthors(int editionId, int[] authorsId) throws ServiceException {
-
-  }
+  public void bindEditionAndAuthors(int editionId, int[] authorsId) throws ServiceException {}
 
   @Override
   public List<Author> findAuthors(Criteria criterion) throws ServiceException {
@@ -275,9 +270,7 @@ public class LibraryService implements WelcomeServiceInterface {
   }
 
   @Override
-  public void decommissionBook(int bookId) throws ServiceException {
-
-  }
+  public void decommissionBook(int bookId) throws ServiceException {}
 
   @Override
   public List<User> findUsers(String surname, String name) throws ServiceException {
@@ -285,29 +278,47 @@ public class LibraryService implements WelcomeServiceInterface {
   }
 
   @Override
-  public void addUser(User user) throws ServiceException {
-
-  }
+  public void addUser(User user) throws ServiceException {}
 
   @Override
-  public void changeStatus(int userId, int roleId) throws ServiceException {
-
-  }
+  public void changeStatus(int userId, int roleId) throws ServiceException {}
 
   @Override
   public void orderBook(BookOrder bookOrder) throws ServiceException {
-
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<Book> bookDao = new LibraryDaoImpl<>(TableEntityMapper.BOOK, connector);
+      int userId = bookOrder.getUserId();
+      for (EditionInfo editionInfo : bookOrder.getEditionInfoSet()) {
+        Book book = editionInfo.getBook();
+        int bookId = book.getId();
+        EntityField<Integer> userField = new EntityField<>(Book.READER_ID);
+        userField.setValue(userId);
+        EntityField<Integer> reserveField = new EntityField<>(Book.RESERVED);
+        reserveField.setValue(ConstantManager.RESERVED);
+        try {
+          connector.suspendAutoCommit();
+          Book dBook = bookDao.get(bookId);
+          if (dBook.fieldForName(Book.RESERVED).getValue().equals(ConstantManager.NOT_RESERVED)) {
+            bookDao.update(bookId, userField);
+            bookDao.update(bookId, reserveField);
+          }
+          connector.commit();
+        } catch (SQLException | LibraryEntityException throwables) {
+          connector.rollback();
+        } finally {
+          connector.confirmAutoCommit();
+        }
+      }
+    } catch (DaoException | SQLException e) {
+      throw new ServiceException("Cannot order book", e);
+    }
   }
 
   @Override
-  public void prepareOrder(BookOrder bookOrder) throws ServiceException {
-
-  }
+  public void prepareOrder(BookOrder bookOrder) throws ServiceException {}
 
   @Override
-  public void fulfillOrder(BookOrder dispatchedOrder) throws ServiceException {
-
-  }
+  public void fulfillOrder(BookOrder dispatchedOrder) throws ServiceException {}
 
   @Override
   public Book findBookById(int bookId) throws ServiceException {
@@ -315,9 +326,7 @@ public class LibraryService implements WelcomeServiceInterface {
   }
 
   @Override
-  public void fixReturn(Book book) throws ServiceException {
-
-  }
+  public void fixReturn(Book book) throws ServiceException {}
 
   @Override
   public Collection<BookOrder> getPlacedOrder() throws ServiceException {
