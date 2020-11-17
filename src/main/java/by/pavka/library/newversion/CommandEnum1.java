@@ -15,10 +15,10 @@ public enum CommandEnum1 {
   SELECT_BOOK(new SelectBookCommand1()),
   BASKET(new BasketCommand1()),
   ORDER_BOOK(new OrderBookCommand1()),
-  SHOW_ORDERS(new ShowOrdersCommand1());
-//  PREPARE_BOOK(new PrepareBookCommand1()),
-//  SHOW_BOOKS(new ShowBooksCommand1()),
-//  DISPATCH(new DispatchCommand1()),
+  SHOW_ORDERS(new ShowOrdersCommand1()),
+  PREPARE_BOOK(new PrepareBookCommand1()),
+  SHOW_BOOKS(new ShowBooksCommand1()),
+  DISPATCH(new DispatchCommand1());
 //  BOOK_OPTIONS(new BookOptionsCommand1()),
 //  FIND_CODE(new FindCodeCommand1()),
 //  ADD_BOOK(new AddBookCommand1()),

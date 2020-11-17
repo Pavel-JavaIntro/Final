@@ -43,6 +43,10 @@ public class OrderHolder {
     placedOrders.add(order);
   }
 
+  public void denyOrder(BookOrder bookOrder) {
+    placedOrders.remove(bookOrder);
+  }
+
   public void prepareOrder(BookOrder order) {
     preparedOrders.add(order);
   }

@@ -28,6 +28,8 @@ public interface Command1 {
   public static final String ORDER = "order";
   public static final String BOOK = "book";
   public static final String ORDERS = "orders";
+  public static final String PREPARATION = "preparation";
+  public static final String PREPARED = "prepared";
 
   default PageRouter executeCommand(HttpServletRequest request) {
     HttpSession session = request.getSession();

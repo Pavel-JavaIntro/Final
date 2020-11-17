@@ -315,10 +315,84 @@ public class LibraryService implements WelcomeServiceInterface {
   }
 
   @Override
-  public void prepareOrder(BookOrder bookOrder) throws ServiceException {}
+  public void prepareOrder(BookOrder bookOrder) throws ServiceException {
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<Book> bookDao = new LibraryDaoImpl<>(TableEntityMapper.BOOK, connector);
+      for (EditionInfo editionInfo : bookOrder.getEditionInfoSet()) {
+        Book book = editionInfo.getBook();
+        int bookId = book.getId();
+        EntityField<Integer> locField = new EntityField<>(Book.LOCATION_ID);
+        locField.setValue(ConstantManager.LOCATION_READING_HALL_RESERVE);
+        EntityField<Integer> reserveField = new EntityField<>(Book.RESERVED);
+        reserveField.setValue(ConstantManager.PREPARED);
+        try {
+          connector.suspendAutoCommit();
+          bookDao.update(bookId, locField);
+          bookDao.update(bookId, reserveField);
+          connector.commit();
+        } catch (SQLException throwables) {
+          connector.rollback();
+        } finally {
+          connector.confirmAutoCommit();
+        }
+      }
+    } catch (DaoException | SQLException e) {
+      throw new ServiceException("Cannot prepare book", e);
+    }
+  }
+
+  public void denyOrder(BookOrder bookOrder) throws ServiceException {
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<Book> bookDao = new LibraryDaoImpl<>(TableEntityMapper.BOOK, connector);
+      for (EditionInfo editionInfo : bookOrder.getEditionInfoSet()) {
+        Book book = editionInfo.getBook();
+        int bookId = book.getId();
+        EntityField<Integer> reserveField = new EntityField<>(Book.RESERVED);
+        reserveField.setValue(ConstantManager.NOT_RESERVED);
+        EntityField<Integer> userField = new EntityField<>(Book.READER_ID);
+        userField.setValue(null);
+        try {
+          connector.suspendAutoCommit();
+          bookDao.update(bookId, reserveField);
+          bookDao.update(bookId, userField);
+          connector.commit();
+        } catch (SQLException throwables) {
+          connector.rollback();
+        } finally {
+          connector.confirmAutoCommit();
+        }
+      }
+    } catch (DaoException | SQLException e) {
+      throw new ServiceException("Cannot deny book", e);
+    }
+  }
 
   @Override
-  public void fulfillOrder(BookOrder dispatchedOrder) throws ServiceException {}
+  public void fulfillOrder(BookOrder dispatchedOrder) throws ServiceException {
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<Book> bookDao = new LibraryDaoImpl<>(TableEntityMapper.BOOK, connector);
+      for (EditionInfo editionInfo : dispatchedOrder.getEditionInfoSet()) {
+        Book book = editionInfo.getBook();
+        int bookId = book.getId();
+        EntityField<Integer> locField = new EntityField<>(Book.LOCATION_ID);
+        locField.setValue(ConstantManager.LOCATION_ON_HAND);
+        EntityField<Integer> reserveField = new EntityField<>(Book.RESERVED);
+        reserveField.setValue(ConstantManager.ISSUED);
+        try {
+          connector.suspendAutoCommit();
+          bookDao.update(bookId, locField);
+          bookDao.update(bookId, reserveField);
+          connector.commit();
+        } catch (SQLException throwables) {
+          connector.rollback();
+        } finally {
+          connector.confirmAutoCommit();
+        }
+      }
+    } catch (DaoException | SQLException e) {
+      throw new ServiceException("Cannot prepare book", e);
+    }
+  }
 
   @Override
   public Book findBookById(int bookId) throws ServiceException {
