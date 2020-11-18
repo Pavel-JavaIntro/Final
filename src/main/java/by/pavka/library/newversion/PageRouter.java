@@ -18,6 +18,9 @@ public class PageRouter {
   public static final String RESERVE = "/jsp/reserve.jsp";
   public static final String SHOW_ORDERS = "/jsp/show_orders.jsp";
   public static final String SHOW_BOOKS = "/jsp/show_books.jsp";
+  public static final String PROCESS_BOOKS = "/jsp/process_books.jsp";
+  public static final String EDITION_ADDITION = "block/edition_addition.jsp";
+  public static final String BOOK_ADDITION = "block/book_addition.jsp";
 
   public enum TransitionType {
     FORWARD,

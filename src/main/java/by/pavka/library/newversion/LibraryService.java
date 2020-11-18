@@ -88,7 +88,23 @@ public class LibraryService implements WelcomeServiceInterface {
 
   @Override
   public List<Book> findBooksByEditionCode(String code) throws ServiceException {
-    return null;
+    List<Book> books;
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<Edition> editionDao = new LibraryDaoImpl<>(TableEntityMapper.EDITION, connector);
+      EntityField<String> field = new EntityField<>(Edition.STANDARD_NUMBER);
+      field.setValue(code);
+      Criteria criteria = new Criteria();
+      criteria.addConstraint(field);
+      List<Edition> editions = editionDao.read(criteria, true);
+      int editionId = 0;
+      if (!editions.isEmpty()) {
+        editionId = editions.get(0).getId();
+      }
+      books = findBooksByEdition(editionId);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot find editions", e);
+    }
+    return books;
   }
 
   @Override
@@ -209,12 +225,10 @@ public class LibraryService implements WelcomeServiceInterface {
       ManyToManyDao<Edition, Author> editionDao = new ManyToManyDaoImpl(connector);
       LibraryDao<Author> authorDao = new LibraryDaoImpl<>(TableEntityMapper.AUTHOR, connector);
       Set<Author> authors = new HashSet<>();
-      // TODO start transaction
       Set<Integer> authorIds = editionDao.getSecond(info.getEdition().getId());
       for (int id : authorIds) {
         authors.add(authorDao.get(id));
       }
-      // TODO finish transaction
       StringBuilder stringBuilder = new StringBuilder();
       for (Author a : authors) {
         stringBuilder.append(a.fieldForName(Author.SURNAME).getValue()).append(" ");
@@ -245,11 +259,32 @@ public class LibraryService implements WelcomeServiceInterface {
 
   @Override
   public int editionIdByCode(String code) throws ServiceException {
-    return 0;
+    int editionId = 0;
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<Edition> editionDao = new LibraryDaoImpl<>(TableEntityMapper.EDITION, connector);
+      EntityField<String> field = new EntityField<>(Edition.STANDARD_NUMBER);
+      field.setValue(code);
+      Criteria criteria = new Criteria();
+      criteria.addConstraint(field);
+      List<Edition> editions = editionDao.read(criteria, true);
+      if (!editions.isEmpty()) {
+        editionId = editions.get(0).getId();
+      }
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot identify edition standard number", e);
+    }
+    return editionId;
   }
 
   @Override
-  public void addBook(Book book) throws ServiceException {}
+  public void addBook(Book book) throws ServiceException {
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<Book> bookDao = new LibraryDaoImpl<>(TableEntityMapper.BOOK, connector);
+      bookDao.add(book);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot add a book", e);
+    }
+  }
 
   @Override
   public int addEdition(Edition edition) throws ServiceException {

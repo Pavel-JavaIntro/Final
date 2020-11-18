@@ -18,10 +18,10 @@ public enum CommandEnum1 {
   SHOW_ORDERS(new ShowOrdersCommand1()),
   PREPARE_BOOK(new PrepareBookCommand1()),
   SHOW_BOOKS(new ShowBooksCommand1()),
-  DISPATCH(new DispatchCommand1());
-//  BOOK_OPTIONS(new BookOptionsCommand1()),
-//  FIND_CODE(new FindCodeCommand1()),
-//  ADD_BOOK(new AddBookCommand1()),
+  DISPATCH(new DispatchCommand1()),
+  BOOK_OPTIONS(new BookOptionsCommand1()),
+  FIND_CODE(new FindCodeCommand1()),
+  ADD_BOOK(new AddBookCommand1());
 //  ADD_EDITION(new AddEditionCommand1()),
 //  DECOMMISSION_BOOK(new DecommissionBookCommand1()),
 //  USER_OPTIONS(new UserOptionsCommand1()),

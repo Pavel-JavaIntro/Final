@@ -30,6 +30,10 @@ public interface Command1 {
   public static final String ORDERS = "orders";
   public static final String PREPARATION = "preparation";
   public static final String PREPARED = "prepared";
+  public static final String CODE = "code";
+  public static final String ADDITION = "addition";
+  public static final String DECOMMISSION = "decommission";
+  public static final String BOOK_LOCATION = "booklocation";
 
   default PageRouter executeCommand(HttpServletRequest request) {
     HttpSession session = request.getSession();
