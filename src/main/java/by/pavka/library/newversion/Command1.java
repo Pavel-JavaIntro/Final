@@ -34,6 +34,10 @@ public interface Command1 {
   public static final String ADDITION = "addition";
   public static final String DECOMMISSION = "decommission";
   public static final String BOOK_LOCATION = "booklocation";
+  public static final String BOOK_TITLE = "booktitle";
+  public static final String BOOK_YEAR = "bookyear";
+  public static final String GENRE = "genre";
+  public static final String DECOM = "decom";
 
   default PageRouter executeCommand(HttpServletRequest request) {
     HttpSession session = request.getSession();

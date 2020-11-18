@@ -21,6 +21,7 @@ public class PageRouter {
   public static final String PROCESS_BOOKS = "/jsp/process_books.jsp";
   public static final String EDITION_ADDITION = "block/edition_addition.jsp";
   public static final String BOOK_ADDITION = "block/book_addition.jsp";
+  public static final String PROCESS_USERS = "/jsp/process_users.jsp";
 
   public enum TransitionType {
     FORWARD,

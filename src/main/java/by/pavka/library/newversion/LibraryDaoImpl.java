@@ -57,11 +57,9 @@ public class LibraryDaoImpl<T extends LibraryEntity>
       int affectedRows = statement.executeUpdate();
       System.out.println(statement);
       ResultSet resultSet = statement.getGeneratedKeys();
-      System.out.println("GENERATED KEYS " + affectedRows);
       if (resultSet.next()) {
         return resultSet.getInt(1);
       } else {
-        System.out.println("No generated key");
         throw new DaoException("No generated key");
       }
     } catch (DaoException | SQLException e) {

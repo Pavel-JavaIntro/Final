@@ -288,24 +288,59 @@ public class LibraryService implements WelcomeServiceInterface {
 
   @Override
   public int addEdition(Edition edition) throws ServiceException {
-    return 0;
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<Edition> editionDao = new LibraryDaoImpl<>(TableEntityMapper.EDITION, connector);
+      return editionDao.add(edition);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot add an edition code", e);
+    }
   }
 
   @Override
   public int addAuthor(Author author) throws ServiceException {
-    return 0;
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<Author> authorDao = new LibraryDaoImpl<>(TableEntityMapper.AUTHOR, connector);
+      return authorDao.add(author);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot add an author", e);
+    }
   }
 
   @Override
-  public void bindEditionAndAuthors(int editionId, int[] authorsId) throws ServiceException {}
+  public void bindEditionAndAuthors(int editionId, int[] authorsId) throws ServiceException {
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      ManyToManyDao<Edition, Author> dao = new ManyToManyDaoImpl(connector);
+      for (int id : authorsId) {
+        if (id != 0) {
+          dao.bind(editionId, id);
+        }
+      }
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot bind editions and authors", e);
+    }
+  }
 
   @Override
   public List<Author> findAuthors(Criteria criterion) throws ServiceException {
-    return null;
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<Author> authorDao = new LibraryDaoImpl<>(TableEntityMapper.AUTHOR, connector);
+      return authorDao.read(criterion, true);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot add a book", e);
+    }
   }
 
   @Override
-  public void decommissionBook(int bookId) throws ServiceException {}
+  public void decommissionBook(int bookId) throws ServiceException {
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<Book> bookDao = new LibraryDaoImpl<>(TableEntityMapper.BOOK, connector);
+      EntityField<Integer> field = new EntityField<>(Book.LOCATION_ID);
+      field.setValue(ConstantManager.LOCATION_DECOMMISSIONED);
+      bookDao.update(bookId, field);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot decommission a book", e);
+    }
+  }
 
   @Override
   public List<User> findUsers(String surname, String name) throws ServiceException {
