@@ -38,6 +38,10 @@ public interface Command1 {
   public static final String BOOK_YEAR = "bookyear";
   public static final String GENRE = "genre";
   public static final String DECOM = "decom";
+  public static final String USER_SURNAME = "surname";
+  public static final String USER_NAME = "name";
+  public static final String USERS = "users";
+  public static final String USER_ADDITION = "user_addition";
 
   default PageRouter executeCommand(HttpServletRequest request) {
     HttpSession session = request.getSession();

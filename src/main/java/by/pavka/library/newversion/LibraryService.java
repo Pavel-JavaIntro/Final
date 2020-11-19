@@ -376,7 +376,19 @@ public class LibraryService implements WelcomeServiceInterface {
 
   @Override
   public List<User> findUsers(String surname, String name) throws ServiceException {
-    return null;
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<User> userDao = new LibraryDaoImpl<>(TableEntityMapper.USER, connector);
+      EntityField<String> surnameField = new EntityField<>(User.SURNAME);
+      surnameField.setValue(surname);
+      EntityField<String> nameField = new EntityField<>(User.NAME);
+      nameField.setValue(name);
+      Criteria criteria = new Criteria();
+      criteria.addConstraints(surnameField, nameField);
+      List<User> users = userDao.read(criteria, true);
+      return users;
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot find users", e);
+    }
   }
 
   @Override
