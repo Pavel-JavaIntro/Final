@@ -27,6 +27,7 @@ public class LibraryDaoImpl<T extends LibraryEntity>
   private static final String GET = "SELECT * FROM %s WHERE id=?";
   private static final String UPDATE = "UPDATE %s SET %s WHERE id=?";
   private static final String DELETE = "DELETE FROM %s WHERE id=?";
+  public static final String ID = "id";
 
   private final String tableName;
   private final EntityExtractor<T> entityExtractor;
@@ -49,13 +50,13 @@ public class LibraryDaoImpl<T extends LibraryEntity>
   public int add(T entity) throws DaoException {
     PreparedStatement statement = null;
     String sql = String.format(INSERT, getTableName());
-    System.out.println(sql);
     try {
       sql += formInsertRequest(entity);
       System.out.println(sql);
       statement = connector.obtainPreparedStatement(sql);
+      System.out.println("Before execution: " + statement);
       int affectedRows = statement.executeUpdate();
-      System.out.println(statement);
+      System.out.println("After execution: " + affectedRows + " " + statement);
       ResultSet resultSet = statement.getGeneratedKeys();
       if (resultSet.next()) {
         return resultSet.getInt(1);
@@ -212,11 +213,10 @@ public class LibraryDaoImpl<T extends LibraryEntity>
 
   private T formEntity(ResultSet resultSet) throws SQLException, LibraryEntityException {
     T item = extractEntity();
-    int id = resultSet.getInt("id");
+    int id = resultSet.getInt(ID);
     item.setId(id);
     ResultSetMetaData metaData = resultSet.getMetaData();
     int count = metaData.getColumnCount();
-    ;
     ColumnFieldMapper<T> mapper = ColumnFieldMapper.getInstance(item);
     for (int i = 2; i <= count; i++) {
       String name = metaData.getColumnName(i);

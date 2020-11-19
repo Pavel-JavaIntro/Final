@@ -32,6 +32,7 @@ public class ConstantManager {
   public static final int RESERVED = 1;
   public static final int PREPARED = 2;
   public static final int ISSUED = 3;
+  public static final Integer DECOM = 4;
 
   private ConstantManager()  {}
 

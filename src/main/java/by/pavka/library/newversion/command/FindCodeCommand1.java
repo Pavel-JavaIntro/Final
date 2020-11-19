@@ -20,6 +20,7 @@ public class FindCodeCommand1 implements Command1 {
     LibraryService service = LibraryService.getInstance();
     HttpSession session = request.getSession();
     session.setAttribute(CODE, code);
+    session.removeAttribute(DECOMMISSION);
     try {
       int editionId = service.editionIdByCode(code);
       if (editionId == 0) {

@@ -326,8 +326,30 @@ public class LibraryService implements WelcomeServiceInterface {
       LibraryDao<Author> authorDao = new LibraryDaoImpl<>(TableEntityMapper.AUTHOR, connector);
       return authorDao.read(criterion, true);
     } catch (DaoException e) {
-      throw new ServiceException("Cannot add a book", e);
+      throw new ServiceException("Cannot find authors", e);
     }
+  }
+
+  public List<Author> findAuthors(Author author) throws ServiceException {
+    List<Author> result = new ArrayList<>();
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<Author> authorDao = new LibraryDaoImpl<>(TableEntityMapper.AUTHOR, connector);
+      if (author != null) {
+        System.out.println(author);
+        EntityField<String> surname = new EntityField<>(Author.SURNAME);
+        surname.setValue((String)author.fieldForName(Author.SURNAME).getValue());
+        EntityField<String> firstname = new EntityField<>(Author.FIRST_NAME);
+        firstname.setValue((String)author.fieldForName(Author.FIRST_NAME).getValue());
+        EntityField<String> secondname = new EntityField<>(Author.SECOND_NAME);
+        secondname.setValue((String)author.fieldForName(Author.SECOND_NAME).getValue());
+        Criteria criteria = new Criteria();
+        criteria.addConstraints(surname, firstname, secondname);
+        return authorDao.read(criteria, true);
+      }
+    } catch (DaoException | LibraryEntityException e) {
+      throw new ServiceException("Cannot find authors", e);
+    }
+    return result;
   }
 
   @Override
@@ -336,8 +358,18 @@ public class LibraryService implements WelcomeServiceInterface {
       LibraryDao<Book> bookDao = new LibraryDaoImpl<>(TableEntityMapper.BOOK, connector);
       EntityField<Integer> field = new EntityField<>(Book.LOCATION_ID);
       field.setValue(ConstantManager.LOCATION_DECOMMISSIONED);
-      bookDao.update(bookId, field);
-    } catch (DaoException e) {
+      EntityField<Integer> reserved = new EntityField<>(Book.RESERVED);
+      reserved.setValue(ConstantManager.DECOM);
+      try {
+        connector.suspendAutoCommit();
+        bookDao.update(bookId, field);
+        bookDao.update(bookId, reserved);
+      } catch (SQLException throwables) {
+        connector.rollback();
+      } finally {
+        connector.restoreAutoCommit();
+      }
+    } catch (DaoException | SQLException e) {
       throw new ServiceException("Cannot decommission a book", e);
     }
   }
@@ -376,7 +408,7 @@ public class LibraryService implements WelcomeServiceInterface {
         } catch (SQLException | LibraryEntityException throwables) {
           connector.rollback();
         } finally {
-          connector.confirmAutoCommit();
+          connector.restoreAutoCommit();
         }
       }
     } catch (DaoException | SQLException e) {
@@ -403,7 +435,7 @@ public class LibraryService implements WelcomeServiceInterface {
         } catch (SQLException throwables) {
           connector.rollback();
         } finally {
-          connector.confirmAutoCommit();
+          connector.restoreAutoCommit();
         }
       }
     } catch (DaoException | SQLException e) {
@@ -429,7 +461,7 @@ public class LibraryService implements WelcomeServiceInterface {
         } catch (SQLException throwables) {
           connector.rollback();
         } finally {
-          connector.confirmAutoCommit();
+          connector.restoreAutoCommit();
         }
       }
     } catch (DaoException | SQLException e) {
@@ -448,6 +480,7 @@ public class LibraryService implements WelcomeServiceInterface {
         locField.setValue(ConstantManager.LOCATION_ON_HAND);
         EntityField<Integer> reserveField = new EntityField<>(Book.RESERVED);
         reserveField.setValue(ConstantManager.ISSUED);
+
         try {
           connector.suspendAutoCommit();
           bookDao.update(bookId, locField);
@@ -456,10 +489,18 @@ public class LibraryService implements WelcomeServiceInterface {
         } catch (SQLException throwables) {
           connector.rollback();
         } finally {
-          connector.confirmAutoCommit();
+          connector.restoreAutoCommit();
         }
+        int editionId = editionInfo.getEdition().getId();
+        LibraryDao<Edition> editionDao = new LibraryDaoImpl<>(TableEntityMapper.EDITION, connector);
+        Edition edition = editionDao.get(editionId);
+        int deliveries = (int) edition.fieldForName(Edition.DELIVERIES).getValue();
+        deliveries++;
+        EntityField<Integer> deliveryField = new EntityField<>(Edition.DELIVERIES);
+        deliveryField.setValue(deliveries);
+        editionDao.update(editionId, deliveryField);
       }
-    } catch (DaoException | SQLException e) {
+    } catch (DaoException | SQLException | LibraryEntityException e) {
       throw new ServiceException("Cannot prepare book", e);
     }
   }

@@ -49,7 +49,7 @@ public class DBConnector implements AutoCloseable {
     connection.setAutoCommit(false);
   }
 
-  public void confirmAutoCommit() throws SQLException {
+  public void restoreAutoCommit() throws SQLException {
     connection.setAutoCommit(true);
   }
 

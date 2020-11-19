@@ -88,8 +88,10 @@ public class AddEditionCommand1 implements Command1 {
       book.setValue(Book.EDITION_ID, id);
       service.addBook(book);
       for (int i = 0; i < 3; i++) {
-        if (criteria[i] != null) {
-          List<Author> authorList = service.findAuthors(criteria[i]);
+        //if (criteria[i] != null) {
+          //List<Author> authorList = service.findAuthors(criteria[i]);
+        if (athrs[i] != null) {
+          List<Author> authorList = service.findAuthors(athrs[i]);
           if (!authorList.isEmpty()) {
             ids[i] = authorList.get(0).getId();
           } else {
