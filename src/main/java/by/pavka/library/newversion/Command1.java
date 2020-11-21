@@ -42,10 +42,16 @@ public interface Command1 {
   public static final String USER_NAME = "name";
   public static final String USERS = "users";
   public static final String USER_ADDITION = "user_addition";
+  public static final String USER_ADDRESS = "address";
+  public static final String USER_PHONE = "phone";
+  public static final String USER_EMAIL = "email";
+  public static final String USER_ROLE = "role";
+  public static final String USER = "user";
+  public static final String STATUS = "status";
 
   default PageRouter executeCommand(HttpServletRequest request) {
     HttpSession session = request.getSession();
-    String page = (String)session.getAttribute(SESSION_ATTRIBUTE_PAGE);
+    String page = (String) session.getAttribute(SESSION_ATTRIBUTE_PAGE);
     LOGGER.info("Current Page is " + page);
     PageRouter pageRouter = execute(request);
     String nextPage = pageRouter.getPage();
@@ -54,7 +60,7 @@ public interface Command1 {
     } else {
       session.setAttribute(SESSION_ATTRIBUTE_PAGE, nextPage);
     }
-    LOGGER.info("Next Page is " + (String)session.getAttribute(SESSION_ATTRIBUTE_PAGE));
+    LOGGER.info("Next Page is " + (String) session.getAttribute(SESSION_ATTRIBUTE_PAGE));
     return pageRouter;
   }
 

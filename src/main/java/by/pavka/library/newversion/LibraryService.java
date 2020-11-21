@@ -392,10 +392,26 @@ public class LibraryService implements WelcomeServiceInterface {
   }
 
   @Override
-  public void addUser(User user) throws ServiceException {}
+  public void addUser(User user) throws ServiceException {
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<User> userDao = new LibraryDaoImpl<>(TableEntityMapper.USER, connector);
+      userDao.add(user);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot add users", e);
+    }
+  }
 
   @Override
-  public void changeStatus(int userId, int roleId) throws ServiceException {}
+  public void changeStatus(int userId, int roleId) throws ServiceException {
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<User> userDao = new LibraryDaoImpl<>(TableEntityMapper.USER, connector);
+      EntityField<Integer> field = new EntityField<>(User.ROLE_ID);
+      field.setValue(roleId);
+      userDao.update(userId, field);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot change user status", e);
+    }
+  }
 
   @Override
   public void orderBook(BookOrder bookOrder) throws ServiceException {

@@ -25,10 +25,10 @@ public enum CommandEnum1 {
   ADD_EDITION(new AddEditionCommand1()),
   DECOMMISSION_BOOK(new DecommissionBookCommand1()),
   USER_OPTIONS(new UserOptionsCommand1()),
-  FIND_USER(new FindUsersCommand1());
-//  ADD_USER(new AddUserCommand1()),
-//  CHANGE_STATUS(new ChangeStatusCommand1()),
-//  RETURN_BOOKS(new ReturnBookCommand1()),
+  FIND_USER(new FindUsersCommand1()),
+  ADD_USER(new AddUserCommand1()),
+  CHANGE_STATUS(new ChangeStatusCommand1()),
+  RETURN_BOOKS(new ReturnBookCommand1());
 //  RETURN(new ReturnCommand1()),
 //  FIX_RETURN(new FixReturnCommand1());
 
