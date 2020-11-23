@@ -43,6 +43,7 @@
                             <input type="submit" value="<fmt:message key="message.return"/>"/>
                         </form>
                         </p>
+                        <jsp:include page="${sessionScope.result}"/>
                     </td>
                     <jsp:include page="${sessionScope.client.entrance}"/>
                 </tr>

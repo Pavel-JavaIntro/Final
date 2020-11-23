@@ -48,6 +48,9 @@ public interface Command1 {
   public static final String USER_ROLE = "role";
   public static final String USER = "user";
   public static final String STATUS = "status";
+  public static final String RETURN = "return";
+  public static final String RETURNING = "returning";
+  public static final String RESULT = "result";
 
   default PageRouter executeCommand(HttpServletRequest request) {
     HttpSession session = request.getSession();

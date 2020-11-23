@@ -535,11 +535,42 @@ public class LibraryService implements WelcomeServiceInterface {
 
   @Override
   public Book findBookById(int bookId) throws ServiceException {
-    return null;
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<Book> bookDao = new LibraryDaoImpl<>(TableEntityMapper.BOOK, connector);
+      return bookDao.get(bookId);
+    } catch (DaoException e) {
+      throw new ServiceException("Cannot find book", e);
+    }
   }
 
   @Override
-  public void fixReturn(Book book) throws ServiceException {}
+  public void fixReturn(Book book) throws ServiceException {
+    try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
+      LibraryDao<Book> bookDao = new LibraryDaoImpl<>(TableEntityMapper.BOOK, connector);
+      int bookId = book.getId();
+      EntityField<Integer> userField = new EntityField<>(Book.READER_ID);
+      userField.setValue(null);
+      EntityField<Integer> standardLocationField = book.fieldForName(Book.STANDARD_LOCATION_ID);
+      int locationId = standardLocationField.getValue();
+      EntityField<Integer> locationField = new EntityField<>(Book.LOCATION_ID);
+      locationField.setValue(locationId);
+      EntityField<Integer> reserveField = new EntityField<>(Book.RESERVED);
+      reserveField.setValue(ConstantManager.NOT_RESERVED);
+      try {
+        connector.suspendAutoCommit();
+        bookDao.update(bookId, userField);
+        bookDao.update(bookId, locationField);
+        bookDao.update(bookId, reserveField);
+        connector.commit();
+      } catch (SQLException throwables) {
+        connector.rollback();
+      } finally {
+        connector.restoreAutoCommit();
+      }
+    } catch (DaoException | LibraryEntityException | SQLException e) {
+      throw new ServiceException("Cannot return book", e);
+    }
+  }
 
   @Override
   public Collection<BookOrder> getPlacedOrder() throws ServiceException {

@@ -28,9 +28,9 @@ public enum CommandEnum1 {
   FIND_USER(new FindUsersCommand1()),
   ADD_USER(new AddUserCommand1()),
   CHANGE_STATUS(new ChangeStatusCommand1()),
-  RETURN_BOOKS(new ReturnBookCommand1());
-//  RETURN(new ReturnCommand1()),
-//  FIX_RETURN(new FixReturnCommand1());
+  RETURN_BOOKS(new ReturnBookCommand1()),
+  RETURN(new ReturnCommand1()),
+  FIX_RETURN(new FixReturnCommand1());
 
   private final Command1 command;
 
