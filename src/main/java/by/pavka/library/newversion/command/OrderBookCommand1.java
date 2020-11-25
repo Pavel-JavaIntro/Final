@@ -19,7 +19,7 @@ public class OrderBookCommand1 implements Command1 {
 
   @Override
   public PageRouter execute(HttpServletRequest request) {
-    PageRouter pageRouter = new PageRouter(PageRouter.RESERVE);
+    PageRouter pageRouter = new PageRouter();
     HttpSession session = request.getSession();
     AppClient client = (AppClient)session.getAttribute(SESSION_ATTRIBUTE_CLIENT);
     String action = request.getParameter(ORDER);
@@ -41,6 +41,7 @@ public class OrderBookCommand1 implements Command1 {
       LibraryService service = LibraryService.getInstance();
       try {
         service.orderBook(bookOrder);
+        pageRouter.setPage(PageRouter.RESERVE);
       } catch (ServiceException e) {
         pageRouter.setPage(PageRouter.ERROR);
         LOGGER.error("OrderBookCommand hasn't completed");

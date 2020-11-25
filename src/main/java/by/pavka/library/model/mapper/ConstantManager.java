@@ -3,6 +3,7 @@ package by.pavka.library.model.mapper;
 import by.pavka.library.model.LibraryFatalException;
 import by.pavka.library.model.service.ServiceException;
 import by.pavka.library.model.service.WelcomeService;
+import by.pavka.library.newversion.LibraryService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,14 +33,14 @@ public class ConstantManager {
   public static final int RESERVED = 1;
   public static final int PREPARED = 2;
   public static final int ISSUED = 3;
-  public static final Integer DECOM = 4;
+  public static final int DECOM = 4;
 
   private ConstantManager()  {}
 
   static {
     try {
-      WelcomeService service = WelcomeService.getInstance();
-      //LibraryService service = LibraryService.getInstance();
+      //WelcomeService service = WelcomeService.getInstance();
+      LibraryService service = LibraryService.getInstance();
       service.initConstants(locations, TableEntityMapper.LOCATION);
       service.initConstants(operations, TableEntityMapper.OPERATION);
       service.initConstants(roles, TableEntityMapper.ROLE);

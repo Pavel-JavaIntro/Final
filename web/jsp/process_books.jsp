@@ -38,6 +38,7 @@
                             </tr>
                             <tr>
                                 <jsp:include page="${sessionScope.addition}"/>
+                                <br/><jsp:include page="${sessionScope.result}"/>
                             </tr>
                         </table>
                     </td>

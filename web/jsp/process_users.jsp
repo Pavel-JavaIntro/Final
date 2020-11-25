@@ -39,6 +39,7 @@
                             </tr>
                             <tr>
                                 <jsp:include page="${sessionScope.user_addition}"/>
+                                <br/><jsp:include page="${sessionScope.result}"/>
                             </tr>
                         </table>
                     </td>

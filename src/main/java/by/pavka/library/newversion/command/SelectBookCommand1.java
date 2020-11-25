@@ -16,8 +16,8 @@ public class SelectBookCommand1 implements Command1 {
     String id = request.getParameter(EDITION);
     int intId = Integer.parseInt(id);
     AppClient client = (AppClient) session.getAttribute(SESSION_ATTRIBUTE_CLIENT);
-    Set<EditionInfo> all = (Set<EditionInfo>) session.getAttribute(EDITIONS);
-    for (EditionInfo info : all) {
+    Set<EditionInfo> editionInfos = (Set<EditionInfo>) session.getAttribute(EDITIONS);
+    for (EditionInfo info : editionInfos) {
       if (intId == info.getEdition().getId()) {
         client.addEditionInfo(info);
       }

@@ -19,6 +19,7 @@ public class AddBookCommand1 implements Command1 {
     HttpSession session = request.getSession();
     PageRouter pageRouter = new PageRouter();
     String code = (String) session.getAttribute(CODE);
+    session.removeAttribute(CODE);
     String loc = request.getParameter(BOOK_LOCATION);
     int locationId = loc.isEmpty() ? 0 : Integer.parseInt(loc);
     List<Book> books = (List<Book>) session.getAttribute(DECOMMISSION);
@@ -29,6 +30,7 @@ public class AddBookCommand1 implements Command1 {
         editionId = (int) book.fieldForName(Book.EDITION_ID).getValue();
         if (locationId == 0) {
           locationId = (int) book.fieldForName(Book.STANDARD_LOCATION_ID).getValue();
+          session.removeAttribute(DECOMMISSION);
         }
       } catch (LibraryEntityException e) {
         pageRouter.setPage(PageRouter.ERROR);
@@ -36,21 +38,24 @@ public class AddBookCommand1 implements Command1 {
         return pageRouter;
       }
     }
-    Book newBook = new Book();
-    LibraryService service = LibraryService.getInstance();
-    try {
-      if (editionId == 0) {
-        editionId = service.editionIdByCode(code);
+    if (code != null) {
+      Book newBook = new Book();
+      LibraryService service = LibraryService.getInstance();
+      try {
+        if (editionId == 0) {
+          editionId = service.editionIdByCode(code);
+        }
+        if (locationId != 0) {
+          newBook.fieldForName(Book.LOCATION_ID).setValue(locationId);
+          newBook.fieldForName(Book.STANDARD_LOCATION_ID).setValue(locationId);
+        }
+        newBook.fieldForName(Book.EDITION_ID).setValue(editionId);
+        service.addBook(newBook);
+        session.setAttribute(RESULT, PageRouter.RESULT_SUCCESS);
+      } catch (LibraryEntityException | ServiceException e) {
+        pageRouter.setPage(PageRouter.ERROR);
+        LOGGER.error("AddBookCommand hasn't completed");
       }
-      if (locationId != 0) {
-        newBook.fieldForName(Book.LOCATION_ID).setValue(locationId);
-        newBook.fieldForName(Book.STANDARD_LOCATION_ID).setValue(locationId);
-      }
-      newBook.fieldForName(Book.EDITION_ID).setValue(editionId);
-      service.addBook(newBook);
-    } catch (LibraryEntityException | ServiceException e) {
-      pageRouter.setPage(PageRouter.ERROR);
-      LOGGER.error("AddBookCommand hasn't completed");
     }
     return pageRouter;
   }

@@ -26,6 +26,10 @@ public class AddEditionCommand1 implements Command1 {
     PageRouter pageRouter = new PageRouter();
     HttpSession session = request.getSession();
     String code = (String) session.getAttribute(CODE);
+    session.removeAttribute(CODE);
+    if (code == null) {
+      return pageRouter;
+    }
     int genre = Integer.parseInt(request.getParameter(GENRE));
     String yearS = request.getParameter(BOOK_YEAR);
     int year = yearS.isEmpty() ? 0 : Integer.parseInt(yearS);
@@ -102,6 +106,7 @@ public class AddEditionCommand1 implements Command1 {
         }
       }
       service.bindEditionAndAuthors(id, ids);
+      session.setAttribute(RESULT, PageRouter.RESULT_SUCCESS);
     } catch (ServiceException e) {
       pageRouter.setPage(PageRouter.ERROR);
       LOGGER.error("AddEditionCommand hasn't completed");

@@ -3,7 +3,6 @@ package by.pavka.library.newversion.command;
 import by.pavka.library.ConfigurationManager;
 import by.pavka.library.entity.impl.Book;
 import by.pavka.library.model.service.ServiceException;
-import by.pavka.library.model.service.WelcomeService;
 import by.pavka.library.newversion.Command1;
 import by.pavka.library.newversion.LibraryService;
 import by.pavka.library.newversion.PageRouter;
@@ -16,6 +15,7 @@ public class ReturnCommand1 implements Command1 {
   public PageRouter execute(HttpServletRequest request) {
     PageRouter pageRouter = new PageRouter();
     HttpSession session = request.getSession();
+    session.removeAttribute(RESULT);
     int bookId = Integer.parseInt(request.getParameter(RETURN));
     LibraryService service = LibraryService.getInstance();
     Book book = null;

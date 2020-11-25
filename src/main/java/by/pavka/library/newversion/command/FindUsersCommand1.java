@@ -20,6 +20,7 @@ public class FindUsersCommand1 implements Command1 {
     String surname = request.getParameter(USER_SURNAME);
     String name = request.getParameter(USER_NAME);
     session.removeAttribute(USERS);
+    session.removeAttribute(RESULT);
     LibraryService service = LibraryService.getInstance();
     try {
       List<User> users = service.findUsers(surname, name);

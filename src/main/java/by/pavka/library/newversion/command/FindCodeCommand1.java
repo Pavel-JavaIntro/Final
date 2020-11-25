@@ -21,6 +21,7 @@ public class FindCodeCommand1 implements Command1 {
     HttpSession session = request.getSession();
     session.setAttribute(CODE, code);
     session.removeAttribute(DECOMMISSION);
+    session.removeAttribute(RESULT);
     try {
       int editionId = service.editionIdByCode(code);
       if (editionId == 0) {
