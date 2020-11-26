@@ -17,22 +17,24 @@ public class FindCodeCommand1 implements Command1 {
   public PageRouter execute(HttpServletRequest request) {
     PageRouter pageRouter = new PageRouter();
     String code = request.getParameter(CODE);
-    LibraryService service = LibraryService.getInstance();
-    HttpSession session = request.getSession();
-    session.setAttribute(CODE, code);
-    session.removeAttribute(DECOMMISSION);
-    session.removeAttribute(RESULT);
-    try {
-      int editionId = service.editionIdByCode(code);
-      if (editionId == 0) {
-        session.setAttribute(ADDITION, PageRouter.EDITION_ADDITION);
-      } else {
-        List<Book> books = service.findBooksByEditionCode(code);
-        session.setAttribute(ADDITION, PageRouter.BOOK_ADDITION);
-        session.setAttribute(DECOMMISSION, books);}
-    } catch (ServiceException e) {
-      pageRouter.setPage(PageRouter.ERROR);
-      LOGGER.error("FindCodeCommand hasn't completed");
+    if (code != null) {
+      LibraryService service = LibraryService.getInstance();
+      HttpSession session = request.getSession();
+      session.setAttribute(CODE, code);
+      session.removeAttribute(DECOMMISSION);
+      session.removeAttribute(RESULT);
+      try {
+        int editionId = service.editionIdByCode(code);
+        if (editionId == 0) {
+          session.setAttribute(ADDITION, PageRouter.EDITION_ADDITION);
+        } else {
+          List<Book> books = service.findBooksByEditionCode(code);
+          session.setAttribute(ADDITION, PageRouter.BOOK_ADDITION);
+          session.setAttribute(DECOMMISSION, books);}
+      } catch (ServiceException e) {
+        pageRouter.setPage(PageRouter.ERROR);
+        LOGGER.error("FindCodeCommand hasn't completed");
+      }
     }
     return pageRouter;
   }

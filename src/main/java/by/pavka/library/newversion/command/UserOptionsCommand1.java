@@ -11,6 +11,9 @@ public class UserOptionsCommand1 implements Command1 {
   public PageRouter execute(HttpServletRequest request) {
     HttpSession session = request.getSession();
     session.removeAttribute(RESULT);
+    session.removeAttribute(USERS);
+    session.removeAttribute(USER_NAME);
+    session.removeAttribute(USER_SURNAME);
     return new PageRouter(PageRouter.PROCESS_USERS);
   }
 }

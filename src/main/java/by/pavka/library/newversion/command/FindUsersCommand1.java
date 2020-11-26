@@ -19,20 +19,22 @@ public class FindUsersCommand1 implements Command1 {
     HttpSession session = request.getSession();
     String surname = request.getParameter(USER_SURNAME);
     String name = request.getParameter(USER_NAME);
-    session.removeAttribute(USERS);
-    session.removeAttribute(RESULT);
-    LibraryService service = LibraryService.getInstance();
-    try {
-      List<User> users = service.findUsers(surname, name);
-      session.setAttribute(USER_SURNAME, surname);
-      session.setAttribute(USER_NAME, name);
-      if (!users.isEmpty()) {
-        session.setAttribute(USERS, users);
+    if (surname != null && name != null) {
+      session.removeAttribute(USERS);
+      session.removeAttribute(RESULT);
+      LibraryService service = LibraryService.getInstance();
+      try {
+        List<User> users = service.findUsers(surname, name);
+        session.setAttribute(USER_SURNAME, surname);
+        session.setAttribute(USER_NAME, name);
+        if (!users.isEmpty()) {
+          session.setAttribute(USERS, users);
+        }
+        session.setAttribute(USER_ADDITION, PageRouter.USER_ADDITION);
+      } catch (ServiceException e) {
+        pageRouter.setPage(PageRouter.ERROR);
+        LOGGER.error("FindUsersCommand hasn't completed");
       }
-      session.setAttribute(USER_ADDITION, PageRouter.USER_ADDITION);
-    } catch (ServiceException e) {
-      pageRouter.setPage(PageRouter.ERROR);
-      LOGGER.error("FindUsersCommand hasn't completed");
     }
     return pageRouter;
   }

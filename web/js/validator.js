@@ -26,3 +26,12 @@ function validateAuthor() {
     }
     return true;
 }
+
+function validateCode() {
+    var a = document.getElementById("code").value;
+    if (a.length <= 0) {
+        alert("Please enter the edition code");
+        return false;
+    }
+    return true;
+}

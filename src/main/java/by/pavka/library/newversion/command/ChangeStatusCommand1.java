@@ -15,15 +15,18 @@ public class ChangeStatusCommand1 implements Command1 {
   @Override
   public PageRouter execute(HttpServletRequest request) {
     PageRouter pageRouter = new PageRouter();
-    int userId = Integer.parseInt(request.getParameter(USER));
+    String user = request.getParameter(USER);
     String role = request.getParameter(STATUS);
-    int roleId = ConstantManager.getRoleId(role);
-    LibraryService service = LibraryService.getInstance();
-    try {
-      service.changeStatus(userId, roleId);
-    } catch (ServiceException e) {
-      pageRouter.setPage(PageRouter.ERROR);
-      LOGGER.error("ChangeStatusCommand hasn't completed");
+    if (user != null && role != null) {
+      int userId = Integer.parseInt(user);
+      int roleId = ConstantManager.getRoleId(role);
+      LibraryService service = LibraryService.getInstance();
+      try {
+        service.changeStatus(userId, roleId);
+      } catch (ServiceException e) {
+        pageRouter.setPage(PageRouter.ERROR);
+        LOGGER.error("ChangeStatusCommand hasn't completed");
+      }
     }
     return pageRouter;
   }

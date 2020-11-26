@@ -5,7 +5,7 @@
 <fmt:setBundle basename="messages"/>
 <html>
 <head>
-    <title><fmt:message key="message.title" /></title>
+    <title><fmt:message key="message.title"/></title>
 </head>
 <body>
 <table
@@ -28,7 +28,7 @@
                         <table>
                             <h3><fmt:message key="message.administer_books"/></h3>
                             <tr>
-                                <form name="adminBookForm" method="POST" action="library">
+                                <form name="adminBookForm" method="POST" action="library" onsubmit="return validateCode();">
                                     <input type="hidden" name="command" value="find_code"/>
                                     <br/><fmt:message key="message.findcode"/><br/>
                                     <input type="text" name="code" id="code" value="" required/>
@@ -38,7 +38,8 @@
                             </tr>
                             <tr>
                                 <jsp:include page="${sessionScope.addition}"/>
-                                <br/><jsp:include page="${sessionScope.result}"/>
+                                <br/>
+                                <jsp:include page="${sessionScope.result}"/>
                             </tr>
                         </table>
                     </td>
@@ -72,5 +73,6 @@
     </tr>
 </table>
 <script src="${pageContext.request.contextPath}/js/poster.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/validator.js" type="text/javascript"></script>
 </body>
 </html>
