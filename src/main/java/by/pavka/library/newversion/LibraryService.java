@@ -335,15 +335,23 @@ public class LibraryService implements WelcomeServiceInterface {
     try (DBConnector connector = DBConnectorPool.getInstance().obtainConnector()) {
       LibraryDao<Author> authorDao = new LibraryDaoImpl<>(TableEntityMapper.AUTHOR, connector);
       if (author != null) {
-        System.out.println(author);
+        Criteria criteria = new Criteria();
         EntityField<String> surname = new EntityField<>(Author.SURNAME);
         surname.setValue((String)author.fieldForName(Author.SURNAME).getValue());
-        EntityField<String> firstname = new EntityField<>(Author.FIRST_NAME);
-        firstname.setValue((String)author.fieldForName(Author.FIRST_NAME).getValue());
-        EntityField<String> secondname = new EntityField<>(Author.SECOND_NAME);
-        secondname.setValue((String)author.fieldForName(Author.SECOND_NAME).getValue());
-        Criteria criteria = new Criteria();
-        criteria.addConstraints(surname, firstname, secondname);
+        criteria.addConstraint(surname);
+        String fname = (String)author.fieldForName(Author.FIRST_NAME).getValue();
+        EntityField<String> firstname = null;
+        if (fname != null) {
+          firstname = new EntityField<>(Author.FIRST_NAME);
+          firstname.setValue(fname);
+          criteria.addConstraint(firstname);
+        }
+        String sname = (String)author.fieldForName(Author.SECOND_NAME).getValue();
+        if (sname != null) {
+          EntityField<String> secondname = new EntityField<>(Author.SECOND_NAME);
+          secondname.setValue(sname);
+          criteria.addConstraint(secondname);
+        }
         return authorDao.read(criteria, true);
       }
     } catch (DaoException | LibraryEntityException e) {

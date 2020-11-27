@@ -26,10 +26,10 @@ public class AddEditionCommand1 implements Command1 {
     PageRouter pageRouter = new PageRouter();
     HttpSession session = request.getSession();
     String code = (String) session.getAttribute(CODE);
-    session.removeAttribute(CODE);
     if (code == null) {
       return pageRouter;
     }
+    session.removeAttribute(CODE);
     int genre = Integer.parseInt(request.getParameter(GENRE));
     String yearS = request.getParameter(BOOK_YEAR);
     int year = yearS.isEmpty() ? 0 : Integer.parseInt(yearS);
