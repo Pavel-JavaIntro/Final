@@ -37,10 +37,10 @@ public class OrderBookCommand1 implements Command1 {
       return pageRouter;
     } else {
       BookOrder bookOrder = new BookOrder(client);
-      OrderHolder.getInstance().addOrder(bookOrder);
       LibraryService service = LibraryService.getInstance();
       try {
         service.orderBook(bookOrder);
+        OrderHolder.getInstance().addOrder(bookOrder);
         pageRouter.setPage(PageRouter.RESERVE);
       } catch (ServiceException e) {
         pageRouter.setPage(PageRouter.ERROR);

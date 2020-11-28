@@ -2,27 +2,31 @@ package by.pavka.library;
 
 import by.pavka.library.model.LibraryFatalException;
 import by.pavka.library.model.service.ServiceException;
-import by.pavka.library.model.service.WelcomeService;
+import by.pavka.library.newversion.LibraryService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Collection;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class OrderHolder {
+  private static final Logger LOGGER = LogManager.getLogger(OrderHolder.class);
   private static final OrderHolder instance = new OrderHolder();
   private Queue<BookOrder> placedOrders;
   private Queue<BookOrder> preparedOrders;
 
   private OrderHolder() {
-    WelcomeService welcomeService = WelcomeService.getInstance();
+    LibraryService service = LibraryService.getInstance();
     placedOrders = new ConcurrentLinkedQueue<>();
     preparedOrders = new ConcurrentLinkedQueue<>();
     try {
-      Collection<BookOrder> oldPlacedOrders = welcomeService.getPlacedOrder();
-      //placedOrders.addAll(oldPlacedOrders);
-      Collection<BookOrder> oldPreparedOrders = welcomeService.getPreparedOrders();
-      //preparedOrders.addAll(oldPreparedOrders);
+      Collection<BookOrder> oldPlacedOrders = service.getPlacedOrders();
+      placedOrders.addAll(oldPlacedOrders);
+      Collection<BookOrder> oldPreparedOrders = service.getPreparedOrders();
+      preparedOrders.addAll(oldPreparedOrders);
     } catch (ServiceException e) {
+      LOGGER.fatal("Cannot initialize order status");
       throw new LibraryFatalException("Cannot initialize order status");
     }
   }

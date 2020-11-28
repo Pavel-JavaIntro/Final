@@ -13,12 +13,12 @@ public class SelectBookCommand1 implements Command1 {
   @Override
   public PageRouter execute(HttpServletRequest request) {
     HttpSession session = request.getSession();
-    String id = request.getParameter(EDITION);
-    int intId = Integer.parseInt(id);
+    String idS = request.getParameter(EDITION);
+    int id = Integer.parseInt(idS);
     AppClient client = (AppClient) session.getAttribute(SESSION_ATTRIBUTE_CLIENT);
     Set<EditionInfo> editionInfos = (Set<EditionInfo>) session.getAttribute(EDITIONS);
     for (EditionInfo info : editionInfos) {
-      if (intId == info.getEdition().getId()) {
+      if (id == info.getEdition().getId()) {
         client.addEditionInfo(info);
       }
     }

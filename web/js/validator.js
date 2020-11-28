@@ -27,6 +27,15 @@ function validateAuthor() {
     return true;
 }
 
+function validateSurname() {
+    var a = document.getElementById("surname0").value;
+    if (a.length <= 0) {
+        alert("Please don't leave the first Surname field empty");
+        return false;
+    }
+    return true;
+}
+
 function validateCode() {
     var a = document.getElementById("code").value;
     if (a.length <= 0) {

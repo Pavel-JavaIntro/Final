@@ -68,7 +68,7 @@ public interface WelcomeServiceInterface {
 
   void fixReturn(Book book) throws ServiceException;
 
-  Collection<BookOrder> getPlacedOrder() throws ServiceException;
+  Collection<BookOrder> getPlacedOrders() throws ServiceException;
 
-  Collection<BookOrder> getPreparedOrders();
+  Collection<BookOrder> getPreparedOrders() throws ServiceException;
 }

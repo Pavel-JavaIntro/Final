@@ -484,7 +484,7 @@ public class WelcomeService implements WelcomeServiceInterface {
   }
 
   @Override
-  public Collection<BookOrder> getPlacedOrder() throws ServiceException {
+  public Collection<BookOrder> getPlacedOrders() throws ServiceException {
     List<BookOrder> placedOrders = new ArrayList<>();
     try (LibraryDao<Book> bookDao =
         LibraryDaoFactory.getInstance().obtainDao(TableEntityMapper.BOOK)) {

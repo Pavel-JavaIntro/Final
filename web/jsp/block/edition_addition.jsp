@@ -5,7 +5,7 @@
 <fmt:setBundle basename="messages"/>
 
 <br/><fmt:message key="message.new"/>${sessionScope.code}
-<form name="bookAddingForm" method="POST" action="library">
+<form name="bookAddingForm" method="POST" action="library" onsubmit="return validateSurname();">
     <br/>
     <input type="hidden" name="command" value="add_edition"/>
     <fmt:message key="message.genre"/>:<br/>
@@ -37,3 +37,4 @@
     <input type="number" name="booklocation" id="booklocation" value=""/>
     <br/><input type="submit" value="<fmt:message key="message.addbook"/>"/>
 </form>
+<script src="${pageContext.request.contextPath}/js/validator.js" type="text/javascript"></script>
