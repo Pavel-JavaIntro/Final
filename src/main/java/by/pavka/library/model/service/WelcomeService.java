@@ -503,4 +503,9 @@ public class WelcomeService implements WelcomeServiceInterface {
   public Collection<BookOrder> getPreparedOrders() {
     return null;
   }
+
+  @Override
+  public List<Book> findDeskBooksOnHands() {
+    return null;
+  }
 }

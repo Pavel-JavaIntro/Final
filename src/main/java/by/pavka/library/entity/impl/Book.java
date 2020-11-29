@@ -3,6 +3,7 @@ package by.pavka.library.entity.impl;
 import by.pavka.library.entity.criteria.EntityField;
 import by.pavka.library.entity.LibraryEntity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Book extends LibraryEntity {
@@ -20,7 +21,7 @@ public class Book extends LibraryEntity {
     EntityField<Integer> readerId = new EntityField<>(READER_ID);
     EntityField<Integer> standardLocationId = new EntityField<>(STANDARD_LOCATION_ID);
     EntityField<Integer> reserved = new EntityField<>(RESERVED);
-    EntityField<Date> dueDate = new EntityField<>(DUE_DATE);
+    EntityField<LocalDate> dueDate = new EntityField<>(DUE_DATE);
     return new EntityField[] {editionId, reserved, locationId, readerId, dueDate,
             standardLocationId};
   }

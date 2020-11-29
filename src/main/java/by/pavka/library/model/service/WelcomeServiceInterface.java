@@ -71,4 +71,6 @@ public interface WelcomeServiceInterface {
   Collection<BookOrder> getPlacedOrders() throws ServiceException;
 
   Collection<BookOrder> getPreparedOrders() throws ServiceException;
+
+  List<Book> findDeskBooksOnHands() throws ServiceException;
 }

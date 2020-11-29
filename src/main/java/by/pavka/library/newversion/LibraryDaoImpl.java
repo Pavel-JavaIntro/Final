@@ -17,11 +17,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LibraryDaoImpl<T extends LibraryEntity>
-    implements LibraryDao<T>, EntityExtractor<T> {
+public class LibraryDaoImpl<T extends LibraryEntity> implements LibraryDao<T>, EntityExtractor<T> {
   private static final String INSERT = "INSERT INTO %s ";
   private static final String LIST_ALL = "SELECT * FROM ";
   private static final String GET = "SELECT * FROM %s WHERE id=?";
@@ -102,17 +102,37 @@ public class LibraryDaoImpl<T extends LibraryEntity>
     }
   }
 
+  //  @Override
+  //  public void update(int id, EntityField<?> field) throws DaoException {
+  //    PreparedStatement statement = null;
+  //    String assignment =
+  //        ConverterFactory.getInstance().getConverter().formColumnName(field)
+  //            + "="
+  //            + field.getValue();
+  //    String sql = String.format(UPDATE, getTableName(), assignment);
+  //    System.out.println("SQL :" + sql);
+  //    try {
+  //      statement = connector.obtainPreparedStatement(sql);
+  //      statement.setInt(1, id);
+  //      System.out.println("INSIDE DAO: " + statement);
+  //      statement.executeUpdate();
+  //    } catch (DaoException | SQLException e) {
+  //      throw new DaoException("SimpleLibraryDao update exception", e);
+  //    } finally {
+  //      connector.closeStatement(statement);
+  //    }
+  //  }
+
   @Override
   public void update(int id, EntityField<?> field) throws DaoException {
     PreparedStatement statement = null;
-    String assignment =
-        ConverterFactory.getInstance().getConverter().formColumnName(field)
-            + "="
-            + field.getValue();
+    String assignment = ConverterFactory.getInstance().getConverter().formColumnName(field) + "=?";
     String sql = String.format(UPDATE, getTableName(), assignment);
+    System.out.println("SQL :" + sql);
     try {
       statement = connector.obtainPreparedStatement(sql);
-      statement.setInt(1, id);
+      statement.setObject(1, field.getValue());
+      statement.setInt(2, id);
       System.out.println("INSIDE DAO: " + statement);
       statement.executeUpdate();
     } catch (DaoException | SQLException e) {
@@ -158,9 +178,7 @@ public class LibraryDaoImpl<T extends LibraryEntity>
   }
 
   @Override
-  public void close() {
-
-  }
+  public void close() {}
 
   private String getTableName() {
     return tableName;
