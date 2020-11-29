@@ -34,7 +34,7 @@ public class ConstantManager {
   public static final int PREPARED = 2;
   public static final int ISSUED = 3;
   public static final int DECOM = 4;
-  public static final long DESK_DISPATCH_TERM = -1;
+  public static final long DESK_DISPATCH_TERM = 7;
 
   private ConstantManager()  {}
 
