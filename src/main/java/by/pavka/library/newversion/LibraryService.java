@@ -262,8 +262,10 @@ public class LibraryService implements WelcomeServiceInterface {
       Book book = findFreeBookByEdition(info.getEdition().getId());
       info.setBook(book);
       if (book != null) {
-        int locationId = (int) book.fieldForName(Book.LOCATION_ID).getValue();
+        int locationId = (int)book.fieldForName(Book.LOCATION_ID).getValue();
         info.setLocationId(locationId);
+        int standardLocationId = (int)book.fieldForName(Book.STANDARD_LOCATION_ID).getValue();
+        info.setStandardLocationId(standardLocationId);
       }
     } catch (ServiceException | LibraryEntityException e) {
       throw new ServiceException("Cannot find relevant books", e);
@@ -450,12 +452,15 @@ public class LibraryService implements WelcomeServiceInterface {
         userField.setValue(userId);
         EntityField<Integer> reserveField = new EntityField<>(Book.RESERVED);
         reserveField.setValue(ConstantManager.RESERVED);
+        EntityField<Integer> locationField = new EntityField<>(Book.LOCATION_ID);
+        locationField.setValue(editionInfo.getLocationId());
         try {
           connector.suspendAutoCommit();
           Book dBook = bookDao.get(bookId);
           if (dBook.fieldForName(Book.RESERVED).getValue().equals(ConstantManager.NOT_RESERVED)) {
             bookDao.update(bookId, userField);
             bookDao.update(bookId, reserveField);
+            bookDao.update(bookId, locationField);
           } else {
             int editionId = editionInfo.getEdition().getId();
             Book nBook = findFreeBookByEdition(editionId);
@@ -464,6 +469,7 @@ public class LibraryService implements WelcomeServiceInterface {
               bookId = nBook.getId();
               bookDao.update(bookId, userField);
               bookDao.update(bookId, reserveField);
+              bookDao.update(bookId, locationField);
             } else {
               bookOrder.passBook(editionInfo);
             }

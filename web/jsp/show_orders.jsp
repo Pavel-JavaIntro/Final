@@ -32,7 +32,7 @@
                                 <c:forEach var="item" items="${sessionScope.orders}">
                                     <c:forEach var="edition" items="${item.editionInfoSet}">
                                         <option value="${edition.book.id}">${item.userId} &lt;&lt; ${edition}
-                                            &gt;&gt; ${edition.book.id} &gt;&gt; ${edition.locationId}</option>
+                                            &gt;&gt; ${edition.book.id} &gt;&gt; ${edition.locationId} &gt;&gt; ${edition.standardLocationId}</option>
                                     </c:forEach>
                                 </c:forEach>
                             </select>

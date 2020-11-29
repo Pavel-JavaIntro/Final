@@ -13,6 +13,7 @@ public class EditionInfo implements Serializable {
   private String authors;
   private Book book;
   private int locationId;
+  private int standardLocationId;
 
   public Edition getEdition() {
     return edition;
@@ -46,6 +47,14 @@ public class EditionInfo implements Serializable {
     this.locationId = locationId;
   }
 
+  public int getStandardLocationId() {
+    return standardLocationId;
+  }
+
+  public void setStandardLocationId(int standardLocationId) {
+    this.standardLocationId = standardLocationId;
+  }
+
   public String getAvailability() {
     if (book == null) {
       return NOT_AVAILABLE;
@@ -61,7 +70,8 @@ public class EditionInfo implements Serializable {
     return edition.equals(that.edition)
         && Objects.equals(authors, that.authors)
         && Objects.equals(book, that.book)
-        && locationId == that.locationId;
+        && locationId == that.locationId
+        && standardLocationId == that.standardLocationId;
   }
 
   @Override
