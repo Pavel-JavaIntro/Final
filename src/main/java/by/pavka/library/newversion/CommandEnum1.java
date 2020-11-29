@@ -30,7 +30,8 @@ public enum CommandEnum1 {
   CHANGE_STATUS(new ChangeStatusCommand1()),
   RETURN_BOOKS(new ReturnBookCommand1()),
   RETURN(new ReturnCommand1()),
-  FIX_RETURN(new FixReturnCommand1());
+  FIX_RETURN(new FixReturnCommand1()),
+  OVERDUE_BOOKS(new OverdueBooksCommand1());
 
   private final Command1 command;
 

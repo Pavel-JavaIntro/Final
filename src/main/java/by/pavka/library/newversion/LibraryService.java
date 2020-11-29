@@ -493,13 +493,13 @@ public class LibraryService implements WelcomeServiceInterface {
       for (EditionInfo editionInfo : bookOrder.getEditionInfoSet()) {
         Book book = editionInfo.getBook();
         int bookId = book.getId();
-        EntityField<Integer> locField = new EntityField<>(Book.LOCATION_ID);
-        locField.setValue(ConstantManager.LOCATION_READING_HALL_RESERVE);
+//        EntityField<Integer> locField = new EntityField<>(Book.LOCATION_ID);
+//        locField.setValue(ConstantManager.LOCATION_READING_HALL_RESERVE);
         EntityField<Integer> reserveField = new EntityField<>(Book.RESERVED);
         reserveField.setValue(ConstantManager.PREPARED);
         try {
           connector.suspendAutoCommit();
-          bookDao.update(bookId, locField);
+          //bookDao.update(bookId, locField);
           bookDao.update(bookId, reserveField);
           connector.commit();
         } catch (SQLException throwables) {
@@ -643,6 +643,8 @@ public class LibraryService implements WelcomeServiceInterface {
         editionInfo.setEdition(edition);
         int locationId = (int)book.fieldForName(Book.LOCATION_ID).getValue();
         editionInfo.setLocationId(locationId);
+        int standardLocationId = (int)book.fieldForName(Book.STANDARD_LOCATION_ID).getValue();
+        editionInfo.setStandardLocationId(standardLocationId);
         bindAuthors(editionInfo, connector);
         BookOrder bookOrder = new BookOrder(userId, editionInfo);
         orders.add(bookOrder);
