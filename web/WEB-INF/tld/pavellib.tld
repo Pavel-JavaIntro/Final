@@ -18,6 +18,20 @@
         </attribute>
     </tag>
 
+    <tag>
+        <name>info</name>
+        <tag-class>by.pavka.library.newversion.LibraryTagHandler</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>type</name>
+            <required>true</required>
+        </attribute>
+        <attribute>
+            <name>id</name>
+            <required>true</required>
+        </attribute>
+    </tag>
+
 
     <!-- Invoke 'Generate' action to add tags or functions -->
 

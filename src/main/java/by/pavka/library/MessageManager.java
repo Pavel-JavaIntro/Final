@@ -1,5 +1,6 @@
 package by.pavka.library;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class MessageManager {
@@ -9,5 +10,10 @@ public class MessageManager {
 
   public static String getProperty(String key) {
     return resourceBundle.getString(key);
+  }
+
+  public static String getProperty(String key, Locale locale) {
+    ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
+    return bundle.getString(key);
   }
 }

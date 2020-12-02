@@ -13,6 +13,7 @@ import by.pavka.library.newversion.PageRouter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Locale;
 
 public class LoginCommand1 implements Command1 {
   @Override
@@ -22,6 +23,8 @@ public class LoginCommand1 implements Command1 {
     String name = request.getParameter(NAME);
     String password = request.getParameter(PASSWORD);
     HttpSession session = request.getSession();
+    String language = (String)session.getAttribute(SESSION_ATTRIBUTE_LANGUAGE);
+    Locale locale = language == null ? Locale.getDefault() : new Locale(language);
     if (LibValidator.validateLogin(surname, name, password)) {
       LibraryService service = LibraryService.getInstance();
       try {
@@ -51,8 +54,9 @@ public class LoginCommand1 implements Command1 {
             LOGGER.warn("Login failed");
           }
         } else {
+          System.out.println(locale);
           request.setAttribute(ERROR_LOGIN_PASS, MessageManager.getProperty(
-              "message.loginerror"));
+              "message.loginerror", locale));
         }
       } catch (ServiceException e) {
         pageRouter.setPage(PageRouter.ERROR);
@@ -60,7 +64,7 @@ public class LoginCommand1 implements Command1 {
       }
     } else {
       request.setAttribute(ERROR_LOGIN_PASS, MessageManager.getProperty(
-          "message.emptyfields"));
+          "message.emptyfields", locale));
     }
     return pageRouter;
   }

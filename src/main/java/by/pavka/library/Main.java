@@ -14,26 +14,29 @@ public class Main {
 
   public static void main(String[] args) {
 
-    List list = new CopyOnWriteArrayList();
-    list.add(1);
-    list.add(2);
-    list.add(3);
-    Iterator iterator = list.iterator();
-    while (iterator.hasNext()) {
-      Integer a = (Integer)iterator.next();
-      System.out.println(a);
-      list.remove(a);
-    }
-    System.out.println(list.size());
-    System.out.println("admin".hashCode());
-    //System.out.println(Integer.parseInt(""));
+//    List list = new CopyOnWriteArrayList();
+//    list.add(1);
+//    list.add(2);
+//    list.add(3);
+//    Iterator iterator = list.iterator();
+//    while (iterator.hasNext()) {
+//      Integer a = (Integer)iterator.next();
+//      System.out.println(a);
+//      list.remove(a);
+//    }
+//    System.out.println(list.size());
+//    System.out.println("admin".hashCode());
+//    //System.out.println(Integer.parseInt(""));
+//
+//    System.out.println(ConfirmationMailSender.sendInvitation("pavkascool@gmail.com"));
+//
+//    List<String> lst = null;
+//    for (String s: lst) {
+//      System.out.println(s);
+//    }
+    ResourceBundle bundle = ResourceBundle.getBundle("messages", Locale.US);
 
-    System.out.println(ConfirmationMailSender.sendInvitation("pavkascool@gmail.com"));
-
-    List<String> lst = null;
-    for (String s: lst) {
-      System.out.println(s);
-    }
+    System.out.println(bundle.getLocale());
   }
 
 }
