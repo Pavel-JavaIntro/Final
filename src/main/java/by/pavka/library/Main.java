@@ -34,8 +34,8 @@ public class Main {
 //    for (String s: lst) {
 //      System.out.println(s);
 //    }
-    ResourceBundle bundle = ResourceBundle.getBundle("messages", Locale.US);
-
+    ResourceBundle bundle = ResourceBundle.getBundle("messages", new Locale("ru"));
+    System.out.println(bundle.getString("message.title"));
     System.out.println(bundle.getLocale());
   }
 

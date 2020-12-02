@@ -54,7 +54,6 @@ public class LoginCommand1 implements Command1 {
             LOGGER.warn("Login failed");
           }
         } else {
-          System.out.println(locale);
           request.setAttribute(ERROR_LOGIN_PASS, MessageManager.getProperty(
               "message.loginerror", locale));
         }

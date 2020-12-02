@@ -13,6 +13,9 @@ public class MessageManager {
   }
 
   public static String getProperty(String key, Locale locale) {
+    if (!locale.getLanguage().equalsIgnoreCase("ru")) {
+      locale = new Locale("");
+    }
     ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
     return bundle.getString(key);
   }

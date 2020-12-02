@@ -1,5 +1,6 @@
 package by.pavka.library;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ConfigurationManager {
