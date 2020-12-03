@@ -9,6 +9,6 @@ public class LibValidator {
         && pass != null
         && !surname.isEmpty()
         && !name.isEmpty()
-        && !pass.isEmpty());
+        && pass.length() > 4);
   }
 }

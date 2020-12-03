@@ -9,26 +9,14 @@
     <short-name>LibraryTags</short-name>
     <uri>http://library.pavka.by</uri>
     <tag>
-        <name>invitation</name>
-        <tag-class>by.pavka.library.newversion.LibraryTagHandler</tag-class>
+        <description>The tag provides readable info</description>
+        <name>user-info</name>
+        <tag-class>by.pavka.library.newversion.UserTagHandler</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>user</name>
             <required>true</required>
-        </attribute>
-    </tag>
-
-    <tag>
-        <name>info</name>
-        <tag-class>by.pavka.library.newversion.LibraryTagHandler</tag-class>
-        <body-content>scriptless</body-content>
-        <attribute>
-            <name>type</name>
-            <required>true</required>
-        </attribute>
-        <attribute>
-            <name>id</name>
-            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
 

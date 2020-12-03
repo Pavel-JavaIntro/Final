@@ -42,7 +42,6 @@
                         <p><fmt:message key="message.maintext6" /></p>
                         <p style="text-indent:20px">
                             <fmt:message key="message.maintext7" /></p>
-                        <plib:invitation user="Pavel"/>
                     </td>
                     <jsp:include page="${sessionScope.client.entrance}"/>
                 </tr>
