@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="plib" uri="http://library.pavka.by" %>
 <fmt:setLocale value="${sessionScope.lan}"/>
 <fmt:setBundle basename="messages"/>
 <html>
@@ -52,7 +53,8 @@
                             <select size="10" name="decom" required>
                                 <c:forEach var="item" items="${sessionScope.decommission}">
                                     <option value="${item.id}">
-                                            ${item}
+<%--                                            ${item}--%>
+                                        <plib:book-info book="${item}"/>
                                     </option>
                                 </c:forEach>
                             </select>

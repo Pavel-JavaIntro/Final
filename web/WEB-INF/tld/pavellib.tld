@@ -9,9 +9,9 @@
     <short-name>LibraryTags</short-name>
     <uri>http://library.pavka.by</uri>
     <tag>
-        <description>The tag provides readable info</description>
+        <description>The tag provides readable info about a user</description>
         <name>user-info</name>
-        <tag-class>by.pavka.library.newversion.UserTagHandler</tag-class>
+        <tag-class>by.pavka.library.newversion.tag.UserTagHandler</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>user</name>
@@ -20,7 +20,32 @@
         </attribute>
     </tag>
 
+    <tag>
+        <description>The tag provides readable info about a book</description>
+        <name>book-info</name>
+        <tag-class>by.pavka.library.newversion.tag.BookTagHandler</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>book</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>detailed</name>
+            <required>false</required>
+        </attribute>
+    </tag>
 
-    <!-- Invoke 'Generate' action to add tags or functions -->
+    <tag>
+        <description>The tag provides readable info about an editionInfo</description>
+        <name>edition-info</name>
+        <tag-class>by.pavka.library.newversion.tag.EditionTagHandler</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>edition</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
 
 </taglib>

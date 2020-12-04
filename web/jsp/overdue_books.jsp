@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="plib" uri="http://library.pavka.by" %>
 <fmt:setLocale value="${sessionScope.lan}"/>
 <fmt:setBundle basename="messages"/><fmt:setLocale value="${sessionScope.lan}"/>
 <fmt:setBundle basename="messages"/>
@@ -31,7 +32,10 @@
 
                         <select size="10" name="book">
                             <c:forEach var="item" items="${sessionScope.overdue}">
-                                <option value="null">${item}</option>
+                                <option value="null">
+<%--                                        ${item}--%>
+                                    <plib:book-info book="${item}" detailed="true"/>
+                                </option>
                             </c:forEach>
 
                         </select>

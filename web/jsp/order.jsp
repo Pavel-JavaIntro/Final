@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="plib" uri="http://library.pavka.by" %>
 <fmt:setLocale value="${sessionScope.lan}"/>
 <fmt:setBundle basename="messages"/>
 <html>
@@ -30,7 +31,10 @@
                         <form name="orderForm" method="POST" action="library">
                             <select size="10" name="book">
                                 <c:forEach var="item" items="${sessionScope.client.editionInfos}">
-                                    <option value="${item.edition.id}">${item}</option>
+                                    <option value="${item.edition.id}">
+<%--                                            ${item}--%>
+                                        <plib:edition-info edition="${item}"/>
+                                    </option>
                                 </c:forEach>
                             </select>
                             <br/>

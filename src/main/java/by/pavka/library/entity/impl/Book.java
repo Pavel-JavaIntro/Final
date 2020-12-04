@@ -4,7 +4,6 @@ import by.pavka.library.entity.criteria.EntityField;
 import by.pavka.library.entity.LibraryEntity;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Book extends LibraryEntity {
   public static final String EDITION_ID = "editionId";
