@@ -83,11 +83,10 @@ public class EditionInfo implements Serializable {
   public String toString() {
     try {
       return String.format(
-          "%s, %s, %s, AVAILABILITY: %s",
+          "\"%s\", %s, %s",
           edition.fieldForName(Edition.TITLE).getValue(),
           authors,
-          edition.fieldForName(Edition.YEAR).getValue(),
-          getAvailability());
+          edition.fieldForName(Edition.YEAR).getValue());
     } catch (LibraryEntityException e) {
       return "";
     }

@@ -43,7 +43,7 @@ public class ConstantManager {
       //WelcomeService service = WelcomeService.getInstance();
       LibraryService service = LibraryService.getInstance();
       service.initConstants(locations, TableEntityMapper.LOCATION);
-      service.initConstants(operations, TableEntityMapper.OPERATION);
+      //service.initConstants(operations, TableEntityMapper.OPERATION);
       service.initConstants(roles, TableEntityMapper.ROLE);
       LOCATION_DECOMMISSIONED = getLocationIdByDescription(DECOMMISSIONED);
       LOCATION_ON_HAND = getLocationIdByDescription(ON_HAND);

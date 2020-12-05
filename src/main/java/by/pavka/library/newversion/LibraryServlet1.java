@@ -1,10 +1,5 @@
 package by.pavka.library.newversion;
 
-import by.pavka.library.ConfigurationManager;
-import by.pavka.library.MessageManager;
-import by.pavka.library.controller.LibraryServlet;
-import by.pavka.library.controller.command.ActionCommand;
-import by.pavka.library.controller.command.ActionFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

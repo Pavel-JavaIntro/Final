@@ -46,6 +46,31 @@
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
+        <attribute>
+            <name>availability</name>
+            <required>false</required>
+        </attribute>
+    </tag>
+
+    <tag>
+        <description>The tag provides readable info about a bookOrder</description>
+        <name>order-info</name>
+        <tag-class>by.pavka.library.newversion.tag.OrderTagHandler</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>order</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>edition</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>standard</name>
+            <required>false</required>
+        </attribute>
     </tag>
 
 </taglib>

@@ -17,19 +17,28 @@ import java.util.Locale;
 
 public class EditionTagHandler extends SimpleTagSupport {
   private static final Logger LOGGER = LogManager.getLogger(EditionTagHandler.class);
+  private static final String INFO = "\"%s\", %s, %s";
   private EditionInfo edition;
+  private boolean availability;
 
   @Override
   public void doTag() throws JspException, IOException {
     String language = (String) getJspContext().findAttribute(Command1.SESSION_ATTRIBUTE_LANGUAGE);
     Locale locale = language == null ? Locale.getDefault() : new Locale(language);
-    String info = MessageManager.getProperty("message.ordereditioninfo", locale);
     Edition ed = edition.getEdition();
+    String info = null;
+    String extra = null;
     try {
       String title = (String)ed.fieldForName(Edition.TITLE).getValue();
       String authors = edition.getAuthors();
-      String destination = ConstantManager.getLocationById(edition.getLocationId());
-      getJspContext().getOut().print(String.format(info, title, authors, destination));
+      if (!availability) {
+        info = MessageManager.getProperty("message.ordereditioninfo", locale);
+        extra = ConstantManager.getLocationById(edition.getLocationId());
+      } else {
+        info = INFO;
+        extra = edition.getAvailability();
+      }
+      getJspContext().getOut().print(String.format(info, title, authors, extra));
     } catch (LibraryEntityException e) {
       LOGGER.error("Cannot read edition-info tag");
       throw new SkipPageException("Cannot read edition-info tag");
@@ -38,5 +47,9 @@ public class EditionTagHandler extends SimpleTagSupport {
 
   public void setEdition(EditionInfo editionInfo) {
     this.edition = editionInfo;
+  }
+
+  public void setAvailability(boolean availability) {
+    this.availability = availability;
   }
 }
